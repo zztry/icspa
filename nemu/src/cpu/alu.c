@@ -259,29 +259,29 @@ void set_ZF(uint32_t result, size_t data_size)
 // SF and OF contain information relevant to signed integers
 void set_SF(uint32_t res,size_t data_size)
 {
-    res = sign_ext(result & ( 0xFFFFFFFF >>(32 - data_size) ) ,data_size );//符号扩展
-    cpu.eflags.SF = signed(res)//此函数取32位的最高位
+    res = sign_ext(res & ( 0xFFFFFFFF >>(32 - data_size) ) ,data_size );//符号扩展
+    cpu.eflags.SF = sign(res)//此函数取32位的最高位
 }
 
 void set_OF_add(uint32_t res,uint32_t src,uint32_t dest,size_t data_size)
 {
     //先进行符号扩展
     if(data_size==8){
-        result = sign_ext(res & 0xFF, 8); 
+        res = sign_ext(res & 0xFF, 8); 
 		src = sign_ext(src & 0xFF, 8); 
 		dest = sign_ext(dest & 0xFF, 8); 
 
     }
     else if(data_size ==16){
-        result = sign_ext(res & 0xFFFF, 16); 
+        res = sign_ext(res & 0xFFFF, 16); 
 		src = sign_ext(src & 0xFFFF, 16); 
 		dest = sign_ext(dest & 0xFFFF, 16); 
     }
     
     //如果一正一负必为0，符号相同则判断
-    if(signed(dest)==signed(src))
+    if(sign(dest)==sign(src))
     {
-        if(signed(res)!=signed(src))
+        if(sign(res)!=sign(src))
         {
             cpu.eflags.OF = 1;
         }
