@@ -257,7 +257,7 @@ void set_ZF(uint32_t result, size_t data_size)
 }
 
 // SF and OF contain information relevant to signed integers
-void set_SF(res, data_size);
+void set_SF(res, data_size)
 {
     result = sign_ext(result & ( 0xFFFFFFFF >>(32 - data_size) ));//符号扩展
     cpu.eflags.SF = signed(result)//此函数取32位的最高位
