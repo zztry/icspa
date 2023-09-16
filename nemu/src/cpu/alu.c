@@ -325,21 +325,35 @@ void set_OF_add(uint32_t res,uint32_t src,uint32_t dest,size_t data_size)
 
 void set_OF_adc(uint32_t res,uint32_t src,uint32_t dest,uint32_t CF,size_t data_size)
 {
-    uint32_t res1 = dest + src;
+    //uint32_t res1 = dest + src;
     //先进行符号扩展
     if(data_size==8){
         res = sign_ext(res & 0xFF, 8); 
 		src = sign_ext(src & 0xFF, 8); 
 		dest = sign_ext(dest & 0xFF, 8); 
-        res1 = sign_ext(res1 & 0xFF, 8); 
+        //res1 = sign_ext(res1 & 0xFF, 8); 
     }
     else if(data_size ==16){
         res = sign_ext(res & 0xFFFF, 16); 
 		src = sign_ext(src & 0xFFFF, 16); 
 		dest = sign_ext(dest & 0xFFFF, 16); 
-		res1 = sign_ext(res1 & 0xFFFF, 16); 
+		//res1 = sign_ext(res1 & 0xFFFF, 16); 
     }
     
+     if(sign(dest)==sign(src))
+        {
+            if(sign(res)!=sign(src))
+            {
+                cpu.eflags.OF = 1;
+            }
+        else{
+                cpu.eflags.OF = 0;
+            }
+        }
+        else{
+            cpu.eflags.OF = 0;
+        }
+    /*
     //如果符号相同相加后不同则为1
     if(CF == 0)
     {
@@ -366,7 +380,7 @@ void set_OF_adc(uint32_t res,uint32_t src,uint32_t dest,uint32_t CF,size_t data_
         else{
             cpu.eflags.OF = 0;
         }
-    }
+    }*/
     
     
 }
