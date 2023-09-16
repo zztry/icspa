@@ -45,6 +45,12 @@ uint32_t alu_sub(uint32_t src, uint32_t dest, size_t data_size)
 	uint32_t res = 0;
 	res = dest - src;
 	
+	set_CF_sub(res, dest, data_size);
+	set_PF(res);
+	set_ZF(res ,data_size);
+	set_SF(res, data_size);
+	set_OF_sub(res, src, dest, data_size);//还没写
+	
 	return res & (0xFFFFFFFF >> (32- data_size));
 #endif
 }
@@ -249,6 +255,13 @@ void set_CF_adc(uint32_t result,uint32_t src,uint32_t dest,size_t data_size)
     }
 }
 
+void set_CF_sub(uint32_t result, uint32_t dest,size_t data_size)
+{
+    result = sign_ext(result & (0xFFFFFFFF >> (32 - data_size)), data_size);
+    dest = sign_ext(dest & (0xFFFFFFFF >> (32 - data_size)), data_size);
+    cpu.eflags.CF = (result>dest);
+}
+
 void set_PF(uint32_t result)
 {
     uint32_t res[8];
@@ -383,6 +396,37 @@ void set_OF_adc(uint32_t res,uint32_t src,uint32_t dest,uint32_t CF,size_t data_
     }*/
     
     
+}
+
+void set_OF_sub(uint32_t res,uint32_t src,uint32_t dest,size_t data_size)
+{
+    //先进行符号扩展
+    if(data_size==8){
+        res = sign_ext(res & 0xFF, 8); 
+		src = sign_ext(src & 0xFF, 8); 
+		dest = sign_ext(dest & 0xFF, 8); 
+
+    }
+    else if(data_size ==16){
+        res = sign_ext(res & 0xFFFF, 16); 
+		src = sign_ext(src & 0xFFFF, 16); 
+		dest = sign_ext(dest & 0xFFFF, 16); 
+    }
+    
+    //sign(src) ->-sign(src)
+    if(sign(dest)!=sign(src))
+    {
+        if(sign(res)==sign(src))
+        {
+            cpu.eflags.OF = 1;
+        }
+        else{
+            cpu.eflags.OF = 0;
+        }
+    }
+    else{
+        cpu.eflags.OF = 0;
+    }
 }
 
 
