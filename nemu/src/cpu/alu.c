@@ -355,6 +355,7 @@ void set_OF_adc(uint32_t res,uint32_t src,uint32_t dest,uint32_t CF,size_t data_
             cpu.eflags.OF = 0;
         }
     }
+    cout<<"now OF is: "<<cpu.eflags.OF<<endl;
     
 }
 
