@@ -347,7 +347,7 @@ void set_OF_adc(uint32_t res,uint32_t src,uint32_t dest,uint32_t CF,size_t data_
     }
     else{
         //继续比较，由于cf恒为正，所以若res1为正而res为负则of=1
-        if(sign(res)==0 && sign(res)==1)
+        if(sign(res1)==0 && sign(res)==1)
         {
             cpu.eflags.OF = 1;
         }
