@@ -14,7 +14,7 @@ uint32_t alu_add(uint32_t src, uint32_t dest, size_t data_size)
 	set_SF(res, data_size);
 	set_OF_add(res, src, dest, data_size);
 	
-	return res & (0xFFFFFFFF >> (32- data_size));
+	return res & (0xFFFFFFFF >> (32- data_size));//高位清0
 #endif
 }
 
@@ -212,12 +212,16 @@ uint32_t alu_sal(uint32_t src, uint32_t dest, size_t data_size)
 #endif
 }
 
+//
+
 
 //CF contains information relevant to unsigned integers
 void set_CF_add(uint32_t result,uint32_t src, size_t data_size)
 {
-    result = sign_ext(result & (0xFFFFFFFF >> (32 - data_size)), data_size);//保留data_size位，符号扩展
+    //保留data_size位，符号扩展,右边是一个带符号数，左边为无符号数
+    result = sign_ext(result & (0xFFFFFFFF >> (32 - data_size)), data_size);
     src = sign_ext(src & (0xFFFFFFFF >> (32 - data_size)), data_size);
+    //若和比加数小则借位，无符号数溢出
     cpu.eflags.CF = (result<src);
     
 }
@@ -252,7 +256,8 @@ void set_PF(uint32_t result)
 
 void set_ZF(uint32_t result, size_t data_size) 
 {
-    result = result & (0xFFFFFFFF >> (32 - data_size));//保留data_size位
+    result = result & (0xFFFFFFFF >> (32 - data_size));
+    //保留data_size位，然后赋给无符号32位数，由于右边为无符号数故机器数不变，同时避免高位的影响
 	cpu.eflags.ZF = (result == 0);
 }
 
@@ -260,7 +265,7 @@ void set_ZF(uint32_t result, size_t data_size)
 void set_SF(uint32_t res,size_t data_size)
 {
     res = sign_ext(res & ( 0xFFFFFFFF >>(32 - data_size) ) ,data_size );//符号扩展
-    cpu.eflags.SF = sign(res);//此函数取32位的最高位
+    cpu.eflags.SF = sign(res);//此函数取32位的最高位，返回一个无符号数
 }
 
 void set_OF_add(uint32_t res,uint32_t src,uint32_t dest,size_t data_size)
