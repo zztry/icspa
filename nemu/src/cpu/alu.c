@@ -23,9 +23,16 @@ uint32_t alu_adc(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_adc(src, dest, data_size);
 #else
-	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
-	fflush(stdout);
-	assert(0);
+	uint32_t res = 0;
+	res = dest + src + cpu.eflags.CF;
+	uint32_t cf = cpu.eflags.CF;
+	
+	set_CF_adc(res,src,dest,data_size);
+	set_PF(res);
+	set_ZF(res ,data_size);
+	set_SF(res, data_size);
+	set_OF_adc(res,src,dest,cf,data_size );
+	
 	return 0;
 #endif
 }
@@ -226,6 +233,22 @@ void set_CF_add(uint32_t result,uint32_t src, size_t data_size)
     
 }
 
+void set_CF_adc(uint32_t result,uint32_t src,uint32_t dest,size_t data_size)
+{
+    //先比较前两个加数
+    uint32_t res1 = dest + src;
+    res1 = sign_ext(res1 & (0xFFFFFFFF >> (32 - data_size)), data_size);
+    src = sign_ext(src & (0xFFFFFFFF >> (32 - data_size)), data_size);
+    if(res1<src)
+    {
+        cpu.eflags.CF = (res1<src);
+    }
+    else{
+        result = sign_ext(result & (0xFFFFFFFF >> (32 - data_size)), data_size);
+        cpu.eflags.CF = (result<res1);
+    }
+}
+
 void set_PF(uint32_t result)
 {
     uint32_t res[8];
@@ -297,6 +320,42 @@ void set_OF_add(uint32_t res,uint32_t src,uint32_t dest,size_t data_size)
     else{
         cpu.eflags.OF = 0;
     }
+}
+
+
+void set_OF_adc(uint32_t res,uint32_t src,uint32_t dest,uint32_t CF,size_t data_size)
+{
+    uint32_t res1 = dest + src;
+    //先进行符号扩展
+    if(data_size==8){
+        res = sign_ext(res & 0xFF, 8); 
+		src = sign_ext(src & 0xFF, 8); 
+		dest = sign_ext(dest & 0xFF, 8); 
+        res1 = sign_ext(res1 & 0xFF, 8); 
+    }
+    else if(data_size ==16){
+        res = sign_ext(res & 0xFFFF, 16); 
+		src = sign_ext(src & 0xFFFF, 16); 
+		dest = sign_ext(dest & 0xFFFF, 16); 
+		res1 = sign_ext(res1 & 0xFFFF, 16); 
+    }
+    
+    //如果符号相同相加后不同则为1
+    if(sign(dest)==sign(src)&&sign(res1)!=sign(src))
+    {
+        cpu.eflags.OF = 1;
+    }
+    else{
+        //继续比较，由于cf恒为正，所以若res1为正而res为负则of=1
+        if(sign(res)==0 && sign(res)==1)
+        {
+            cpu.eflags.OF = 1;
+        }
+        else{
+            cpu.eflags.OF = 0;
+        }
+    }
+    
 }
 
 
