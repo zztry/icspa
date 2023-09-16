@@ -350,7 +350,7 @@ void set_OF_adc(uint32_t res,uint32_t src,uint32_t dest,uint32_t CF,size_t data_
                 cpu.eflags.OF = 1;
             }
         else{
-            cpu.eflags.OF = 0;
+                cpu.eflags.OF = 0;
             }
         }
         else{
@@ -359,7 +359,7 @@ void set_OF_adc(uint32_t res,uint32_t src,uint32_t dest,uint32_t CF,size_t data_
     }
     else{
         //CF为1，所以若res1为正而res为负则of=1
-        if(sign(res1)==0 && sign(res)==1)
+        if(sign(res1)==0 && sign(res)>0)
         {
             cpu.eflags.OF = 1;
         }
