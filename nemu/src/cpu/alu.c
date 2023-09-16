@@ -280,7 +280,8 @@ void set_CF_sbb(uint32_t result,uint32_t src,uint32_t dest,size_t data_size)
         cpu.eflags.CF = (src>dest);
     }
     else{
-        cpu.eflags.CF = ((src+1)>dest);
+        cpu.eflags.CF = (src>=dest);
+        //这里不能是(src+1)>dest，只能是src>=dest,为什么，自己写程序没有问题
     }
 }
 
