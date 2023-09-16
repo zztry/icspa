@@ -268,7 +268,7 @@ void set_CF_sub(uint32_t result, uint32_t dest,size_t data_size)
     cpu.eflags.CF = (result>dest);
 }
 
-void set_CF_adc(uint32_t result,uint32_t src,uint32_t dest,size_t data_size)
+void set_CF_sbb(uint32_t result,uint32_t src,uint32_t dest,size_t data_size)
 {
     //根据adc修改
     uint32_t res1 = dest - src;
