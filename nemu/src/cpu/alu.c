@@ -341,12 +341,24 @@ void set_OF_adc(uint32_t res,uint32_t src,uint32_t dest,uint32_t CF,size_t data_
     }
     
     //如果符号相同相加后不同则为1
-    if(sign(dest)==sign(src)&&sign(res1)!=sign(src))
+    if(CF == 0)
     {
-        cpu.eflags.OF = 1;
+        if(sign(dest)==sign(src))
+        {
+            if(sign(res)!=sign(src))
+            {
+                cpu.eflags.OF = 1;
+            }
+        else{
+            cpu.eflags.OF = 0;
+            }
+        }
+        else{
+            cpu.eflags.OF = 0;
+        }
     }
     else{
-        //继续比较，由于cf恒为正，所以若res1为正而res为负则of=1
+        //CF为1，所以若res1为正而res为负则of=1
         if(sign(res1)==0 && sign(res)==1)
         {
             cpu.eflags.OF = 1;
@@ -355,7 +367,7 @@ void set_OF_adc(uint32_t res,uint32_t src,uint32_t dest,uint32_t CF,size_t data_
             cpu.eflags.OF = 0;
         }
     }
-    std:cout<<"now OF is: "<<cpu.eflags.OF<<endl;
+    
     
 }
 
