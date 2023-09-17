@@ -226,12 +226,12 @@ uint32_t alu_shr(uint32_t src, uint32_t dest, size_t data_size)
 	return __ref_alu_shr(src, dest, data_size);
 #else
 //逻辑右移，高位补0
-//右移将高位移入了非0数字？
+//右移将高位移入了非0数字
 	uint32_t res = dest;
 	uint32_t di = 2;
 	for(int i = 0;i<src;i++)
 	{
-	    cpu.eflags.CF = dest & 0x00000001;
+	    cpu.eflags.CF = res & 0x00000001;
 	    res = res / di;
 	    if (data_size ==8)
 	    {
@@ -240,6 +240,7 @@ uint32_t alu_shr(uint32_t src, uint32_t dest, size_t data_size)
 	    }
 	    else if(data_size ==16)
 	    {
+	        //第16位变成0
 	        res = res & 0xFFFF7FFF;
 	    }
 	}
