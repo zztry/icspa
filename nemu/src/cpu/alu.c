@@ -128,46 +128,14 @@ int64_t alu_imul(int32_t src, int32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_imul(src, dest, data_size);
 #else
-	int32_t src_ = sign_ext(src & (0xFFFFFFFF >> (32- data_size)),data_size);
-    int32_t dest_ = sign_ext(dest & (0xFFFFFFFF >> (32- data_size)),data_size);
+	int64_t src_ = sign_ext_64(src & (0xFFFFFFFF >> (32- data_size)),data_size);
+    int64_t dest_ = sign_ext_64(dest & (0xFFFFFFFF >> (32- data_size)),data_size);
 	int64_t res = 0;
-	res = (int64_t)dest_ * (int64_t)src_;
 	
-	res = res & (0xFFFFFFFFFFFFFFFF >> (64- data_size*2));
-	if(data_size == 8)
-	{
-	    uint64_t test = 0x00000000000000FF & res;
-	    if(test == res)
-	    {
-	        cpu.eflags.CF = 0;
-	    }
-	    else{
-	        cpu.eflags.CF = 1;
-	    }
-	}
-	else if(data_size == 16)
-	{
-	    uint64_t test = 0x000000000000FFFF & res;
-	    if(test == res)
-	    {
-	        cpu.eflags.CF = 0;
-	    }
-	    else{
-	        cpu.eflags.CF = 1;
-	    }
-	}
-	else if (data_size == 32)
-	{
-	    uint64_t test = 0x00000000FFFFFFFF & res;
-	    if(test == res)
-	    {
-	        cpu.eflags.CF = 0;
-	    }
-	    else{
-	        cpu.eflags.CF = 1;
-	    }
-	}
-	cpu.eflags.OF = cpu.eflags.CF;
+	res = dest_ * src_;
+	
+	//res = res & (0xFFFFFFFFFFFFFFFF >> (64- data_size*2));
+	
 	return res;
 #endif
 }
