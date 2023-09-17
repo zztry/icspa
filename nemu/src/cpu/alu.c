@@ -298,8 +298,16 @@ uint32_t alu_sar(uint32_t src, uint32_t dest, size_t data_size)
 	set_PF(res);
 	set_ZF(res ,data_size);
 	set_SF(res, data_size);
+	if(dest_sign==0)
+	{
+	    res = res & (0xFFFFFFFF >> (32- data_size));//高位清0
+	}
+	else
+	{
+	    res = res | (0xFFFFFFFF << data_size);//高位变成1
+	}
 	
-	return res & (0xFFFFFFFF >> (32- data_size));//高位清0
+	return res;
 #endif
 }
 
