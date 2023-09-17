@@ -83,7 +83,7 @@ uint64_t alu_mul(uint32_t src, uint32_t dest, size_t data_size)
 	
 	
 	
-	return res & (0xFFFFFFFF >> (64- data_size));//高位清0
+	return res;
 #endif
 }
 
