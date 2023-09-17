@@ -78,8 +78,8 @@ uint64_t alu_mul(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_mul(src, dest, data_size);
 #else
-    src = src & (0xFFFFFFFFFFFFFFFF >> (32- data_size));
-    dest = dest & (0xFFFFFFFFFFFFFFFF >> (32- data_size));
+    src = src & (0xFFFFFFFF >> (32- data_size));
+    dest = dest & (0xFFFFFFFF >> (32- data_size));
 	uint64_t res = 0;
 	res = dest * src;
 	res = res & (0xFFFFFFFFFFFFFFFF >> (64- data_size*2));
