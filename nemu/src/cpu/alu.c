@@ -270,8 +270,7 @@ void set_CF_sub(uint32_t result, uint32_t dest,size_t data_size)
 
 void set_CF_sbb(uint32_t result,uint32_t src,uint32_t dest,size_t data_size)
 {
-    //与cpu.eflags.XX做运算就会出错?
-    //cpu.eflags.XX为uint32_t,在union的一个bit中储存
+    //res1方法错误，见下
     uint32_t res1 = cpu.eflags.CF + src;
     res1 = sign_ext(res1 & (0xFFFFFFFF >> (32 - data_size)), data_size);
     src = sign_ext(src & (0xFFFFFFFF >> (32 - data_size)), data_size);
@@ -281,7 +280,9 @@ void set_CF_sbb(uint32_t result,uint32_t src,uint32_t dest,size_t data_size)
     }
     else{
         cpu.eflags.CF = (src>=dest);
-        //这里不能是(src+1)>dest，只能是src>=dest,为什么，自己写程序没有问题
+        //这里不能是(src+1)>dest，只能是src>=dest,为什么
+        //个人推测是+1产生了溢出之后此bool表达式为假，就与无符号减法中x-x-1借位不符，故先算res+1的方法也错误
+        //但是>=能避免此问题
     }
 }
 
