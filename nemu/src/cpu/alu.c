@@ -82,9 +82,42 @@ uint64_t alu_mul(uint32_t src, uint32_t dest, size_t data_size)
     dest = dest & (0xFFFFFFFF >> (32- data_size));
 	uint64_t res = 0;
 	res = (uint64_t)dest * (uint64_t)src;
+	//强制转换成64位乘法后正确
+	//经验证，有些情况下会产生溢出，32位数相乘后只保留32位才赋给64位的参数，4000000000（dcd65000）*2 = ee6b2800不是80w
 	res = res & (0xFFFFFFFFFFFFFFFF >> (64- data_size*2));
-	
-	
+	if(data_size == 8)
+	{
+	    uint64_t test = 0x00000000000000FF & res;
+	    if(test == res)
+	    {
+	        cpu.eflags.CF = 0;
+	    }
+	    else{
+	        cpu.eflags.CF = 1;
+	    }
+	}
+	else if(data_size == 16)
+	{
+	    uint64_t test = 0x000000000000FFFF & res;
+	    if(test == res)
+	    {
+	        cpu.eflags.CF = 0;
+	    }
+	    else{
+	        cpu.eflags.CF = 1;
+	    }
+	}
+	else if (data_size == 32)
+	{
+	    uint64_t test = 0x00000000FFFFFFFF & res;
+	    if(test == res)
+	    {
+	        cpu.eflags.CF = 0;
+	    }
+	    else{
+	        cpu.eflags.CF = 1;
+	    }
+	}
 	return res;
 #endif
 }
