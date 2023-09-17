@@ -118,6 +118,7 @@ uint64_t alu_mul(uint32_t src, uint32_t dest, size_t data_size)
 	        cpu.eflags.CF = 1;
 	    }
 	}
+	cpu.eflags.OF = cpu.eflags.CF;
 	return res;
 #endif
 }
