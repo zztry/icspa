@@ -242,8 +242,8 @@ uint32_t alu_shr(uint32_t src, uint32_t dest, size_t data_size)
 	else{
 	    test = dest;
 	} 
-	//符号扩展取最低位存入CF
-	uint32_t temp = (test & (0xFFFFFFFF >> (32 - data_size)), data_size)& 0x00000001；
+	//取最低位存入CF
+	uint32_t temp = test & 0x00000001;
 	cpu.eflags.CF = temp;
 	set_PF(res);
 	set_ZF(res ,data_size);
