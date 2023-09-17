@@ -206,19 +206,24 @@ uint32_t alu_shl(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_shl(src, dest, data_size);
 #else
-	uint32_t res = 0;
-	res = dest << src;
-	
-	uint32_t test;
-	if(src!=0){
-	    test = dest <<(src-1);
+	uint32_t res = dest;
+	for(int i = 0;i<src;i++)
+	{
+	    cpu.eflags.CF = sign(sign_ext(test & (0xFFFFFFFF >> (32 - data_size)), data_size));
+	    res = res * 2;
 	}
-	else{
+	//res = dest << src;
+	
+	//uint32_t test;
+	//if(src!=0){
+	//    test = dest <<(src-1);
+	//}
+	//else{
 	    test = dest;
-	} 
+	//} 
 	//符号扩展取最高位存入CF
-	uint32_t temp = sign_ext(test & (0xFFFFFFFF >> (32 - data_size)), data_size);
-	cpu.eflags.CF = sign(temp);
+	//uint32_t temp = sign_ext(test & (0xFFFFFFFF >> (32 - data_size)), data_size);
+	//cpu.eflags.CF = sign(temp);
 	set_PF(res);
 	set_ZF(res ,data_size);
 	set_SF(res, data_size);
