@@ -219,7 +219,7 @@ uint32_t alu_shl(uint32_t src, uint32_t dest, size_t data_size)
 	//    test = dest <<(src-1);
 	//}
 	//else{
-	    test = dest;
+	//   test = dest;
 	//} 
 	//符号扩展取最高位存入CF
 	//uint32_t temp = sign_ext(test & (0xFFFFFFFF >> (32 - data_size)), data_size);
