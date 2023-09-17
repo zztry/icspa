@@ -264,14 +264,7 @@ uint32_t alu_sar(uint32_t src, uint32_t dest, size_t data_size)
 	//uint32_t di = 2;
 	for(int i = 0;i<src;i++)
 	{
-	    if(dest_sign==0)
-	    {
-	    res = res & (0xFFFFFFFF >> (32- data_size));//高位清0
-	    }
-	    else
-	    {
-	    res = res | (0xFFFFFFFF << data_size);//高位变成1
-	    }
+	    
 	    cpu.eflags.CF = res & 0x00000001;
 	    res = res >>1 ;
 	    if(dest_sign==0)
@@ -286,7 +279,11 @@ uint32_t alu_sar(uint32_t src, uint32_t dest, size_t data_size)
 	            //第16位变成0
 	            res = res & 0xFFFF7FFF;
 	        }
-	        
+	        else if(data_size ==32)
+	        {
+	            //第32位变成0
+	            res = res & 0x7FFFFFFF;
+	        }
 	    }
 	    else 
 	    {
@@ -314,7 +311,7 @@ uint32_t alu_sar(uint32_t src, uint32_t dest, size_t data_size)
 	set_SF(res, data_size);
 	
 	
-	return res;
+	return res & (0xFFFFFFFF >> (32 - data_size);
 #endif
 }
 
