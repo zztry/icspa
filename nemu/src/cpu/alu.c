@@ -80,7 +80,7 @@ uint64_t alu_mul(uint32_t src, uint32_t dest, size_t data_size)
 #else
 	uint64_t res = 0;
 	res = dest * src;
-	
+	res = res & (0xFFFFFFFFFFFFFFFF >> (64- data_size*2));
 	
 	
 	return res;
