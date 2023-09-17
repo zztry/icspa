@@ -128,10 +128,10 @@ int64_t alu_imul(int32_t src, int32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_imul(src, dest, data_size);
 #else
-	src = sign_ext(src & (0xFFFFFFFF >> (32- data_size)),data_size);
-    dest = sign_ext(dest & (0xFFFFFFFF >> (32- data_size)),data_size);
+	int32_t src_ = sign_ext(src & (0xFFFFFFFF >> (32- data_size)),data_size);
+    int32_t dest_ = sign_ext(dest & (0xFFFFFFFF >> (32- data_size)),data_size);
 	int64_t res = 0;
-	res = (int64_t)dest * (int64_t)src;
+	res = (int64_t)dest_ * (int64_t)src_;
 	
 	res = res & (0xFFFFFFFFFFFFFFFF >> (64- data_size*2));
 	if(data_size == 8)
