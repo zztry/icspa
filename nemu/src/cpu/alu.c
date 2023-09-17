@@ -212,22 +212,9 @@ uint32_t alu_shl(uint32_t src, uint32_t dest, size_t data_size)
 	    cpu.eflags.CF = sign(sign_ext(res & (0xFFFFFFFF >> (32 - data_size)), data_size));
 	    res = res * 2;
 	}
-	//res = dest << src;
-	
-	//uint32_t test;
-	//if(src!=0){
-	//    test = dest <<(src-1);
-	//}
-	//else{
-	//   test = dest;
-	//} 
-	//符号扩展取最高位存入CF
-	//uint32_t temp = sign_ext(test & (0xFFFFFFFF >> (32 - data_size)), data_size);
-	//cpu.eflags.CF = sign(temp);
 	set_PF(res);
 	set_ZF(res ,data_size);
 	set_SF(res, data_size);
-	
 	
 	return res & (0xFFFFFFFF >> (32- data_size));//高位清0
 #endif
@@ -240,10 +227,11 @@ uint32_t alu_shr(uint32_t src, uint32_t dest, size_t data_size)
 #else
 //逻辑右移，高位补0
 	uint32_t res = dest;
+	uint32_t di = 2;
 	for(int i = 0;i<src;i++)
 	{
 	    cpu.eflags.CF = dest & 0x00000001;
-	    res = res / 2;
+	    res = res / di;
 	}
 
 	set_PF(res);
