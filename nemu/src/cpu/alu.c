@@ -273,7 +273,7 @@ uint32_t alu_sar(uint32_t src, uint32_t dest, size_t data_size)
 	    res = res | (0xFFFFFFFF << data_size);//高位变成1
 	    }
 	    cpu.eflags.CF = res & 0x00000001;
-	    res = res / 2;
+	    res = res >>1 ;
 	    if(dest_sign==0)
 	    {
 	        if (data_size ==8)
