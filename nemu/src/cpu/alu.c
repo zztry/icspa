@@ -278,8 +278,9 @@ uint32_t alu_sar(uint32_t src, uint32_t dest, size_t data_size)
 	            //第16位变成0
 	            res = res & 0xFFFF7FFF;
 	        }
+	        
 	    }
-	    else
+	    else 
 	    {
 	        if (data_size ==8)
 	        {
@@ -290,6 +291,11 @@ uint32_t alu_sar(uint32_t src, uint32_t dest, size_t data_size)
 	        {
 	            //第16位变成1
 	            res = res | 0x00008000;
+	        }
+	        else if(data_size == 32)
+	        {
+	            //第32位变成1
+	            res = res | 0x80000000;
 	        }
 	    }
 	    
