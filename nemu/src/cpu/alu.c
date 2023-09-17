@@ -233,18 +233,14 @@ uint32_t alu_shr(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_shr(src, dest, data_size);
 #else
-	uint32_t res = 0;
-	res = dest >> src;
-	uint32_t test;
-	if(src!=0){
-	    test = dest >>(src-1);
+//逻辑右移，高位补0
+	uint32_t res = dest;
+	for(int i = 0;i<src;i++)
+	{
+	    cpu.eflags.CF = dest & 0x00000001;
+	    res = res / 2;
 	}
-	else{
-	    test = dest;
-	} 
-	//取最低位存入CF
-	uint32_t temp = test & 0x00000001;
-	cpu.eflags.CF = temp;
+
 	set_PF(res);
 	set_ZF(res ,data_size);
 	set_SF(res, data_size);
