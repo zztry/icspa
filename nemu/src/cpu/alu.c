@@ -270,10 +270,18 @@ uint32_t alu_sal(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_sal(src, dest, data_size);
 #else
-	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
-	fflush(stdout);
-	assert(0);
-	return 0;
+//与shl相同
+	uint32_t res = dest;
+	for(int i = 0;i<src;i++)
+	{
+	    cpu.eflags.CF = sign(sign_ext(res & (0xFFFFFFFF >> (32 - data_size)), data_size));
+	    res = res * 2;
+	}
+	set_PF(res);
+	set_ZF(res ,data_size);
+	set_SF(res, data_size);
+	
+	return res & (0xFFFFFFFF >> (32- data_size));//高位清0
 #endif
 }
 
