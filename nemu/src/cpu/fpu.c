@@ -140,7 +140,7 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 		return b;
 	}
 
-	if (fa.exponent > fb.exponent)
+	if (fa.exponent > fb.exponent)//阶码比较，阶码低的赋给fa，对阶时小阶增加，尾数右移，保证移动的为fa
 	{
 		fa.val = b;
 		fb.val = a;
@@ -156,18 +156,21 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 
 	// alignment shift for fa
 	uint32_t shift = 0;
+	
 
 	/* TODO: shift = ? */
-	printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
+	shift = fb.exponent - fa.exponent;
+	
+	/*printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
 	fflush(stdout);
-	assert(0);
+	assert(0);*/
 	assert(shift >= 0);
 
 	sig_a = (sig_a << 3); // guard, round, sticky
 	sig_b = (sig_b << 3);
 
 	uint32_t sticky = 0;
-	while (shift > 0)
+	while (shift > 0)//粘位
 	{
 		sticky = sticky | (sig_a & 0x1);
 		sig_a = sig_a >> 1;
@@ -175,6 +178,7 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 		shift--;
 	}
 
+    //负数符号变-1
 	// fraction add
 	if (fa.sign)
 	{
