@@ -25,7 +25,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 
 			/* TODO: shift right, pay attention to sticky bit*/
 		    sticky = sticky | (sig_grs & 0x1);
-			sig_grs>>1;
+			sig_grs = sig_grs >> 1;
 			sig_grs |= sticky;
 			exp++;
 		}
@@ -34,7 +34,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		{
 			/* TODO: assign the number to infinity */
 			//正负无穷
-			exp = 0xff
+			exp = 0xff;
 			sig_grs=0x0000000000000000;
 			overflow = true;
 		}
