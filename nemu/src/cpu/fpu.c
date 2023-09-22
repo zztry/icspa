@@ -46,7 +46,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 			while( ((sig_grs >> (23 + 3)) >= 1) )
 			{
 			    sticky = sticky | (sig_grs & 0x1);
-			    sig_grs>>1;
+			    sig_grs = sig_grs>>1;
 			    sig_grs |= sticky;
 			    //exp++;
 			}
@@ -66,14 +66,14 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		{
 			/* TODO: shift left */
 			
-			sig_grs<<1;
+			sig_grs = sig_grs<<1;
 			exp--;
 		}
 		if (exp == 0)
 		{
 			// denormal
 			/* TODO: shift right, pay attention to sticky bit*/
-			sig_grs>>1;
+			sig_grs = sig_grs>>1;
 		}
 	}
 	else if (exp == 0 && sig_grs >> (23 + 3) == 1)
@@ -85,9 +85,38 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 	if (!overflow)
 	{
 		/* TODO: round up and remove the GRS bits */
-		printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-		fflush(stdout);
-		assert(0);
+		uint32_t grs = sig_grs & 0x7;
+		if(grs&0x4 == 0)
+		{
+		    sig_grs=sig_grs>>3;
+		}
+		else if(grs>0x4)
+		{
+		    sig_grs=sig_grs>>3;
+		    sig_grs+=1;
+		}
+		else if(grs == 0x4)
+		{
+		    sig_grs=sig_grs>>3;
+		    if(sig_grs&0x1==1)
+		    {
+		        sig_grs+=1;
+		    }
+		}
+		//判断是否可能破坏规格化
+		if(sig_grs>>23 >1)
+		{
+		    exp++;
+		    sig_grs = sig_grs>>1;
+		    if(exp==0xff )//只可能有这一种情况
+		    {
+		        exp = 0xff;
+			    sig_grs=0x0000000000000000;
+			    overflow = true;
+		    }
+		}
+		//第24位赋值0
+		sig_grs = sig_grs& 0x00000000007FFFFF;
 	}
 
 	FLOAT f;
