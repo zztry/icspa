@@ -8,6 +8,7 @@ FLOAT p_zero, n_zero, p_inf, n_inf, p_nan, n_nan;
 // the last three bits of the significand are reserved for the GRS bits
 inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 {
+    //结果符号，中间结果阶数，中间结果尾数(26位小数)
 
 	// normalization
 	bool overflow = false; // true if the result is INFINITY or 0 during normalize
@@ -15,24 +16,26 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 	if ((sig_grs >> (23 + 3)) > 1 || exp < 0)
 	{
 		// normalize toward right
-		while ((((sig_grs >> (23 + 3)) > 1) && exp < 0xff) // condition 1
-			   ||										   // or
-			   (sig_grs > 0x04 && exp < 0)				   // condition 2
+		uint32_t sticky = 0;
+		while ( ( ((sig_grs >> (23 + 3)) > 1) && exp < 0xff) // condition 1
+			    ||										   // or
+			    (sig_grs > 0x04 && exp < 0)				   // condition 2
 			   )
 		{
 
 			/* TODO: shift right, pay attention to sticky bit*/
-			printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-			fflush(stdout);
-			assert(0);
+		    sticky = sticky | (sig_grs & 0x1);
+			sig_grs>>1;
+			sig_grs |= sticky;
+			exp++;
 		}
 
 		if (exp >= 0xff)
 		{
 			/* TODO: assign the number to infinity */
-			printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-			fflush(stdout);
-			assert(0);
+			//正负无穷
+			exp = 0xff
+			sig_grs=0x0000000000000000;
 			overflow = true;
 		}
 		if (exp == 0)
@@ -40,16 +43,19 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 			// we have a denormal here, the exponent is 0, but means 2^-126,
 			// as a result, the significand should shift right once more
 			/* TODO: shift right, pay attention to sticky bit*/
-			printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-			fflush(stdout);
-			assert(0);
+			while( ((sig_grs >> (23 + 3)) >= 1) )
+			{
+			    sticky = sticky | (sig_grs & 0x1);
+			    sig_grs>>1;
+			    sig_grs |= sticky;
+			    //exp++;
+			}
 		}
 		if (exp < 0)
 		{
 			/* TODO: assign the number to zero */
-			printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-			fflush(stdout);
-			assert(0);
+			exp = 0;
+			sig_grs=0x0000000000000000;
 			overflow = true;
 		}
 	}
@@ -59,17 +65,15 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		while (((sig_grs >> (23 + 3)) == 0) && exp > 0)
 		{
 			/* TODO: shift left */
-			printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-			fflush(stdout);
-			assert(0);
+			
+			sig_grs<<1;
+			exp--;
 		}
 		if (exp == 0)
 		{
 			// denormal
 			/* TODO: shift right, pay attention to sticky bit*/
-			printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-			fflush(stdout);
-			assert(0);
+			sig_grs>>1;
 		}
 	}
 	else if (exp == 0 && sig_grs >> (23 + 3) == 1)
@@ -131,7 +135,7 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 	fa.val = a;
 	fb.val = b;
 	// infity, NaN
-	if (fa.exponent == 0xff)
+	if (fa.exponent == 0xff)//阶码全1
 	{
 		return a;
 	}
@@ -140,12 +144,14 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 		return b;
 	}
 
-	if (fa.exponent > fb.exponent)//阶码比较，阶码低的赋给fa，对阶时小阶增加，尾数右移，保证移动的为fa
+    //阶码比较，阶码低的赋给fa，对阶时小阶增加，尾数右移，保证移动的为fa
+	if (fa.exponent > fb.exponent)
 	{
 		fa.val = b;
 		fb.val = a;
 	}
 
+    //尾数->符号+尾数
 	uint32_t sig_a, sig_b, sig_res;
 	sig_a = fa.fraction;
 	if (fa.exponent != 0)
@@ -159,12 +165,14 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 	
 
 	/* TODO: shift = ? */
-	shift = fb.exponent - fa.exponent;
+	//注意非规格化数，阶码为全0，2^-126，而不是-127，需先加一再做差
+	shift = (fb.exponent == 0 ? fb.exponent + 1 : fb.exponent) - (fa.exponent == 0 ? fa.exponent + 1 : fa.exponent);
+	//fb必然>=fa
 	
 	/*printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
 	fflush(stdout);
-	assert(0);*/
-	assert(shift >= 0);
+	assert(0);
+	assert(shift >= 0);*/
 
 	sig_a = (sig_a << 3); // guard, round, sticky
 	sig_b = (sig_b << 3);
@@ -178,7 +186,10 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 		shift--;
 	}
 
-    //负数符号变-1
+    //一个unit32_t 乘-1之后会发生什么?
+    //会使全部为0的高位变为1 uin32t x =0x00800000 *-1之后得到 0xff800000
+    //再*-1 变回0x00800000
+    //原码->补码
 	// fraction add
 	if (fa.sign)
 	{
@@ -190,7 +201,7 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 	}
 
 	sig_res = sig_a + sig_b;
-
+    //补码->原码
 	if (sign(sig_res))
 	{
 		f.sign = 1;
@@ -201,7 +212,7 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 		f.sign = 0;
 	}
 
-	uint32_t exp_res = fb.exponent;
+	uint32_t exp_res = fb.exponent;//把fa阶码与fb对齐，故结果阶码为fb的阶码
 	return internal_normalize(f.sign, exp_res, sig_res);
 }
 
