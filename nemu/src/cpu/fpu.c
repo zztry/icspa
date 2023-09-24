@@ -108,7 +108,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		{
 		    exp++;
 		    sig_grs = sig_grs>>1;
-		    if(exp==0xff )//只可能有这一种情况
+		    if(exp==0xff)//只可能有这一种情况
 		    {
 		        exp = 0xff;
 			    sig_grs=0x0000000000000000;
@@ -207,7 +207,7 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 	sig_b = (sig_b << 3);
 
 	uint32_t sticky = 0;
-	while (shift > 0)//粘位
+	while (shift > 0)//粘位，只要后面不是0就始终保留一位1
 	{
 		sticky = sticky | (sig_a & 0x1);
 		sig_a = sig_a >> 1;
@@ -217,7 +217,8 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 
     //一个unit32_t 乘-1之后会发生什么?
     //会使全部为0的高位变为1 uin32t x =0x00800000 *-1之后得到 0xff800000
-    //再*-1 变回0x00800000
+    //再*-1 变回0x00800000  即原码->补码->原码
+    
     //原码->补码
 	// fraction add
 	if (fa.sign)
@@ -331,9 +332,14 @@ uint32_t internal_float_mul(uint32_t b, uint32_t a)
 	uint32_t exp_res = 0;
 
 	/* TODO: exp_res = ? leave space for GRS bits. */
-	printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
+	/*printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
 	fflush(stdout);
-	assert(0);
+	assert(0);*/
+	//23*2 - 26 = 20
+	exp_res = fa.exponent + fb.exponent - 127 -20;
+	
+	
+	
 	return internal_normalize(f.sign, exp_res, sig_res);
 }
 
