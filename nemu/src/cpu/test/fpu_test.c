@@ -109,6 +109,10 @@ void fpu_test_div()
 			//printf("res     sign %x, exp %x, %d, sig %x\n", res.sign, res.exponent, res.exponent, res.significand);
 			//printf("res_fpu sign %x, exp %x, %d, sig %x\n", res_fpu.sign, res_fpu.exponent, res_fpu.exponent, res_fpu.significand);
 			fflush(stdout);
+			if((res_fpu.val == res.val || res.val - res_fpu.val == 1)==false)
+			{
+			    printf("res_fpu sign %x, exp %x, %d, sig %x\n", res_fpu.sign, res_fpu.exponent, res_fpu.exponent, res_fpu.significand);
+			}
 			assert(res_fpu.val == res.val || res.val - res_fpu.val == 1);
 		}
 	}
