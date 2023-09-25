@@ -56,7 +56,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 			/* TODO: assign the number to zero */
 			exp = 0;
 			sig_grs=0x0000000000000000;
-			overflow = true;
+			//overflow = true;
 		}
 	}
 	else if (((sig_grs >> (23 + 3)) == 0) && exp > 0)
