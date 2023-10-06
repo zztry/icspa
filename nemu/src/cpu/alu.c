@@ -547,7 +547,7 @@ void set_OF_adc(uint32_t res,uint32_t src,uint32_t dest,uint32_t CF,size_t data_
         else{
             cpu.eflags.OF = 0;
         }
-    /* why it is error 在这种情况下应该等价？
+    /* why it is error 在这种情况下应该等价
     //如果符号相同相加后不同则为1
     if(CF == 0)
     {
