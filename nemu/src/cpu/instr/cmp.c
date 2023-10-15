@@ -37,7 +37,7 @@ make_instr_func(cmp_i2rm_bv) //8->16/32
         cpu.eflags.CF=1;
     }
     
-    return len + data_size / 8;    // opcode长度 + ModR/M字节扫描长度 + 立即数长度
+    return len + 1;    // opcode长度 + ModR/M字节扫描长度 + 立即数长度,这里为1
     
 
 }
