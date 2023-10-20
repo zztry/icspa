@@ -30,5 +30,5 @@ make_instr_func(push_r_l)//32
     m.val = r1.val;      // 将源操作数的值赋给栈
     operand_write(&m);    
     
-    return 2;             // 返回指令长度
+    return 1;             // 返回指令长度
 }
