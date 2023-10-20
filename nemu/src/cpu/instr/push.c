@@ -15,7 +15,7 @@ make_instr_func(push_r_l)//32
     
     r2.data_size = 8;    //ESP    
     r2.type = OPR_REG;       
-    r2.addr = &cpu.gpr[4];  
+    r2.addr = cpu.gpr[4];  
     
     operand_read(&r2);
     r2.val = r2.val-4;      // 将源操作数的值赋给栈
