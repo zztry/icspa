@@ -3,6 +3,23 @@
 Put the implementations of `test' instructions here.
 */
 
+//用宏实现make_instr_impl_2op(inst_name, src_type, dest_type, suffix)  
+
+static void instr_execute_2op() 
+{
+	operand_read(&opr_src);
+	operand_read(&opr_dest);
+	
+	opr_dest.val = alu_and(opr_src.val,opr_dest.val,data_size);
+	operand_write(&opr_dest);
+	
+}
+
+//85 /r TEST r/m16,r16 2/5 AND word register with r/m word
+//85 /r TEST r/m32,r32 2/5 AND dword register with r/m dword   v 16/32 test_r2rm_v
+make_instr_impl_2op(test,r,rm,v);
+
+/*
 make_instr_func(test_r2rm_l)//32->32
 {
     
@@ -17,4 +34,4 @@ make_instr_func(test_r2rm_l)//32->32
     
     
     return 2;
-}
+}*/
