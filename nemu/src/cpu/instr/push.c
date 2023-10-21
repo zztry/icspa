@@ -16,7 +16,7 @@ static void instr_execute_1op()
     operand_write(&esp_);
     
     //将src写入esp/sp的地址中
-    operand_read(opr_src);
+    operand_read(&opr_src);
     opr_dest.addr = esp_.val;
     opr_dest.val = opr_src.val;
     operand_write(&opr_dest);
@@ -24,6 +24,7 @@ static void instr_execute_1op()
 
 //50-57   r->esp 16/32 push_r_v
 make_instr_impl_1op(push,r,v);
+
 /*    
 make_instr_func(push_r_l)//32
 {
