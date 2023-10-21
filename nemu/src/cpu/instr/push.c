@@ -3,8 +3,28 @@
 Put the implementations of `push' instructions here.
 */
 
-//
+//宏make_instr_impl_1op(inst_name, src_type, suffix)
+static void instr_execute_1op()
+{
+    //只有src，将esp/sp-2/4，
+    OPERAND esp_;
+    esp_.data_size = data_size;
+    esp_.type = OPR_REG;
+    esp_.addr = 4;
+    operand_read(&esp_);
+    esp_.val = esp_.val - data_size/8;
+    operand_write(&esp_);
+    
+    //将src写入esp/sp的地址中
+    operand_read(opr_src);
+    opr_dest.addr = esp_.val;
+    opr_dest.val = opr_src.val;
+    operand_write(&opr_dest);
+}
 
+//50-57   r->esp 16/32 push_r_v
+make_instr_impl_1op(push,r,v);
+/*    
 make_instr_func(push_r_l)//32
 {
     OPERAND r1,r2,m;        // 创建源操作数和目的操作数（ESP）局部变量
@@ -33,4 +53,4 @@ make_instr_func(push_r_l)//32
     operand_write(&m);    
     
     return 1;             // 返回指令长度
-}
+}*/
