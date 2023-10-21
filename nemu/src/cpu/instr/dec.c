@@ -8,7 +8,7 @@ static void instr_execute_1op()
 {
     //只有src，将src = src-1
     operand_read(&opr_src);
-    opr_src.val = alu_sub(opr_src.val,1);
+    opr_src.val = alu_sub(opr_src.val,1,data_size);
     operand_write(&opr_src);
     
 }
