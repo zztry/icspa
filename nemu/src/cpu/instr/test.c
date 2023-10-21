@@ -9,7 +9,12 @@ static void instr_execute_2op()
 {
 	operand_read(&opr_src);
 	operand_read(&opr_dest);
+	//不能保证高位？
+	opr_dest.val = sign_ext(opr_dest.val,opr_dest.data_size);
+	opr_src.val = sign_ext(opr_src.val,opr_src.data_size); 
+	
 	alu_and(opr_src.val,opr_dest.val,data_size);
+	//????
 	
 	/*
 	opr_dest.val = alu_and(opr_src.val,opr_dest.val,data_size);
