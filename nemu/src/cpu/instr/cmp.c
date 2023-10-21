@@ -21,8 +21,8 @@ static void instr_execute_2op()
 //83 src为imm8   dest为r/m 16/32   bv – 源操作数为8位，目的操作数为16/32位cmp_i2rm_bv
 make_instr_impl_2op(cmp,i,rm,bv);
 
-//3C ib CMP AL,imm8  src imm8   dest AL   b-8位 cmp_i2r_a
-make_instr_impl_2op(cmp,i,r,a);     //a!!!   al ax eax
+//3C ib CMP AL,imm8  src imm8   dest AL   b-8位 cmp_i2a_b
+make_instr_impl_2op(cmp,i,a,b);     //a!!!   al ax eax
 
 
 
