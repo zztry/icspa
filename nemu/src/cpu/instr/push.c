@@ -3,6 +3,8 @@
 Put the implementations of `push' instructions here.
 */
 
+//
+
 make_instr_func(push_r_l)//32
 {
     OPERAND r1,r2,m;        // 创建源操作数和目的操作数（ESP）局部变量
