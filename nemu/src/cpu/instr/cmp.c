@@ -14,12 +14,16 @@ static void instr_execute_2op()
 	opr_dest.val = sign_ext(opr_dest.val,opr_dest.data_size);
 	opr_src.val = sign_ext(opr_src.val,opr_src.data_size);
 	//src-dest 根据sub 是不是反了？
-	alu_sub(opr_dest.val,opr_src.val,data_size);
+	alu_sub(opr_src.val,opr_dest.val,data_size);
 	
 }
 
 //83 src为imm8   dest为r/m 16/32   bv – 源操作数为8位，目的操作数为16/32位
 make_instr_impl_2op(cmp,i,rm,bv);
+
+
+
+
 /*
 make_instr_func(cmp_i2rm_bv) //8->16/32
 {
@@ -60,7 +64,7 @@ make_instr_func(cmp_i2rm_bv) //8->16/32
 
 }*/
 
-
+/*
 make_instr_func(cmp_i2r_b)//8 i->al;
 {
     OPERAND r,imm;
@@ -97,4 +101,4 @@ make_instr_func(cmp_i2r_b)//8 i->al;
     }
     
     return len + 1;    // opcode长度 + ModR/M字节扫描长度 + 立即数长度,这里为1
-}
+}*/
