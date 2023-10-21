@@ -228,12 +228,7 @@ static inline bool inv_cc()
 	printf("Please implement cc condition in instr_helper.h\n");
 	fflush(stdout);
 	assert(0);
-	/*
-	if(condition_c)
-	{
-	    return true;
-	}
-	return false;*/
+	
 }
 
 #endif
