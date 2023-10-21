@@ -16,10 +16,15 @@ static void instr_execute_1op()
     operand_write(&esp_);
     
     //将src写入esp/sp的地址中
+    
+    OPERAND m;
+    
     operand_read(&opr_src);
-    opr_dest.addr = esp_.val;
-    opr_dest.val = opr_src.val;
-    operand_write(&opr_dest);
+    
+    m.type = OPR_MEM;
+    m.addr = esp_.val;
+    m.val = opr_src.val;
+    operand_write(&m);
 }
 
 //50-57   r->esp 16/32 push_r_v
