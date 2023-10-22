@@ -4,4 +4,6 @@
 Put the declarations of `add' instructions here.
 */
 
+make_instr_func(add_r2rm_v);
+
 #endif
