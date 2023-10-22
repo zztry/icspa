@@ -5,7 +5,7 @@ make_instr_func(je_short_);         //74 ok
 make_instr_func(ja_short_);         //77 ok?
 make_instr_func(jae_short_);        //73 ok?
 make_instr_func(jb_short_);         //72 ok?
-make_instr_func(jecxz_short_);      //e3 
+make_instr_func(jecxz_short_);      //e3 o
 make_instr_func(jg_short_);         //7f ok
 make_instr_func(jge_short_);        //7d o
 make_instr_func(jl_short_);         //7c o
