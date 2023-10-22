@@ -38,5 +38,5 @@ make_instr_func(jmp_short)
 
         cpu.eip += offset;
 
-        return 1 + data_size / 8;
+        return 2;//此处为2不为1+data_size/8 原因？
 }
