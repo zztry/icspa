@@ -14,7 +14,7 @@ make_instr_func(lea_rm2r_v)//m地址 源操作数rm 目的操作数r
     operand_read(&opr_dest);
     if(opr_dest.data_size==16)
     {
-        opr_dest.val = (0xffffffff>>16)opr_src.addr;
+        opr_dest.val = (0xffffffff>>16)&opr_src.addr;
     }
     else if(opr_dest.data_size==32)
     {
