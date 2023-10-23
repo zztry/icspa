@@ -31,8 +31,8 @@ make_instr_func(jmp_short)
         rel.addr = eip + 1;
 
         operand_read(&rel);
-
-        int offset = sign_ext(rel.val, rel.data_size);
+        
+        int offset = sign_ext(0xff&rel.val, rel.data_size);
         
         print_asm_1("jmp", "", 2, &rel);
 
