@@ -9,7 +9,7 @@ make_instr_func(lea_rm2r_v)//m地址 源操作数rm 目的操作数r
     int len = 1;
     opr_src.data_size = data_size;
     opr_dest.data_size = data_size;
-    len += modrm_r_rm(eip + 1, &opr_src, &opr_dest);
+    len += modrm_r_rm(eip + 1, &opr_dest, &opr_src);
     operand_read(&opr_src);
     operand_read(&opr_dest);
     opr_dest.val = opr_src.addr;
