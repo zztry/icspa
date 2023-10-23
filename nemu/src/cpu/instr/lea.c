@@ -12,6 +12,8 @@ make_instr_func(lea_rm2r_v)//m地址 源操作数rm 目的操作数r
     len += modrm_r_rm(eip + 1, &opr_dest, &opr_src);
     operand_read(&opr_src);
     operand_read(&opr_dest);
+    opr_dest.val = opr_src.addr;
+    /*
     if(opr_dest.data_size==16)
     {
         opr_dest.val = (0xffffffff>>16)&opr_src.addr;
@@ -19,7 +21,7 @@ make_instr_func(lea_rm2r_v)//m地址 源操作数rm 目的操作数r
     else if(opr_dest.data_size==32)
     {
         opr_dest.val = opr_src.addr;//这里没处理16->32的0扩展
-    }
+    }*/
     operand_write(&opr_dest);
     return len;
 }
