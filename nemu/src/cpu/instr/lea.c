@@ -6,13 +6,16 @@ Put the implementations of `lea' instructions here.
 
 make_instr_func(lea_rm2r_v)//m地址 源操作数rm 目的操作数r
 {
+    OPERAND rm, r;
+    
     int len = 1;
-    opr_src.data_size = data_size;
-    opr_dest.data_size = data_size;
-    len += modrm_r_rm(eip + 1, &opr_dest, &opr_src);
-    operand_read(&opr_src);
-    operand_read(&opr_dest);
-    opr_dest.val = opr_src.addr;
+    r.data_size = data_size;
+    rm.data_size = data_size;
+    len += modrm_r_rm(eip + 1, &r, &rm);
+    //operand_read(&r);
+    //operand_read(&opr_dest);
+    //opr_src.val = signed_ext(opr_src.val,opr_src.data_size);
+    r.val = rm.addr;
     /*
     if(opr_dest.data_size==16)
     {
@@ -22,7 +25,7 @@ make_instr_func(lea_rm2r_v)//m地址 源操作数rm 目的操作数r
     {
         opr_dest.val = opr_src.addr;//这里没处理16->32的0扩展
     }*/
-    operand_write(&opr_dest);
+    operand_write(&r);
     return len;
 }
 //8D /r LEA r16,m 2 Store effective address for m in register r16
