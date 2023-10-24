@@ -24,3 +24,115 @@ Tue Oct 24 12:17:35 CST 2023
 make-[1]: Entering directory '/home/pa221220150/pa_nju/kernel'
 make-[1]: 'kernel' is up to date.
 make-[1]: Leaving directory '/home/pa221220150/pa_nju/kernel'
+./nemu/nemu --testcase mov
+NEMU load and execute img: [1m[32m./testcase/bin/mov.img[0m  elf: [1m[36m./testcase/bin/mov[0m
+(nemu) si
+00030000:   e9 00 00 00 00                            jmp $0x0
+(nemu) si
+00030005:   b8 00 00 00 00                            movl $0x0, %eax
+(nemu) si
+0003000a:   bb 00 00 00 00                            movl $0x0, %ebx
+(nemu) si
+0003000f:   b9 00 00 00 00                            movl $0x0, %ecx
+(nemu) si
+00030014:   ba 00 00 00 00                            movl $0x0, %edx
+(nemu) si
+00030019:   b9 00 80 00 00                            movl $0x8000, %ecx
+(nemu) si
+0003001e:   66 bb 00                                  movw $0x0, %bx
+(nemu) si
+00030022:   b7 00                                     movb $0x0, %bh
+(nemu) si
+00030024:   c7 05 34 12 00 00 01 00 00 00             movl $0x1, 0x1234
+(nemu) si
+0003002e:   66 c7 05 34 12 00 00 01                   movw $0x1, 0x1234
+(nemu) si
+00030037:   c6 05 34 12 00 00 01                      movb $0x1, 0x1234
+(nemu) si
+0003003e:   c7 01 01 00 00 00                         movl $0x1, (%ecx)
+(nemu) si
+00030044:   66 c7 01 01                               movw $0x1, (%ecx)
+(nemu) si
+00030049:   c6 01 01                                  movb $0x1, (%ecx)
+(nemu) si
+0003004c:   c7 04 99 01 00 00 00                      movl $0x1, (%ecx,%ebx,4)
+(nemu) si
+00030053:   66 c7 04 99 01                            movw $0x1, (%ecx,%ebx,4)
+(nemu) si
+00030059:   c6 04 99 01                               movb $0x1, (%ecx,%ebx,4)
+(nemu) si
+0003005d:   c7 41 02 01 00 00 00                      movl $0x1, 0x2(%ecx)
+(nemu) si
+00030064:   66 c7 41 02 01                            movw $0x1, 0x2(%ecx)
+(nemu) si
+0003006a:   c6 41 02 01                               movb $0x1, 0x2(%ecx)
+(nemu) si
+0003006e:   c7 41 fe 01 00 00 00                      movl $0x1, -0x2(%ecx)
+(nemu) si
+00030075:   66 c7 41 fe 01                            movw $0x1, -0x2(%ecx)
+(nemu) si
+0003007b:   c6 41 fe 01                               movb $0x1, -0x2(%ecx)
+(nemu) si
+0003007f:   c7 44 99 02 01 00 00 00                   movl $0x1, 0x2(%ecx,%ebx,4)
+(nemu) si
+00030087:   66 c7 44 99 02 01                         movw $0x1, 0x2(%ecx,%ebx,4)
+(nemu) si
+0003008e:   c6 44 99 02 01                            movb $0x1, 0x2(%ecx,%ebx,4)
+(nemu) si
+00030093:   c7 44 99 fe 01 00 00 00                   movl $0x1, -0x2(%ecx,%ebx,4)
+(nemu) si
+0003009b:   66 c7 44 99 fe 01                         movw $0x1, -0x2(%ecx,%ebx,4)
+(nemu) si
+000300a2:   c6 44 99 fe 01                            movb $0x1, -0x2(%ecx,%ebx,4)
+(nemu) si
+000300a7:   c7 81 00 20 00 00 01 00 00 00             movl $0x1, 0x2000(%ecx)
+(nemu) si
+000300b1:   66 c7 81 00 20 00 00 01                   movw $0x1, 0x2000(%ecx)
+(nemu) si
+000300ba:   c6 81 00 20 00 00 01                      movb $0x1, 0x2000(%ecx)
+(nemu) si
+000300c1:   c7 81 00 e0 ff ff 01 00 00 00             movl $0x1, -0x2000(%ecx)
+(nemu) si
+000300cb:   66 c7 81 00 e0 ff ff 01                   movw $0x1, -0x2000(%ecx)
+(nemu) si
+000300d4:   c6 81 00 e0 ff ff 01                      movb $0x1, -0x2000(%ecx)
+(nemu) si
+000300db:   c7 84 99 00 20 00 00 01 00 00 00          movl $0x1, 0x2000(%ecx,%ebx,4)
+(nemu) si
+000300e6:   66 c7 84 99 00 20 00 00 01                movw $0x1, 0x2000(%ecx,%ebx,4)
+(nemu) si
+000300f0:   c6 84 99 00 20 00 00 01                   movb $0x1, 0x2000(%ecx,%ebx,4)
+(nemu) si
+000300f8:   c7 84 99 00 e0 ff ff 01 00 00 00          movl $0x1, -0x2000(%ecx,%ebx,4)
+(nemu) si
+00030103:   66 c7 84 99 00 e0 ff ff 01                movw $0x1, -0x2000(%ecx,%ebx,4)
+(nemu) si
+0003010d:   c6 84 99 00 e0 ff ff 01                   movb $0x1, -0x2000(%ecx,%ebx,4)
+(nemu) si
+00030115:   89 c3                                     movl %eax, %ebx
+(nemu) si
+00030117:   66 89                                     movw %ax, %bx
+(nemu) si
+0003011a:   88 e3                                     movb %ah, %bl
+(nemu) si
+0003011c:   a3 34 12 00 00                            movl %eax, 0x1234
+(nemu) si
+00030121:   66 a3 34 12 00                            movw %ax, 0x1234
+(nemu) si
+00030127:   a2 34 12 00 00                            movb %al, 0x1234
+(nemu) si
+0003012c:   88 25 34 12 00 00                         movb %ah, 0x1234
+(nemu) si
+00030132:   89 03                                     movl %eax, (%ebx)
+(nemu) si
+00030134:   89 04 99                                  movl %eax, (%ecx,%ebx,4)
+(nemu) si
+00030137:   66 89 04                                  movw %ax, (%ecx,%ebx,4)
+(nemu) si
+0003013b:   88 24 99                                  movb %ah, (%ecx,%ebx,4)
+(nemu) si
+0003013e:   89 41 02                                  movl %eax, 0x2(%ecx)
+(nemu) c
+nemu: HIT [0;32mGOOD[0m TRAP at eip = 0x000302b6
+NEMU2 terminated
+make-: Nothing to be done for 'add'.
