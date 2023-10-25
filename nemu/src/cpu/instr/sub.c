@@ -27,3 +27,12 @@ static void instr_execute_2op()
 //83 /5 ib SUB r/m32,imm8 2/7 Subtract sign-extended immediate byte from r/m dword
 //  i rm v-16/32            sub_i2rm_bv
 make_instr_impl_2op(sub,i,rm,bv);
+
+//29   sub_r2rm_v
+make_instr_impl_2op(sub,r,rm,v);
+
+
+
+
+
+
