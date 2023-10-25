@@ -23,4 +23,8 @@ make_instr_impl_2op(add,r,rm,v);
 //83 /0 ib ADD r/m32,imm8 2/7 Add sign-extended immediate byte to r/m dword add_i2rm_v
 make_instr_impl_2op(add,i,rm,bv);
 
+//05 iw ADD AX,imm16 2 Add immediate word to AX
+//05 id ADD EAX,imm32 2 Add immediate dword to EAX add_i2a_v
+make_instr_impl_2op(add,i,a,v);
+
 //
