@@ -25,7 +25,7 @@ make_instr_func(call_near)
     OPERAND m;
     
     operand_read(&opr_src);
-    m.data_size = data_size;
+    m.data_size = 16;
     m.type = OPR_MEM;
     m.addr = esp_.val;
     m.val = eip&0x0000FFFF;
