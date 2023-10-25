@@ -17,7 +17,7 @@ make_instr_func(ret_near)//c3
     operand_read(&m);
     cpu.eip = m.val;
     
-    cpu.esp += data_size/8;
+    cpu.esp += data_size/8-1;
     //eip = m.val;
     
     
