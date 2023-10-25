@@ -39,9 +39,10 @@ make_instr_func(call_near)
     rel.addr = eip+1;
     operand_read(&rel);
     
-    int offset = (eip + rel.val)&0x0000FFFF;
-    cpu.eip +=offset;
+    int offset = sign_ext(rel.val, data_size);
+    cpu.eip +=offset&0x0000FFFF;
     
     
     return len+data_size/8;
 }
+
