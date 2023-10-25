@@ -19,7 +19,8 @@ make_instr_func(leave)
     operand_read(&m);
     cpu.ebp = m.val;
     
-    eip = m.val;
+    cpu.esp += data_size/8;
+    //eip = m.val;
     
     
     return 1+data_size/8;
