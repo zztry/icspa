@@ -9,7 +9,7 @@ Put the implementations of `call' instructions here.
 make_instr_func(call_near)
 {
     int len = 1;
-    
+    /*
     //opcode_entry[54]
      //将esp/sp-2/4，
     OPERAND esp_;
@@ -25,11 +25,11 @@ make_instr_func(call_near)
     OPERAND m;
     
     operand_read(&opr_src);
-    m.data_size = data_size;
+    m.data_size = 32;
     m.type = OPR_MEM;
     m.addr = esp_.val;
     m.val = eip;
-    operand_write(&m);
+    operand_write(&m);*/
     
     
     //rel
@@ -44,6 +44,6 @@ make_instr_func(call_near)
     cpu.eip &= 0x0000FFFF;
     
     
-    return len+data_size/8;
+    return 1+data_size/8;
 }
 
