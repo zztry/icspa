@@ -27,4 +27,26 @@ make_instr_impl_2op(add,i,rm,bv);
 //05 id ADD EAX,imm32 2 Add immediate dword to EAX add_i2a_v
 make_instr_impl_2op(add,i,a,v);
 
-//
+//04  add_i2a_b
+make_instr_impl_2op(add,i,a,b);
+
+
+// 80 /0  add_i2rm_b
+make_instr_impl_2op(add,i,rm,b);
+
+//81 /0 add_i2rm_v
+make_instr_impl_2op(add,i,rm,v);
+
+//02    add_rm2r_b
+make_instr_impl_2op(add,rm,r,b);
+
+//03 add_rm2r_v
+make_instr_impl_2op(add,rm,r,v);
+
+
+
+
+
+
+
+
