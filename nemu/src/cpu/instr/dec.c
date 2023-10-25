@@ -9,7 +9,7 @@ static void instr_execute_1op()
     //只有src，将src = src-1
     operand_read(&opr_src);
     uint32_t tmp =  cpu.eflags.CF;
-    opr_src.val = alu_sub(opr_src.val,1,opr_src.data_size);
+    opr_src.val = alu_sub(1,opr_src.val,opr_src.data_size);//写反了……
     operand_write(&opr_src);
     cpu.eflags.CF = tmp;
     
