@@ -11,7 +11,7 @@ make_instr_func(call_near)
     int len = 1;
     
     //opcode_entry[54]
-     //只有src，将esp/sp-2/4，
+     //将esp/sp-2/4，
     OPERAND esp_;
     esp_.data_size = 4;
     esp_.type = OPR_REG;
