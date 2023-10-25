@@ -14,7 +14,7 @@ make_instr_func(call_near)
     
     //push(eip/ip)
     //将esp/sp-2，
-    cpu.esp.val-=2;
+    cpu.esp-=2;
     
     //eip写入sp的地址中
     OPERAND m;//m为esp地址
@@ -30,7 +30,7 @@ make_instr_func(call_near)
     rel.addr = eip+1;
     operand_read(&rel);
     
-    cpu.eip.val = (cpu.eip.val + rel.val)&0x0000ffff;
+    cpu.eip = (cpu.eip + rel.val)&0x0000ffff;
     
     
     
