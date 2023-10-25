@@ -20,6 +20,7 @@ static void instr_execute_1op()
     OPERAND m;
     
     operand_read(&opr_src);
+    
     m.data_size = data_size;
     m.type = OPR_MEM;
     m.addr = esp_.val;
