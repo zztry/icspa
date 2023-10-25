@@ -1,7 +1,7 @@
 #include "cpu/instr.h"
 
 instr_func opcode_entry[256] = {
-    /* 0x00 - 0x03*/ inv, add_r2rm_v, inv, inv,//0
+    /* 0x00 - 0x03*/ inv, __ref_add_r2rm_v, inv, inv,//0
     /* 0x04 - 0x07*/ inv, inv, inv, inv,
     /* 0x08 - 0x0b*/ inv, inv, inv, inv,
     /* 0x0c - 0x0f*/ inv, inv, inv, opcode_2_byte,
@@ -15,7 +15,7 @@ instr_func opcode_entry[256] = {
     /* 0x2c - 0x2f*/ inv, inv, inv, inv,
     /* 0x30 - 0x33*/ inv, inv, inv, inv,//xor_r2rm_b
     /* 0x34 - 0x37*/ inv, inv, inv, inv,
-    /* 0x38 - 0x3b*/ inv, cmp_r2rm_v, inv, inv,//cmp_r2rm_v
+    /* 0x38 - 0x3b*/ inv, __ref_cmp_r2rm_v, inv, inv,//cmp_r2rm_v
     /* 0x3c - 0x3f*/ cmp_i2a_b, inv, inv, inv,//3c cmp_i2a_b
     /* 0x40 - 0x43*/ inv, inv, inv, inv,
     /* 0x44 - 0x47*/ inv, inv, inv, inv,
@@ -32,7 +32,7 @@ instr_func opcode_entry[256] = {
     /* 0x70 - 0x73*/ jo_short_, jno_short_, jb_short_, jae_short_,
     /* 0x74 - 0x77*/ je_short_, jne_short_, jna_short_, ja_short_,//je_short_ 74
     /* 0x78 - 0x7b*/ js_short_, jns_short_, jp_short_, jnp_short_,
-    /* 0x7c - 0x7f*/ jl_short_, jge_short_, __ref_jle_short_, jg_short_,//jle_short_,//jg_short_,
+    /* 0x7c - 0x7f*/ jl_short_, jge_short_, jle_short_, jg_short_,//jle_short_,//jg_short_,
     /* 0x80 - 0x83*/ group_1_b, group_1_v, nemu_trap, group_1_bv,
     /* 0x84 - 0x87*/ inv, test_r2rm_v, inv, inv,//85test_r2rm_v
     /* 0x88 - 0x8b*/ mov_r2rm_b, mov_r2rm_v, mov_rm2r_b, mov_rm2r_v,
@@ -77,7 +77,7 @@ instr_func group_1_v_entry[8] =
 
 /* 0x83 */
 instr_func group_1_bv_entry[8] =
-    {inv, inv, inv, inv, inv, sub_i2rm_bv, inv, cmp_i2rm_bv};//update 111 group_1_bv    sub_i2rm_bv
+    {inv, inv, inv, inv, inv, __ref_sub_i2rm_bv, inv, cmp_i2rm_bv};//update 111 group_1_bv    sub_i2rm_bv
 
 /* 0xc0 */
 instr_func group_2_b_entry[8] =
