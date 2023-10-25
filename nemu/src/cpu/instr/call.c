@@ -20,7 +20,7 @@ make_instr_func(call_near)
     OPERAND m;//m为esp地址
     m.data_size = data_size;
     m.type = OPR_MEM;
-    m.addr = esp.val;
+    m.addr = cpu.esp;
     m.val = (0x0000ffff&eip);
     operand_write(&m);
     
