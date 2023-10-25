@@ -12,9 +12,9 @@ make_instr_func(call_near)
     
     //opcode_entry[54]
      //将esp/sp-2/4，
-    cpu.esp=cpu.esp-data_size/8;
+    cpu.esp=cpu.esp-4;
     
-    //ip写入esp/sp的地址中
+    //eip写入esp/sp的地址中
     
     OPERAND m;
     
