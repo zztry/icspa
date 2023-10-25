@@ -23,5 +23,5 @@ make_instr_func(leave)
     //eip = m.val;
     
     
-    return 1+data_size/8;
+    return 1;
 }
