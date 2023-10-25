@@ -17,7 +17,7 @@ make_instr_func(call_near)
     esp_.type = OPR_REG;
     esp_.addr = 4;
     operand_read(&esp_);
-    esp_.val = esp_.val - 2;
+    esp_.val = esp_.val - data_size/8;
     operand_write(&esp_);
     
     //ip写入esp/sp的地址中
@@ -25,10 +25,10 @@ make_instr_func(call_near)
     OPERAND m;
     
     operand_read(&opr_src);
-    m.data_size = 16;
+    m.data_size = data_size;
     m.type = OPR_MEM;
     m.addr = esp_.val;
-    m.val = eip&0x0000FFFF;
+    m.val = eip;
     operand_write(&m);
     
     
