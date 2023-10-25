@@ -32,6 +32,10 @@ make_instr_impl_2op(cmp,i,rm,l);
 make_instr_impl_2op(cmp,r,rm,v); 
 
 
+//3B /r CMP r16,r/m16 2/6 Compare r/m word to word register
+//3B /r CMP r32,r/m32 2/6 Compare r/m dword to dword register  cmp_rm2r_v
+make_instr_impl_2op(cmp,rm,r,v);
+
 /*
 make_instr_func(cmp_i2rm_bv) //8->16/32
 {
