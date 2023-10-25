@@ -31,6 +31,32 @@ make_instr_impl_2op(sub,i,rm,bv);
 //29   sub_r2rm_v
 make_instr_impl_2op(sub,r,rm,v);
 
+//28   sub_r2rm_b
+make_instr_impl_2op(sub,r,rm,b);
+
+//80 /5  sub_i2rm_b
+make_instr_impl_2op(sub,i,rm,b);
+
+//81 /5 sub_i2rm_v
+make_instr_impl_2op(sub,i,rm,v);
+
+//2a
+make_instr_impl_2op(sub,rm,r,b);
+
+//2b
+make_instr_impl_2op(sub,rm,r,v);
+
+//2c
+make_instr_impl_2op(sub,i,a,b);
+
+//2d
+make_instr_impl_2op(sub,i,a,v);
+
+
+
+
+
+
 
 
 
