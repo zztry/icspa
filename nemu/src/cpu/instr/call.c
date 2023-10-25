@@ -40,7 +40,8 @@ make_instr_func(call_near)
     operand_read(&rel);
     
     int offset = sign_ext(rel.val, data_size);
-    cpu.eip +=offset&0x0000FFFF;
+    cpu.eip += offset;
+    cpu.eip &= 0x0000FFFF;
     
     
     return len+data_size/8;
