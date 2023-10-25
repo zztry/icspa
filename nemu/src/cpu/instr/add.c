@@ -21,4 +21,6 @@ make_instr_impl_2op(add,r,rm,v);
 
 //83 /0 ib ADD r/m16,imm8 2/7 Add sign-extended immediate byte to r/m word
 //83 /0 ib ADD r/m32,imm8 2/7 Add sign-extended immediate byte to r/m dword add_i2rm_v
-make_instr_impl_2op(add,i,rm,v);
+make_instr_impl_2op(add,i,rm,bv);
+
+//
