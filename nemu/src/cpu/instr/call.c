@@ -11,27 +11,36 @@ make_instr_func(call_near)
     int len = 1;
     
     //opcode_entry[54]
+     //只有src，将esp/sp-2/4，
+    OPERAND esp_;
+    esp_.data_size = 4;
+    esp_.type = OPR_REG;
+    esp_.addr = 4;
+    operand_read(&esp_);
+    esp_.val = esp_.val - 2;
+    operand_write(&esp_);
     
-    //push(eip/ip)
-    //将esp/sp-2，
-    cpu.esp-=2;
+    //将src写入esp/sp的地址中
     
-    //eip写入sp的地址中
-    OPERAND m;//m为esp地址
+    OPERAND m;
+    
+    operand_read(&opr_src);
     m.data_size = data_size;
     m.type = OPR_MEM;
-    m.addr = cpu.esp;
-    m.val = (0x0000ffff&eip);
+    m.addr = esp_.val;
+    m.val = opr_src.val;
     operand_write(&m);
     
+    
+    //rel
     OPERAND rel;
     rel.type = OPR_IMM;
     rel.data_size = data_size;
     rel.addr = eip+1;
     operand_read(&rel);
     
-    cpu.eip = (cpu.eip + rel.val)&0x0000ffff;
-    
+    int offset = (eip + rel.val)&0x0000FFFF;
+    cpu.eip +=offset;
     
     
     return len+data_size/8;
