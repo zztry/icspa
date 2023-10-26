@@ -18,7 +18,7 @@ static void instr_execute_1op()
     //将src写入esp/sp的地址中
     
     OPERAND m;
-    
+    opr_src.data_size=data_size;
     operand_read(&opr_src);
     
     m.data_size = data_size;
