@@ -13,12 +13,12 @@ static void instr_execute_1op()
     
     OPERAND m;
     
-    opr_src.data_size=data_size;
+    //opr_src.data_size=data_size;
     operand_read(&opr_src);
     
     m.data_size = data_size;
     m.type = OPR_MEM;
-    m.addr = esp_.val;
+    m.addr = cpu.esp;
     m.val = opr_src.val;
     operand_write(&m);
 }
