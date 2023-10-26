@@ -26,3 +26,12 @@ make_instr_func(ret_near)//c3
     
     return 1;
 }
+
+//c2
+make_instr_func(ret_near_imm16)
+{
+    return 3;
+}
+
+
+
