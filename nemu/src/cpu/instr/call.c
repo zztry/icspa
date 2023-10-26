@@ -9,12 +9,12 @@ Put the implementations of `call' instructions here.
 make_instr_func(call_near)
 {
     
-    
+    print_asm_1("call_near", "", 1 + data_size / 8, &rel);
     //opcode_entry[54]
      //将esp/sp-2/4，
     cpu.esp=cpu.esp-4;
     
-    //eip写入esp/sp的地址中
+    //eip写入esp/sp的地址中  写的是下一条指令！
     
     OPERAND m;
     
@@ -22,7 +22,7 @@ make_instr_func(call_near)
     m.data_size = 32;
     m.type = OPR_MEM;
     m.addr = cpu.esp;
-    m.val = eip;
+    m.val = eip+1+data_size/8;
     operand_write(&m);
     
     

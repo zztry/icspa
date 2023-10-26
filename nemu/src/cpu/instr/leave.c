@@ -5,6 +5,7 @@ Put the implementations of `leave' instructions here.
 
 make_instr_func(leave)
 {
+    print_asm_1("leave", "", 1, &rel);
     cpu.esp = cpu.ebp;
     
     //ebp pop
