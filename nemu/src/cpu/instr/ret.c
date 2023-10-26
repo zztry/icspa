@@ -16,7 +16,9 @@ make_instr_func(ret_near)//c3
     //m.val = eip;
     operand_read(&m);
     cpu.eip = m.val;
+    //eip指向返回位置，为什么会多1？
     
+    //出栈，
     cpu.esp += data_size/8;
     //eip = m.val;
     

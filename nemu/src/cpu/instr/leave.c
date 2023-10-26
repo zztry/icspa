@@ -20,6 +20,7 @@ make_instr_func(leave)
     operand_read(&m);
     cpu.ebp = m.val;
     
+    
     cpu.esp += 4;
     //eip = m.val;
     

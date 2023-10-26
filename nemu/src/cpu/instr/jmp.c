@@ -1,7 +1,7 @@
 #include "cpu/instr.h"
 
 
-//e9 不是自己写的
+//e9 官方写好的
 make_instr_func(jmp_near)
 {
         OPERAND rel;
