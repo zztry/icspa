@@ -32,6 +32,9 @@ make_instr_impl_1op(push,rm,v);    //没有m，只有rm
 //6a push_i_b
 make_instr_impl_1op(push,i,b); 
 
+//68 push_i_v
+make_instr_impl_1op(push,i,v);
+
 
 /*    
 make_instr_func(push_r_l)//32
