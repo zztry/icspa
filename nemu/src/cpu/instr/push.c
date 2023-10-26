@@ -29,6 +29,9 @@ make_instr_impl_1op(push,r,v);
 //FF /6 PUSH m32 5 Push memory dword  push_m_v
 make_instr_impl_1op(push,rm,v);    //没有m，只有rm
 
+//6a push_i_b
+make_instr_impl_1op(push,i,b); 
+
 
 /*    
 make_instr_func(push_r_l)//32
