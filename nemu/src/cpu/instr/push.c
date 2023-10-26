@@ -6,18 +6,13 @@ Put the implementations of `push' instructions here.
 //宏make_instr_impl_1op(inst_name, src_type, suffix)
 static void instr_execute_1op()
 {
-    //只有src，将esp/sp-2/4，
-    OPERAND esp_;
-    esp_.data_size = data_size;
-    esp_.type = OPR_REG;
-    esp_.addr = 4;
-    operand_read(&esp_);
-    esp_.val = esp_.val - data_size/8;
-    operand_write(&esp_);
+    cpu.esp=cpu.esp - data_size/8;
+    
     
     //将src写入esp/sp的地址中
     
     OPERAND m;
+    
     opr_src.data_size=data_size;
     operand_read(&opr_src);
     
