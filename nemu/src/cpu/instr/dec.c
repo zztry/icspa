@@ -19,3 +19,9 @@ static void instr_execute_1op()
 //48+rw DEC r32 2 Decrement dword register by 1  48-4f
 //v-16/32 dec_r_v
 make_instr_impl_1op(dec,r,v);
+
+//FF /1
+make_instr_impl_1op(dec,rm,v);
+
+//FE 1
+make_instr_impl_1op(dec,rm,b);
