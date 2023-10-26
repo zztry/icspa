@@ -20,3 +20,13 @@ static void instr_execute_1op()
 //FF /0 INC r/m16 Increment r/m word by 1
 //FF /6 INC r/m32 Increment r/m dword by 1  inc_rm_v
 make_instr_impl_1op(inc,rm,v);
+
+//40+rw 40+rd inc_r_v
+make_instr_impl_1op(inc,r,v);
+
+//fe /0 inc_rm_b  没有
+make_instr_impl_1op(inc,rm,b);
+
+
+
+

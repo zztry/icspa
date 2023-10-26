@@ -5,5 +5,7 @@ Put the declarations of `inc' instructions here.
 */
 
 make_instr_func(inc_rm_v);
+make_instr_func(inc_r_v);
+make_instr_func(inc_rm_b);
 
 #endif
