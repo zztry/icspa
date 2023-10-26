@@ -1,7 +1,7 @@
 #include "cpu/instr.h"
 
 instr_func opcode_entry[256] = {
-    /* 0x00 - 0x03*/ inv, __ref_add_r2rm_v, add_rm2r_b, add_rm2r_v,//0
+    /* 0x00 - 0x03*/ inv, add_r2rm_v, add_rm2r_b, add_rm2r_v,//0
     /* 0x04 - 0x07*/ add_i2a_b, add_i2a_v, inv, inv,
     /* 0x08 - 0x0b*/ inv, inv, inv, inv,
     /* 0x0c - 0x0f*/ inv, inv, inv, opcode_2_byte,
@@ -11,7 +11,7 @@ instr_func opcode_entry[256] = {
     /* 0x1c - 0x1f*/ inv, inv, inv, inv,
     /* 0x20 - 0x23*/ inv, inv, inv, inv,
     /* 0x24 - 0x27*/ inv, inv, inv, inv,
-    /* 0x28 - 0x2b*/ sub_r2rm_b, __ref_sub_r2rm_v, sub_rm2r_b, sub_rm2r_v,
+    /* 0x28 - 0x2b*/ sub_r2rm_b, sub_r2rm_v, sub_rm2r_b, sub_rm2r_v,
     /* 0x2c - 0x2f*/ sub_i2a_b, sub_i2a_v, inv, inv,
     /* 0x30 - 0x33*/ inv, inv, inv, inv,//xor_r2rm_b
     /* 0x34 - 0x37*/ inv, inv, inv, inv,
@@ -36,7 +36,7 @@ instr_func opcode_entry[256] = {
     /* 0x80 - 0x83*/ group_1_b, group_1_v, nemu_trap, group_1_bv,
     /* 0x84 - 0x87*/ inv, test_r2rm_v, inv, inv,//85test_r2rm_v
     /* 0x88 - 0x8b*/ mov_r2rm_b, mov_r2rm_v, mov_rm2r_b, mov_rm2r_v,
-    /* 0x8c - 0x8f*/ inv, __ref_lea, inv, inv,//lea_rm2r_v
+    /* 0x8c - 0x8f*/ inv, lea_rm2r_v, inv, inv,//lea_rm2r_v
     /* 0x90 - 0x93*/ nop, inv, inv, inv,
     /* 0x94 - 0x97*/ inv, inv, inv, inv,
     /* 0x98 - 0x9b*/ cbw_a_v, cltd, inv, inv,
@@ -77,7 +77,7 @@ instr_func group_1_v_entry[8] =
 
 /* 0x83 */
 instr_func group_1_bv_entry[8] =
-    {__ref_add_i2rm_bv, inv, inv, inv, and_i2rm_bv, sub_i2rm_bv, inv, cmp_i2rm_bv};//update 111 group_1_bv    sub_i2rm_bv
+    {add_i2rm_bv, inv, inv, inv, and_i2rm_bv, sub_i2rm_bv, inv, cmp_i2rm_bv};//update 111 group_1_bv    sub_i2rm_bv
 
 /* 0xc0 */
 instr_func group_2_b_entry[8] =
@@ -113,7 +113,7 @@ instr_func group_3_v_entry[8] =
 
 /* 0xff */
 instr_func group_5_indirect_entry[8] =
-    {__ref_inc_rm_v, dec_rm_v, inv, inv, inv, inv, push_rm_v, inv};//inc  inc_rm_v
+    {inc_rm_v, dec_rm_v, inv, inv, inv, inv, push_rm_v, inv};//inc  inc_rm_v
 
 instr_func group_7_entry[8] =
     {inv, inv, inv, inv, inv, inv, inv, inv};
