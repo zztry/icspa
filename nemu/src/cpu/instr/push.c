@@ -31,6 +31,11 @@ static void instr_execute_1op()
 //50-57   r->esp 16/32 push_r_v
 make_instr_impl_1op(push,r,v);
 
+//FF /6 PUSH m16 5 Push memory word
+//FF /6 PUSH m32 5 Push memory dword  push_m_v
+make_instr_impl_1op(push,m,v);
+
+
 /*    
 make_instr_func(push_r_l)//32
 {
