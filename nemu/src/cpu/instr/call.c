@@ -14,7 +14,7 @@ make_instr_func(call_near)
      //将esp/sp-2/4，
     cpu.esp=cpu.esp-4;
     
-    //eip写入esp/sp的地址中  写的是下一条指令！
+    //eip写入esp/sp的地址中  写的是call的下一条指令地址！否则会死循环不断执行call
     
     OPERAND m;
     
