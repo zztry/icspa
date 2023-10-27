@@ -46,7 +46,7 @@ make_instr_func(jmp_near_indirect)
 {
         OPERAND rm;
         
-        rm.sreg = SREG_CS;
+        //rm.sreg = SREG_CS;
         rm.data_size = data_size;
         //rm.addr = eip + 1;
         int len = 1;
@@ -65,9 +65,9 @@ make_instr_func(jmp_near_indirect)
         
         print_asm_1("jmp", "", 1 + data_size / 8, &rm);
 
-        
+        //绝对地址跳转，返回0
 
-        return len;
+        return 0;
 }
 
 
