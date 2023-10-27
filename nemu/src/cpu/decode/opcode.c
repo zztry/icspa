@@ -1,7 +1,7 @@
 #include "cpu/instr.h"
 
 instr_func opcode_entry[256] = {
-    /* 0x00 - 0x03*/ inv, __ref_add_r2rm_v, add_rm2r_b, add_rm2r_v,//0
+    /* 0x00 - 0x03*/ inv, add_r2rm_v, add_rm2r_b, add_rm2r_v,//0
     /* 0x04 - 0x07*/ add_i2a_b, add_i2a_v, inv, inv,
     /* 0x08 - 0x0b*/ or_r2rm_b, or_r2rm_v, or_rm2r_b, or_rm2r_v,
     /* 0x0c - 0x0f*/ inv, inv, inv, opcode_2_byte,
@@ -13,7 +13,7 @@ instr_func opcode_entry[256] = {
     /* 0x24 - 0x27*/ inv, inv, inv, inv,
     /* 0x28 - 0x2b*/ sub_r2rm_b, sub_r2rm_v, sub_rm2r_b, sub_rm2r_v,
     /* 0x2c - 0x2f*/ sub_i2a_b, sub_i2a_v, inv, inv,
-    /* 0x30 - 0x33*/ xor_r2rm_b, xor_r2rm_v, xor_rm2r_b, __ref_xor_rm2r_v,//xor_r2rm_b
+    /* 0x30 - 0x33*/ xor_r2rm_b, xor_r2rm_v, xor_rm2r_b, xor_rm2r_v,//xor_r2rm_b
     /* 0x34 - 0x37*/ inv, inv, inv, inv,
     /* 0x38 - 0x3b*/ inv, cmp_r2rm_v, inv, cmp_rm2r_v,//cmp_r2rm_v
     /* 0x3c - 0x3f*/ cmp_i2a_b, inv, inv, inv,//3c cmp_i2a_b
@@ -34,9 +34,9 @@ instr_func opcode_entry[256] = {
     /* 0x78 - 0x7b*/ js_short_, jns_short_, jp_short_, jnp_short_,
     /* 0x7c - 0x7f*/ jl_short_, jge_short_, jle_short_, jg_short_,//jle_short_,//jg_short_,
     /* 0x80 - 0x83*/ group_1_b, group_1_v, nemu_trap, group_1_bv,
-    /* 0x84 - 0x87*/ test_r2rm_b, __ref_test_r2rm_v, inv, inv,//85test_r2rm_v
+    /* 0x84 - 0x87*/ test_r2rm_b, test_r2rm_v, inv, inv,//85test_r2rm_v
     /* 0x88 - 0x8b*/ mov_r2rm_b, mov_r2rm_v, mov_rm2r_b, mov_rm2r_v,
-    /* 0x8c - 0x8f*/ inv, __ref_lea, inv, inv,//lea_rm2r_v
+    /* 0x8c - 0x8f*/ inv, lea_rm2r_v, inv, inv,//lea_rm2r_v
     /* 0x90 - 0x93*/ nop, inv, inv, inv,
     /* 0x94 - 0x97*/ inv, inv, inv, inv,
     /* 0x98 - 0x9b*/ cbw_a_v, cltd, inv, inv,
