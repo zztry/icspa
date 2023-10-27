@@ -1,7 +1,7 @@
 #include "cpu/instr.h"
 
 instr_func opcode_entry[256] = {
-    /* 0x00 - 0x03*/ inv, add_r2rm_v, add_rm2r_b, add_rm2r_v,//0
+    /* 0x00 - 0x03*/ inv, __ref_add_r2rm_v, add_rm2r_b, add_rm2r_v,//0
     /* 0x04 - 0x07*/ add_i2a_b, add_i2a_v, inv, inv,
     /* 0x08 - 0x0b*/ or_r2rm_b, or_r2rm_v, or_rm2r_b, or_rm2r_v,
     /* 0x0c - 0x0f*/ inv, inv, inv, opcode_2_byte,
@@ -73,11 +73,11 @@ instr_func group_1_b_entry[8] =
 
 /* 0x81 */
 instr_func group_1_v_entry[8] =
-    {add_i2rm_v, inv, inv, inv, inv, sub_i2rm_v, inv, cmp_i2rm_v};
+    {add_i2rm_v, inv, inv, inv, inv, __ref_sub_i2rm_v, inv, cmp_i2rm_v};
 
 /* 0x83 */
 instr_func group_1_bv_entry[8] =
-    {add_i2rm_bv, inv, inv, inv, and_i2rm_bv, sub_i2rm_bv, inv, cmp_i2rm_bv};//update 111 group_1_bv    sub_i2rm_bv
+    {__ref_add_i2rm_bv, inv, inv, inv, and_i2rm_bv, sub_i2rm_bv, inv, cmp_i2rm_bv};//update 111 group_1_bv    sub_i2rm_bv
 
 /* 0xc0 */
 instr_func group_2_b_entry[8] =
@@ -109,7 +109,7 @@ instr_func group_3_b_entry[8] =
 
 /* 0xf7 */
 instr_func group_3_v_entry[8] =
-    {inv, inv, not_rm_v, inv, mul_rm2a_v, imul_rm2a_v, div_rm2a_v, idiv_rm2a_v};
+    {inv, inv, not_rm_v, inv, mul_rm2a_v, imul_rm2a_v, div_rm2a_v, idiv_rm2a_v};//not_rm_v
 
 /* 0xff */
 instr_func group_5_indirect_entry[8] =
