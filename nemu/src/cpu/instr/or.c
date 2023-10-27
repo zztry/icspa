@@ -23,3 +23,11 @@ make_instr_impl_2op(or,rm,r,b);
 
 //0b
 make_instr_impl_2op(or,rm,r,v);
+
+//08
+make_instr_impl_2op(or,r,rm,b);
+
+//09  or_r2rm_v
+make_instr_impl_2op(or,r,rm,v);
+
+
