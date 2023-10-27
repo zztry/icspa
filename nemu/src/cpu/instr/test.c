@@ -38,6 +38,9 @@ make_instr_impl_2op(test,i,a,v);
 //a8  test_i2a_b
 make_instr_impl_2op(test,i,a,b);
 
+//f6   test_i2rm_b
+make_instr_impl_2op(test,i,rm,b);
+
 
 /*
 make_instr_func(test_r2rm_l)//32->32
