@@ -14,7 +14,7 @@ static void instr_execute_2op()
 	//opr_src.val = sign_ext(opr_src.val,opr_src.data_size); 
 	
 	alu_and(opr_src.val,opr_dest.val,data_size);
-	//????
+	//
 	
 	/*
 	opr_dest.val = alu_and(opr_src.val,opr_dest.val,data_size);
@@ -25,6 +25,11 @@ static void instr_execute_2op()
 //85 /r TEST r/m16,r16 2/5 AND word register with r/m word
 //85 /r TEST r/m32,r32 2/5 AND dword register with r/m dword   v 16/32 test_r2rm_v
 make_instr_impl_2op(test,r,rm,v);
+
+//84
+make_instr_impl_2op(test,r,rm,b);
+
+
 
 /*
 make_instr_func(test_r2rm_l)//32->32
