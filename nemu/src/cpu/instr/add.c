@@ -44,6 +44,8 @@ make_instr_impl_2op(add,rm,r,b);
 //03 add_rm2r_v
 make_instr_impl_2op(add,rm,r,v);
 
+//00 add_r2rm_b
+make_instr_impl_2op(add,r,rm,b);
 
 
 
