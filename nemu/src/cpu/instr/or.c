@@ -30,4 +30,14 @@ make_instr_impl_2op(or,r,rm,b);
 //09  or_r2rm_v
 make_instr_impl_2op(or,r,rm,v);
 
+//0c  or_i2a_b
+make_instr_impl_2op(or,i,a,b);
+
+//0d
+make_instr_impl_2op(or,i,a,v);
+
+
+
+
+
 
