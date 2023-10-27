@@ -30,7 +30,7 @@ make_instr_impl_2op(test,r,rm,v);
 make_instr_impl_2op(test,r,rm,b);
 
 //f7 /0   test_i2rm_v
-make_instr_func(test,i,rm,v);
+make_instr_impl_2op(test,i,rm,v);
 
 
 
