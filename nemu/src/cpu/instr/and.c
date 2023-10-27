@@ -27,3 +27,7 @@ make_instr_impl_2op(and,rm,r,b);
 
 //21  and_r2rm_v
 make_instr_impl_2op(and,r,rm,v);
+
+//81  /4 and_i2rm_v
+make_instr_impl_2op(and,i,rm,v);
+
