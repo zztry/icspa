@@ -34,6 +34,19 @@ make_instr_impl_2op(adc,i,a,b);
 //15
 make_instr_impl_2op(adc,i,a,v);
 
+//80 /2   adc_i2rm_b
+make_instr_impl_2op(adc,i,rm,b);
+
+//81 /2
+make_instr_impl_2op(adc,i,rm,v);
+
+//83 /2
+make_instr_impl_2op(adc,i,rm,bv);
+
+
+
+
+
 
 
 
