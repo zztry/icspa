@@ -30,10 +30,21 @@ make_instr_func(ret_near)//c3
 //c2
 make_instr_func(ret_near_imm16)
 {
+    OPERAND m;//读取esp内存的地址的数值，赋给eip
     
-    operand_read(&opr_src);
-    cpu.eip += opr_src.val;
-    cpu.esp+=data_size/8;
+    m.data_size = data_size;
+    m.type = OPR_MEM;
+    m.addr = cpu.esp;
+    operand_read(&m);
+    
+    OPERAND imm;//读取后面的立即数
+    imm.data_size = data_size;
+    imm.addr = eip+1;
+    imm.type = OPR_IMM;
+    operand_read(&imm);
+    
+    cpu.eip = m.val;
+    cpu.esp =cpu.esp+ data_size/8+imm.val;
     return 0;
 }
 
