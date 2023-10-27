@@ -42,6 +42,12 @@ make_instr_impl_2op(cmp,rm,r,v);
 //80  cmp_i2rm_b
 make_instr_impl_2op(cmp,i,rm,b);
 
+//38  cmp_r2rm_b
+make_instr_impl_2op(cmp,r,rm,b);
+
+//3d  cmp_i2a_v
+make_instr_impl_2op(cmp,i,a,v);
+
 
 /*
 make_instr_func(cmp_i2rm_bv) //8->16/32
