@@ -9,7 +9,8 @@ static void instr_execute_2op()
 	operand_read(&opr_src);
 	
 	operand_read(&opr_dest);
-	
+	opr_src.val = sign_ext(opr_src.val,opr_src.data_size);
+	opr_dest.val = sign_ext(opr_dest.val,opr_dest.data_size);
 	opr_dest.val = alu_xor(opr_src.val,opr_dest.val,data_size);
 	operand_write(&opr_dest);
 	
@@ -17,3 +18,6 @@ static void instr_execute_2op()
 
 //   30 /r XOR r/m8,r8 2/6 Exclusive-OR byte register to r/m byte   b-8位  xor_r2rm_b
 make_instr_impl_2op(xor,r,rm,b);
+
+//31  xor_r2rm_v
+make_instr_impl_2op(xor,r,rm,v);
