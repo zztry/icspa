@@ -31,6 +31,9 @@ make_instr_impl_2op(cmp,i,rm,v);
 //39 /r CMP r/m32,r32 2/5 Compare dword register to r/m dword   cmp_r2rm_v
 make_instr_impl_2op(cmp,r,rm,v); 
 
+//3a   cmp_rm2r_b
+make_instr_impl_2op(cmp,rm,r,b);
+
 
 //3B /r CMP r16,r/m16 2/6 Compare r/m word to word register
 //3B /r CMP r32,r/m32 2/6 Compare r/m dword to dword register  cmp_rm2r_v
