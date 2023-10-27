@@ -13,18 +13,26 @@ make_instr_func(pop_r_v)
     
     //ebp pop
     
-    //OPERAND m;
+    OPERAND m;//读取esp处存的地址的数值
     
-    
-    //m.data_size = data_size;
-    //m.type = OPR_MEM;
-    //m.addr = cpu.esp;
-    //m.val = eip;
-    //operand_read(&m);
+    m.data_size = data_size;
+    m.type = OPR_MEM;
+    m.addr = cpu.esp;
+    operand_read(&m);
     //cpu.ebp = m.val;
     
     
+    OPERAND r;//要存到的寄存器
+    r.data_size = data_size;
+    r.type = OPR_REG;
+    r.addr = opcode & 0x7;
+    r.val = m.val;
+    
+    operand_write(&r);
+    
     cpu.esp += data_size/8;
+    
+    
     //eip = m.val;
     
     
