@@ -17,3 +17,25 @@ static void instr_execute_2op()
 
 //1b  sbb_rm2r_v
 make_instr_impl_2op(sbb,rm,r,v);
+
+//18  sbb_r2rm_b
+make_instr_impl_2op(sbb,r,rm,b);
+
+//19
+make_instr_impl_2op(sbb,r,rm,v);
+
+//1a  sbb_rm2r_b
+make_instr_impl_2op(sbb,rm,r,b);
+
+//1c  sbb_i2a_b
+make_instr_impl_2op(sbb,i,a,b);
+
+//1d
+make_instr_impl_2op(sbb,i,a,v);
+
+
+
+
+
+
+
