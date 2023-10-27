@@ -34,6 +34,25 @@ make_instr_impl_2op(xor,i,a,b);
 //35
 make_instr_impl_2op(xor,i,a,v);
 
+//80 /6  xor_i2rm_b
+make_instr_impl_2op(xor,i,rm,b);
+
+//81 /6
+make_instr_impl_2op(xor,i,rm,v);
+
+//83 /6 
+make_instr_impl_2op(xor,i,rm,bv);
+
+
+
+
+
+
+
+
+
+
+
 
 
 
