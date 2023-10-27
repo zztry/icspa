@@ -31,7 +31,7 @@ uint32_t loader()
 
 	/* Load each program segment */
 	ph = (void *)elf + elf->e_phoff;
-	eph = ph + elf->e_phnum;
+	eph = ph + elf->e_phnum; 
 	for (; ph < eph; ph++)
 	{
 		if (ph->p_type == PT_LOAD)

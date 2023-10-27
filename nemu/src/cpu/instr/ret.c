@@ -15,7 +15,7 @@ make_instr_func(ret_near)//c3
     m.addr = cpu.esp;
     //m.val = eip;
     operand_read(&m);
-    cpu.eip = m.val-1;
+    cpu.eip = m.val;
     //eip指向返回位置
     //jmp是用偏移量计算eip值的，所以把return的长度加上，这里直接给eip赋值，所以要考虑自身长度
     
@@ -24,13 +24,17 @@ make_instr_func(ret_near)//c3
     //eip = m.val;
     
     
-    return 1;
+    return 0;
 }
 
 //c2
 make_instr_func(ret_near_imm16)
 {
-    return 3;
+    
+    operand_read(&opr_src);
+    cpu.eip = opr_src.val;
+    cpu.esp+=data_size/8;
+    return 0;
 }
 
 
