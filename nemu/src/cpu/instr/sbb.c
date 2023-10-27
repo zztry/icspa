@@ -33,6 +33,16 @@ make_instr_impl_2op(sbb,i,a,b);
 //1d
 make_instr_impl_2op(sbb,i,a,v);
 
+//80 /3   sbb_i2rm_b
+make_instr_impl_2op(sbb,i,rm,b);
+
+//81 /3
+make_instr_impl_2op(sbb,i,rm,v);
+
+//83 /3
+make_instr_impl_2op(sbb,i,rm,bv);
+
+
 
 
 
