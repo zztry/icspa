@@ -20,3 +20,6 @@ static void instr_execute_2op()
 }
 //0a   or_rm2r_b
 make_instr_impl_2op(or,rm,r,b);
+
+//0b
+make_instr_impl_2op(or,rm,r,v);
