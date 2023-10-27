@@ -18,3 +18,22 @@ static void instr_execute_2op()
 
 //11  adc_r2rm_v
 make_instr_impl_2op(adc,r,rm,v);
+
+//10  adc_r2rm_b
+make_instr_impl_2op(adc,r,rm,b);
+
+//12  adc_rm2r_b
+make_instr_impl_2op(adc,rm,r,b);
+
+//13
+make_instr_impl_2op(adc,rm,r,v);
+
+//14  adc_i2a_b
+make_instr_impl_2op(adc,i,a,b);
+
+//15
+make_instr_impl_2op(adc,i,a,v);
+
+
+
+
