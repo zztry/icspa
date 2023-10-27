@@ -56,7 +56,7 @@ make_instr_func(jmp_near_indirect)
 
         int offset = sign_ext(rm.val, data_size);
         
-        print_asm_1("jmp", "", 1 + data_size / 8, &rel);
+        print_asm_1("jmp", "", 1 + data_size / 8, &rm);
 
         cpu.eip += offset;
 
