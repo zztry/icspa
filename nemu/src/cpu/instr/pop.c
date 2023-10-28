@@ -9,7 +9,7 @@ Put the implementations of `pop' instructions here.
 make_instr_func(pop_r_v)
 {
     //print_asm_1("leave", "", 1, &rel);
-    opr_src.val = cpu.esp;
+    //opr_src.val = cpu.esp;
     
     //ebp pop
     
