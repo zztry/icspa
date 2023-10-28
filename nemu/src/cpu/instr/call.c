@@ -12,14 +12,14 @@ make_instr_func(call_near)
     //print_asm_1("call_near", "", 1 + data_size / 8, &rel);
     //opcode_entry[54]
      //将esp/sp-2/4，
-    cpu.esp=cpu.esp-4;
+    cpu.esp=cpu.esp-data_size/8;
     
     //eip写入esp/sp的地址中  写的是call的下一条指令地址！否则会死循环不断执行call
     
     OPERAND m;
     
     operand_read(&opr_src);
-    m.data_size = 32;
+    m.data_size = data_size;
     m.type = OPR_MEM;
     m.addr = cpu.esp;
     m.val = eip+1+data_size/8;
