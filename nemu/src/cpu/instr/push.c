@@ -19,6 +19,10 @@ static void instr_execute_1op()
     m.type = OPR_MEM;
     m.addr = cpu.esp;
     m.val = opr_src.val;
+    if(data_size==8)
+    {
+        m.val = sign_ext(opr_src.val,opr_src.data_size);
+    }
     operand_write(&m);
 }
 
