@@ -10,7 +10,7 @@ make_instr_func(call_near)
 {
     
     //print_asm_1("call_near", "", 1 + data_size / 8, &rel);
-    //opcode_entry[54]
+    
      //将esp/sp-2/4，
     cpu.esp=cpu.esp-data_size/8;
     
