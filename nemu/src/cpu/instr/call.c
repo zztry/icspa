@@ -11,7 +11,7 @@ make_instr_func(call_near)
     
     //print_asm_1("call_near", "", 1 + data_size / 8, &rel);
     
-     //将esp/sp-2/4，
+     //将esp/sp-2/4，    push eip
     cpu.esp=cpu.esp-data_size/8;
     
     //eip写入esp/sp的地址中  写的是call的下一条指令地址！否则会死循环不断执行call
@@ -26,7 +26,7 @@ make_instr_func(call_near)
     operand_write(&m);
     
     
-    //rel
+    //rel   jmp
     OPERAND rel;
     rel.type = OPR_IMM;
     rel.sreg = SREG_CS;
@@ -41,4 +41,46 @@ make_instr_func(call_near)
     
     return 1+data_size/8;
 }
+
+//ff /4
+make_instr_func(call_near_indirect)
+{
+    cpu.esp=cpu.esp-data_size/8;
+    
+    OPERAND m;
+    
+    operand_read(&opr_src);
+    m.data_size = data_size;
+    m.type = OPR_MEM;
+    m.addr = cpu.esp;
+    
+    
+    
+    //  jmp
+    OPERAND rm;
+    rm.data_size = data_size;
+    int len = 1;
+    len += modrm_rm(eip + 1, &rm);
+    operand_read(&rel);
+    
+    int offset = sign_ext(rel.val, data_size);
+    if(data_size==16)
+    {
+        cpu.eip =rm.val&0xffff;
+    }
+    else
+    {
+        cpu.eip = rm.val;
+    }
+    
+    m.val = eip+len;
+    operand_write(&m);
+    
+    //绝对跳转
+    return 0;
+}
+
+
+
+
 

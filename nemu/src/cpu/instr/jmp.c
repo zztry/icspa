@@ -41,7 +41,7 @@ make_instr_func(jmp_short)
         return 2;
 }
 
-//ff /4
+//ff /2
 make_instr_func(jmp_near_indirect)
 {
         OPERAND rm;
