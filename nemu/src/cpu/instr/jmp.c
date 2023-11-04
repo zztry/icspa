@@ -55,7 +55,7 @@ make_instr_func(jmp_near_indirect)
         operand_read(&rm);
         if(data_size==16)
         {
-            cpu.eip =rm.val&0xffff0000;
+            cpu.eip =rm.val&0xffff;
         }
         else
         {
@@ -71,7 +71,28 @@ make_instr_func(jmp_near_indirect)
 }
 
 
+//ea
+make_instr_func(jmp_far_imm)
+{
+        OPERAND rel;
+        rel.type = OPR_IMM;
+        rel.sreg = SREG_CS;
+        rel.data_size = 32;
+        rel.addr = eip + 1;
 
+        operand_read(&rel);
+
+        if(data_size==16)
+        {
+            cpu.eip = rel.val&0xffff;
+        }
+        else
+        {
+            cpu.eip = rel.val;
+        }
+
+        return 0;
+}
 
 
 
