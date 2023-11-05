@@ -45,15 +45,19 @@ uint32_t loader()
             
             for(uint32_t i = 0;i<ph->p_filesz;i++)
             {
-                hw_mem[ph->p_vaddr+i] = hw_mem[ph->p_offset+i];
+                memcpy(&(ph->p_vaddr+i), hw_mem + ph->p_offset+i, 8);
+                //hw_mem[ph->p_vaddr+i] = hw_mem[ph->p_offset+i];
             }
             
 /* TODO: zeror the memory area [vaddr + file_sz, vaddr + mem_sz) */
             //装载到内存VirtAddr开始，连续MemSiz个字节的区域中 ，mem_sz - file_sz大小的位置为0
-            for(uint32_t i = ph->p_filesz;i<ph->p_memsz;i++)
+            memset(hw_mem+ph->p_vaddr+ph->p_filesz, 0, (ph->p_memsz - ph->p_filesz) );
+            /*for(uint32_t i = ph->p_filesz;i<ph->p_memsz;i++)
             {
-                hw_mem[ph->p_vaddr+i] = 0;
-            }
+                //memset(hw_mem, 0, MEM_SIZE_B);
+                memset(hw_mem+i, 0, 8);
+                //hw_mem[ph->p_vaddr+i] = 0;
+            }*/
             
 #ifdef IA32_PAGE
 			/* Record the program break for future use */
