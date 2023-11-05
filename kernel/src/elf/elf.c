@@ -38,7 +38,7 @@ uint32_t loader()
 		{
 
 			// remove this panic!!!
-			//panic("Please implement the loader");
+			panic("Please implement the loader");
 
 /* TODO: copy the segment from the ELF file to its proper memory area */
             //从文件Offset开始位置，连续FileSiz个字节的内容需要被装载
