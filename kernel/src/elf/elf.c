@@ -19,31 +19,42 @@ uint32_t loader()
 	Elf32_Ehdr *elf;
 	Elf32_Phdr *ph, *eph;
 
-#ifdef HAS_DEVICE_IDE
+#ifdef HAS_DEVICE_IDE   
 	uint8_t buf[4096];
 	ide_read(buf, ELF_OFFSET_IN_DISK, 4096);
 	elf = (void *)buf;
-	Log("ELF loading from hard disk.");
+	Log("ELF loading from hard disk.");  
 #else
 	elf = (void *)0x0;
 	Log("ELF loading from ram disk.");
 #endif
 
 	/* Load each program segment */
-	ph = (void *)elf + elf->e_phoff;
-	eph = ph + elf->e_phnum; 
+	ph = (void *)elf + elf->e_phoff;   //程序头表的起始地址
+	eph = ph + elf->e_phnum;            //程序头表结束地址
 	for (; ph < eph; ph++)
 	{
 		if (ph->p_type == PT_LOAD)
 		{
 
 			// remove this panic!!!
-			panic("Please implement the loader");
+			//panic("Please implement the loader");
 
 /* TODO: copy the segment from the ELF file to its proper memory area */
-
+            //从文件Offset开始位置，连续FileSiz个字节的内容需要被装载
+            
+            for(uint32_t i = 0;i<ph->p_filesz;i++)
+            {
+                hw_mem[ph->p_vaddr+i] = hw_mem[ph->p_offset+i];
+            }
+            
 /* TODO: zeror the memory area [vaddr + file_sz, vaddr + mem_sz) */
-
+            //装载到内存VirtAddr开始，连续MemSiz个字节的区域中 ，mem_sz - file_sz大小的位置为0
+            for(uint32_t i = ph->p_filesz;i<ph->p_memsz;i++)
+            {
+                hw_mem[ph->p_vaddr+i] = 0;
+            }
+            
 #ifdef IA32_PAGE
 			/* Record the program break for future use */
 			extern uint32_t brk;
@@ -56,7 +67,7 @@ uint32_t loader()
 		}
 	}
 
-	volatile uint32_t entry = elf->e_entry;
+	volatile uint32_t entry = elf->e_entry;//程序入口地址
 
 #ifdef IA32_PAGE
 	mm_malloc(KOFFSET - STACK_SIZE, STACK_SIZE);
