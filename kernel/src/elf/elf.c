@@ -50,7 +50,7 @@ uint32_t loader()
             
 /* TODO: zeror the memory area [vaddr + file_sz, vaddr + mem_sz) */
             //装载到内存VirtAddr开始，连续MemSiz个字节的区域中 ，mem_sz - file_sz大小的位置为0
-            memset(ph->p_vaddr+ph->p_filesz, 0, (ph->p_memsz - ph->p_filesz) );
+            memset((uint32_t))(ph->p_vaddr+ph->p_filesz), 0, (ph->p_memsz - ph->p_filesz) );
             
             
 #ifdef IA32_PAGE
