@@ -42,11 +42,11 @@ uint32_t loader()
 
 /* TODO: copy the segment from the ELF file to its proper memory area */
             //从文件Offset开始位置，连续FileSiz个字节的内容需要被装载
-            //for(uint32_t i = 0;i<ph->p_filesz;i++)
-            //{
-            //    memcpy((ph->p_offset+i), (ph->p_vaddr+i), 8);
+            for(uint32_t i = 0;i<ph->p_filesz;i++)
+            {
+                memcpy((void *)(ph->p_offset+i), (void *)(ph->p_vaddr+i), 8);
                 //hw_mem[ph->p_vaddr+i] = hw_mem[ph->p_offset+i];
-            //}
+            }
             
 /* TODO: zeror the memory area [vaddr + file_sz, vaddr + mem_sz) */
             //装载到内存VirtAddr开始，连续MemSiz个字节的区域中 ，mem_sz - file_sz大小的位置为0
