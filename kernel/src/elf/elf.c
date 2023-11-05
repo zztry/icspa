@@ -45,12 +45,11 @@ uint32_t loader()
             //memcpy((void *)(elf+ph->p_offset), (void *)(ph->p_vaddr), (uint32_t)ph->p_filesz);
             //for(uint32_t i = 0;i<ph->p_filesz;i++)
             //{
-                //memcpy((void *)(ph->p_offset+i), (void *)(ph->p_vaddr+i), 8);
                 //hw_mem[ph->p_vaddr+i] = hw_mem[ph->p_offset+i];
             //}
             
 /* TODO: zeror the memory area [vaddr + file_sz, vaddr + mem_sz) */
-            memset((void *)(ph->p_vaddr+ph->p_filesz), 0, (uint32_t)(ph->p_memsz - ph->p_filesz) );
+            //memset((void *)(ph->p_vaddr+ph->p_filesz), 0, (uint32_t)(ph->p_memsz - ph->p_filesz) );
             
             
 #ifdef IA32_PAGE
