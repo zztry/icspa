@@ -49,7 +49,10 @@ uint32_t loader()
             //}
             
 /* TODO: zeror the memory area [vaddr + file_sz, vaddr + mem_sz) */
-            memset((void *)(ph->p_vaddr+ph->p_filesz), 0, (ph->p_memsz - ph->p_filesz) );
+            if(ph->memset>ph->p_filesz)
+            {
+                memset((void *)(ph->p_vaddr+ph->p_filesz), 0, (ph->p_memsz - ph->p_filesz) );
+            }
             
             
 #ifdef IA32_PAGE
