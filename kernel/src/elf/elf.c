@@ -42,14 +42,14 @@ uint32_t loader()
 
 /* TODO: copy the segment from the ELF file to its proper memory area */
             //从文件Offset开始位置，连续FileSiz个字节的内容需要被装载
-            //memcpy((void *)(elf+ph->p_offset), (void *)(ph->p_vaddr), (uint32_t)ph->p_filesz);
+            memcpy((void *)(ph->p_offset), (void *)(ph->p_vaddr), ph->p_filesz);
             //for(uint32_t i = 0;i<ph->p_filesz;i++)
             //{
                 //hw_mem[ph->p_vaddr+i] = hw_mem[ph->p_offset+i];
             //}
             
 /* TODO: zeror the memory area [vaddr + file_sz, vaddr + mem_sz) */
-            //memset((void *)(ph->p_vaddr+ph->p_filesz), 0, (uint32_t)(ph->p_memsz - ph->p_filesz) );
+            memset((void *)(ph->p_vaddr+ph->p_filesz), 0, (ph->p_memsz - ph->p_filesz) );
             
             
 #ifdef IA32_PAGE
