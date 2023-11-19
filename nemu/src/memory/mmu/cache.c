@@ -1,4 +1,5 @@
 #include "memory/mmu/cache.h"
+#include "memory/memory.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -53,7 +54,7 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 	            is_match = true;
 	            if(len2==0)//不跨行
 	            {
-	                memcpy(paddr, &data, len);
+	                memcpy(hw_mem+paddr, &data, len);
 	                memcpy(caches[i].data+ingr_addr, &data, len);
 				    caches[i].tag = tag_;
 				    caches[i].valid_bit = true;
