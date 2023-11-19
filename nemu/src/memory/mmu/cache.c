@@ -23,7 +23,7 @@ void init_cache()
 
 // write data to cache
 void cache_write(paddr_t paddr, size_t len, uint32_t data)
-{   /*
+{   
 	// implement me in PA 3-1
 	uint32_t ingr_addr = paddr & 0x3f;        //块内地址
 	uint32_t group = (paddr& 0x1fff)>>6;      //组号
@@ -75,7 +75,7 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 	{
 	    memcpy((void *)(hw_mem+paddr), &data, len);
 	}
-	*/
+	
 	
 	
 	
@@ -120,7 +120,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	            if(len2==0)//不跨行
 	            {   
 	                //从后向前每次读取一个字节(从高位至低位)
-	                for(int j = ingr_addr+len-1; j>=ingr_addr;j--)
+	                /*for(int j = ingr_addr+len-1; j>=ingr_addr;j--)
 	                {
 	                    ret+=caches[i].data[j];
 	                    if(j!=ingr_addr)
@@ -128,8 +128,8 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	                        ret=ret<<8;
 	                    }
 	                    
-	                }
-	                //memcpy(&ret,caches[i].data+ingr_addr,len);
+	                }*/
+	                memcpy(&ret,caches[i].data+ingr_addr,len);
 	            }
 	            else//跨行
 	            {
