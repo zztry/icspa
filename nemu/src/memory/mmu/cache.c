@@ -143,7 +143,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	                uint32_t ret2 = cache_read(paddr+len1,len2);//如果跨组/行都会在这里解决
 	                //后半部分为高位，左移
 	                ret2= ret2<<(8*len2);
-	                ret = ret + ret2;
+	                ret = ret | ret2;
 	                
 	            }
 	            break;
