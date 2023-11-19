@@ -135,7 +135,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	                //读取前半部分
 	                for(int j = ingr_addr+len1-1;j>=ingr_addr;j--)
 	                {
-	                    res+=caches[i].data[j];
+	                    ret+=caches[i].data[j];
 	                    if(j!=ingr_addr)
 	                    {
 	                        ret=ret<<8;
