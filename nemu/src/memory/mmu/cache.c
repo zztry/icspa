@@ -120,7 +120,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	            if(len2==0)//不跨行
 	            {   
 	                //从后向前每次读取一个字节(从高位至低位)
-	                for(int j = ingr_addr+len-1; j>=ingr_addr;j--)
+	                /*for(int j = ingr_addr+len-1; j>=ingr_addr;j--)
 	                {
 	                    ret+=caches[i].data[j];
 	                    if(j!=ingr_addr)
@@ -128,25 +128,25 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	                        ret=ret<<8;
 	                    }
 	                    
-	                }
-	                //memcpy(&ret,caches[i].data+ingr_addr,len);
+	                }*/
+	                memcpy(&ret,caches[i].data+ingr_addr,len);
 	            }
 	            else//跨行
 	            {
 	                //读取前半部分
-	                for(int j = ingr_addr+len1-1;j>=ingr_addr;j--)
+	                /*for(int j = ingr_addr+len1-1;j>=ingr_addr;j--)
 	                {
 	                    ret+=caches[i].data[j];
 	                    if(j!=ingr_addr)
 	                    {
 	                        ret=ret<<8;
 	                    }
-	                }
-	                //memcpy(&ret,caches[i].data+ingr_addr,len1);
+	                }*/
+	                memcpy(&ret,caches[i].data+ingr_addr,len1);
 	                //读取后半部分
 	                uint32_t ret2 = cache_read(paddr+len1,len2);//如果跨组/行都会在这里解决
 	                //后半部分为高位，左移
-	                ret2= ret2<<(8*len2);
+	                ret2= ret2<<(8*len1);
 	                ret = ret | ret2;
 	                
 	            }
