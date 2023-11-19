@@ -54,14 +54,14 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 	            is_match = true;
 	            if(len2==0)//不跨行
 	            {
-	                memcpy(hw_mem+paddr, &data, len);
+	                memcpy((void *)(hw_mem+paddr), &data, len);
 	                memcpy(caches[i].data+ingr_addr, &data, len);
 				    caches[i].tag = tag_;
 				    caches[i].valid_bit = true;
 	            }
 	            else//跨行
 	            {
-	                memcpy(paddr, &data, len);
+	                memcpy((void *)(hw_mem+paddr), &data, len);
 	                
 	                memcpy(caches[i].data+ingr_addr, &data, len1);
 				    caches[i].tag = tag_;
@@ -75,7 +75,7 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 	
 	if(is_match == false)
 	{
-	    memcpy(paddr, &data, len);
+	    memcpy((void *)(hw_mem+paddr), &data, len);
 	}
 	
 	
@@ -170,7 +170,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	    if(pos!=-1)
 	    {
 	        //在第一个空行中写入
-	        memcpy(caches[pos].data, paddr-ingr_addr, 64);
+	        memcpy(caches[pos].data, (void *)paddr-ingr_addr, 64);
 	        caches[pos].valid_bit = true;
 			caches[pos].tag = tag_;
 	    }
@@ -178,7 +178,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	    {
 	        //随机选取
 	        pos = begin_line + (rand()%8);
-	        memcpy(caches[pos].data, paddr-ingr_addr, 64);
+	        memcpy(caches[pos].data, (void *)paddr-ingr_addr, 64);
 	        caches[pos].valid_bit = true;
 			caches[pos].tag = tag_;
 	    }
