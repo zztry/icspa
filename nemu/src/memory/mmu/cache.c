@@ -31,6 +31,52 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 	uint32_t begin_line = group<<3;
 	uint32_t end_line = begin_line+7;
 	
+	//如果跨行/块 先分割长度
+	int len1 = len;
+	int len2 = 0;
+	int ingr_addr2 = 0;  //跨行的第二个地址为0
+	if(64-ingr_addr<len)
+	{
+	    len1 = 64-ingr_addr;
+	    len2 = len-len1;
+	}
+	
+	bool is_match = false;//是否命中
+	for(int i = begin_line;i<=end_line;i++)
+	{
+	    if(caches[i].valid_bit==1)
+	    {
+	        
+	        if(caches[i].tag==tag_)//命中
+	        {
+	            is_match = true;
+	            if(len2==0)//不跨行
+	            {
+	                memcpy(hw_mem + paddr, &data, len);
+	                memcpy(caches[i].data+ingr_addr, &data, len);
+				    caches[i].tag = tag_;
+				    caches[i].valid = true;
+	            }
+	            else//跨行
+	            {
+	                memcpy(hw_mem + paddr, &data, len);
+	                memcpy(caches[i].data+ingr_addr, &data, len1);
+				    caches[i].tag = tag_;
+				    caches[i].valid = true;
+				    
+				    cache_write(paddr+len1, len2, data>>(len1 * 8))
+	            }
+	        }
+	    }
+	   
+	}
+	
+	if(is_match == false)
+	{
+	    memcpy(hw_mem + paddr, &data, len);
+	}
+	
+	
 	
 	
 }
