@@ -1,5 +1,6 @@
 #include "memory/mmu/cache.h"
-
+#include <stdio.h>
+#include <stdlib.h>
 
 //64 * 1024  共64KB
 //8-way set associative
@@ -64,7 +65,7 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 	                memcpy(caches[i].data+ingr_addr, &data, len1);
 				    caches[i].tag = tag_;
 				    caches[i].valid_bit = true;
-				    cache_write(paddr+len1, len2, data>>(len1 * 8))
+				    cache_write(paddr+len1, len2, data>>(len1 * 8));
 	            }
 	        }
 	    }
