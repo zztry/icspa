@@ -69,15 +69,15 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 	        }
 	    }
 	   
-	}*/
+	}
 	
 	if(is_match == false)
 	{
 	    memcpy((void *)(hw_mem+paddr), &data, len);
-	}
+	}*/
 	
 	
-	
+	memcpy((void *)(hw_mem+paddr), &data, len);
 	
 }
 
