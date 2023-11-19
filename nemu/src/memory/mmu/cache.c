@@ -26,7 +26,7 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 {
 	// implement me in PA 3-1
 	uint32_t ingr_addr = paddr & 0x3f;   //块内地址
-	uint32_t group = (paddr& 0x1fc0)>>6;          //组号
+	uint32_t group = (paddr& 0x1fff)>>6;          //组号
 	uint32_t tag_ = paddr>>13;      //标记
 	
 	//组号对应从x1到x2行
@@ -105,7 +105,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	}
 	
 	
-	uint32_t res;
+	uint32_t ret;
 	
 	bool is_match = false;//是否命中
 	uint32_t pos = -1;//判断该组是否满,值为第一个无效的行
@@ -125,7 +125,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	                    res+=caches[i].data[j];
 	                    if(j!=ingr_addr)
 	                    {
-	                        res=res<<8;
+	                        ret=ret<<8;
 	                    }
 	                    
 	                }
@@ -138,14 +138,14 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	                    res+=caches[i].data[j];
 	                    if(j!=ingr_addr)
 	                    {
-	                        res=res<<8;
+	                        ret=ret<<8;
 	                    }
 	                }
 	                //读取后半部分
-	                uint32_t res2 = cache_read(paddr+len1,len2);//如果跨组/行都会在这里解决
+	                uint32_t ret2 = cache_read(paddr+len1,len2);//如果跨组/行都会在这里解决
 	                //后半部分为高位，左移
-	                res2= res2<<(8*len2);
-	                res = res + res2;
+	                ret2= ret2<<(8*len2);
+	                ret = ret + ret2;
 	                
 	            }
 	        }
@@ -163,7 +163,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	//如果没有命中
 	if(is_match==false)
 	{
-	    memcpy(&res,(void *)(hw_mem+paddr),len);
+	    memcpy(&ret,(void *)(hw_mem+paddr),len);
 	    //查看是否有空行
 	    if(pos!=-1)
 	    {
@@ -187,6 +187,6 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	
 	
 	
-	return res;
+	return ret;
 }
 
