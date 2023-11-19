@@ -13,7 +13,7 @@ typedef struct{
     bool valid_bit;     //有效位 1位
     uint32_t tag;        //标记  2^19
     uint8_t data[64]; //数据区 64B  2^6
-} CacheLine ;
+} CacheLine;
 
 
 // init the cache
