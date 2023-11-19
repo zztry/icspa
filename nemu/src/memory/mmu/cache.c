@@ -36,7 +36,6 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 	//如果跨行/块 先分割长度
 	int len1 = len;
 	int len2 = 0;
-	int ingr_addr2 = 0;  //跨行的第二个地址为0
 	if(64-ingr_addr<len)
 	{
 	    len1 = 64-ingr_addr;
@@ -99,7 +98,6 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	//如果跨行/块 先分割长度
 	int len1 = len;
 	int len2 = 0;
-	int ingr_addr2 = 0;  //跨行的第二个地址为0
 	if(64-ingr_addr<len)
 	{
 	    len1 = 64-ingr_addr;
@@ -165,7 +163,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	//如果没有命中
 	if(is_match==false)
 	{
-	    memcpy(&res,hw_mem+paddr,len);
+	    memcpy(&res,(void *)(hw_mem+paddr),len);
 	    //查看是否有空行
 	    if(pos!=-1)
 	    {
