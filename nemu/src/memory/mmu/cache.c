@@ -122,7 +122,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	            if(len2==0)//不跨行
 	            {
 	                //从后向前每次读取一个字节(从高位至低位)
-	                for(int j = ingr_addr+len-1, j>=ingr_addr,j--)
+	                for(int j = ingr_addr+len-1; j>=ingr_addr;j--)
 	                {
 	                    res+=caches[i].data[j];
 	                    if(j!=ingr_addr)
@@ -135,7 +135,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	            else//跨行
 	            {
 	                //读取前半部分
-	                for(int j = ingr_addr+len1-1, j>=ingr_addr,j--)
+	                for(int j = ingr_addr+len1-1;j>=ingr_addr;j--)
 	                {
 	                    res+=caches[i].data[j];
 	                    if(j!=ingr_addr)
