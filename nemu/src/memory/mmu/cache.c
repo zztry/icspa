@@ -118,7 +118,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	        {
 	            is_match = true;
 	            if(len2==0)//不跨行
-	            {   /*
+	            {   
 	                //从后向前每次读取一个字节(从高位至低位)
 	                for(int j = ingr_addr+len-1; j>=ingr_addr;j--)
 	                {
@@ -128,8 +128,8 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	                        ret=ret<<8;
 	                    }
 	                    
-	                }*/
-	                memcpy(&ret,caches[i].data+ingr_addr,len);
+	                }
+	                //memcpy(&ret,caches[i].data+ingr_addr,len);
 	            }
 	            else//跨行
 	            {
