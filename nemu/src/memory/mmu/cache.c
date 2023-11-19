@@ -55,7 +55,7 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 	                memcpy(paddr, &data, len);
 	                memcpy(caches[i].data+ingr_addr, &data, len);
 				    caches[i].tag = tag_;
-				    caches[i].valid = true;
+				    caches[i].valid_bit = true;
 	            }
 	            else//跨行
 	            {
@@ -63,7 +63,7 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 	                
 	                memcpy(caches[i].data+ingr_addr, &data, len1);
 				    caches[i].tag = tag_;
-				    caches[i].valid = true;
+				    caches[i].valid_bit = true;
 				    cache_write(paddr+len1, len2, data>>(len1 * 8))
 	            }
 	        }
@@ -169,7 +169,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	    {
 	        //在第一个空行中写入
 	        memcpy(caches[pos].data, paddr-ingr_addr, 64);
-	        caches[pos].valid = true;
+	        caches[pos].valid_bit = true;
 			caches[pos].tag = tag_;
 	    }
 	    else
@@ -177,7 +177,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	        //随机选取
 	        pos = begin_line + (rand()%8);
 	        memcpy(caches[pos].data, paddr-ingr_addr, 64);
-	        caches[pos].valid = true;
+	        caches[pos].valid_bit = true;
 			caches[pos].tag = tag_;
 	    }
 	    
