@@ -25,12 +25,12 @@ void init_cache()
 void cache_write(paddr_t paddr, size_t len, uint32_t data)
 {
 	// implement me in PA 3-1
-	uint32_t ingr_addr = paddr & 0x3f;   //块内地址
-	uint32_t group = (paddr& 0x1fff)>>6;          //组号
-	uint32_t tag_ = paddr>>13;      //标记
+	uint32_t ingr_addr = paddr & 0x3f;        //块内地址
+	uint32_t group = (paddr& 0x1fff)>>6;      //组号
+	uint32_t tag_ = (paddr>>13)&0x7ffff;      //标记
 	
 	//组号对应从x1到x2行
-	uint32_t begin_line = group<<3;
+	uint32_t begin_line = group*8;
 	uint32_t end_line = begin_line+7;
 	
 	//如果跨行/块 先分割长度
@@ -45,7 +45,7 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 	bool is_match = false;//是否命中
 	for(int i = begin_line;i<=end_line;i++)
 	{
-	    if(caches[i].valid_bit==1)
+	    if(caches[i].valid_bit==true)
 	    {
 	        
 	        if(caches[i].tag==tag_)//命中
@@ -92,7 +92,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	uint32_t tag_ = paddr>>13;      //标记
 	
 	//组号对应从x1到x2行
-	uint32_t begin_line = group<<3;
+	uint32_t begin_line = group*8;
 	uint32_t end_line = begin_line+7;
 	
 	//如果跨行/块 先分割长度
@@ -109,9 +109,10 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	
 	bool is_match = false;//是否命中
 	uint32_t pos = -1;//判断该组是否满,值为第一个无效的行
+	
 	for(int i = begin_line;i<=end_line;i++)
 	{
-	    if(caches[i].valid_bit==1)
+	    if(caches[i].valid_bit==true)
 	    {
 	        
 	        if(caches[i].tag==tag_)//命中，直接读取
