@@ -37,7 +37,7 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 	//如果跨行/块 先分割长度
 	int len1 = len;
 	int len2 = 0;
-	if(64-ingr_addr<len)
+	if(64<len+ingr_addr)
 	{
 	    len1 = 64-ingr_addr;
 	    len2 = len-len1;
@@ -54,7 +54,7 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 	        
 	        if(len2==0)//不跨行
 	        {
-	            memcpy((void *)(&caches[i].data[0]+ingr_addr), &data, len);
+	            memcpy((void *)(caches[i].data+ingr_addr), &data, len);
 				caches[i].tag = tag_;
 				caches[i].valid_bit = true;
 	        }
@@ -109,12 +109,12 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	            is_match = true;
 	            if(len2==0)//不跨行
 	            {   
-	                memcpy(&ret,(void *)(&caches[i].data[0]+ingr_addr),len);
+	                memcpy(&ret,(void *)(caches[i].data+ingr_addr),len);
 	            }
 	            else//跨行
 	            {
 	                //读取前半部分
-	                memcpy(&ret,(void *)(&caches[i].data[0]+ingr_addr),len1);
+	                memcpy(&ret,(void *)(caches[i].data+ingr_addr),len1);
 	                //读取后半部分
 	                uint32_t ret2 = cache_read(paddr+len1,len2);//如果跨组/行都会在这里解决
 	                //后半部分为高位，左移
