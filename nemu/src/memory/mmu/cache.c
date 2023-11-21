@@ -42,7 +42,7 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 	    len1 = 64-ingr_addr;
 	    len2 = len-len1;
 	}
-	
+	/*
 	memcpy((void *)(hw_mem+paddr), &data, len);
 	
 	
@@ -65,7 +65,7 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 	        }
 	    }
 	   
-	}
+	}*/
 	
 	
 	
