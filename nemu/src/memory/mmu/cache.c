@@ -24,7 +24,7 @@ void init_cache()
 // write data to cache
 void cache_write(paddr_t paddr, size_t len, uint32_t data)
 {   
-    /*
+    
 	// implement me in PA 3-1
 	uint32_t ingr_addr = paddr & 0x3f;        //块内地址
 	uint32_t group = (paddr>>6)&0x7f;      //组号
@@ -65,7 +65,7 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 	        }
 	    }
 	   
-	}*/
+	}
 	
 	
 	
@@ -122,6 +122,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	                ret = ret | ret2;
 	                
 	            }
+	            return ret;
 	            break;
 	        }
 	    }
@@ -151,14 +152,9 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	    {
 	        //随机选取
 	        pos = begin_line + (rand()%8);
-	        memcpy(caches[pos].data, (void *)(hw_mem+paddr-ingr_addr), 64);
-	        
+	        memcpy(caches[pos].data, (void *)(hw_mem+paddr-ingr_addr), 64); 
 	        caches[pos].valid_bit = true;
 			caches[pos].tag = tag_;
-	    }
-	    if(len2>0)
-	    {
-	        cache_read(paddr+len1,len2);
 	    }
 	    
 	    
