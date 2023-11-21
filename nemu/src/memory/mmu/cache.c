@@ -170,12 +170,12 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	        //随机选取
 	        pos = begin_line + (rand()%8);
 	        memcpy(caches[pos].data, (void *)(hw_mem+paddr-ingr_addr), 64);
-	        cache_read(paddr+len1,len2);
+	        
 	        caches[pos].valid_bit = true;
 			caches[pos].tag = tag_;
 	    }
 	    
-	    
+	    cache_read(paddr+len1,len2);
 	    
 	}
 	
