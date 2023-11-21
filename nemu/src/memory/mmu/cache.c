@@ -24,7 +24,7 @@ void init_cache()
 // write data to cache
 void cache_write(paddr_t paddr, size_t len, uint32_t data)
 {   
-    /*
+    
 	// implement me in PA 3-1
 	uint32_t ingr_addr = paddr & 0x3f;        //块内地址
 	uint32_t group = (paddr>>6)&0x7f;      //组号
@@ -54,20 +54,18 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 	        
 	        if(len2==0)//不跨行
 	        {
-	            memcpy((void *)(caches[i].data+ingr_addr), &data, len);
+	            memcpy((void *)(&caches[i].data[0]+ingr_addr), &data, len);
 				caches[i].tag = tag_;
 				caches[i].valid_bit = true;
 	        }
 	        else//跨行
 	        {
-				memcpy((void *)(caches[i].data+ingr_addr), &data, len1);
-				caches[i].tag = tag_;
-				caches[i].valid_bit = true;
+				cache_write(paddr,len1,data);
 				cache_write(paddr+len1, len2, data>>(len1 * 8));
 	        }
 	    }
 	   
-	}*/
+	}
 	
 	
 	
