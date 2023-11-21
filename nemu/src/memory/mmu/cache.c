@@ -24,7 +24,7 @@ void init_cache()
 // write data to cache
 void cache_write(paddr_t paddr, size_t len, uint32_t data)
 {   
-    
+    /*
 	// implement me in PA 3-1
 	uint32_t ingr_addr = paddr & 0x3f;        //块内地址
 	uint32_t group = (paddr>>6)&0x7f;      //组号
@@ -67,7 +67,7 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 	        }
 	    }
 	   
-	}
+	}*/
 	
 	
 	
