@@ -26,7 +26,7 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 {   
 	// implement me in PA 3-1
 	uint32_t ingr_addr = paddr & 0x3f;        //块内地址
-	uint32_t group = (paddr& 0x1fff)>>6;      //组号
+	uint32_t group = (paddr>>6)&0x7f;      //组号
 	uint32_t tag_ = (paddr>>13)&0x7ffff;      //标记
 	
 	//组号对应从x1到x2行
@@ -42,42 +42,33 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 	    len2 = len-len1;
 	}
 	
-	bool is_match = false;//是否命中
+	memcpy((void *)(hw_mem+paddr), &data, len);
+	
+	
+	
 	for(int i = begin_line;i<=end_line;i++)
 	{
-	    if(caches[i].valid_bit==true)
+	    if(caches[i].valid_bit==true&&caches[i].tag==tag_)//命中
 	    {
 	        
-	        if(caches[i].tag==tag_)//命中
+	        if(len2==0)//不跨行
 	        {
-	            is_match = true;
-	            if(len2==0)//不跨行
-	            {
-	                memcpy((void *)(hw_mem+paddr), &data, len);
-	                memcpy(caches[i].data+ingr_addr, &data, len);
-				    caches[i].tag = tag_;
-				    caches[i].valid_bit = true;
-	            }
-	            else//跨行
-	            {
-	                memcpy((void *)(hw_mem+paddr), &data, len);
-				    memcpy(caches[i].data+ingr_addr, &data, len1);
-				    caches[i].tag = tag_;
-				    caches[i].valid_bit = true;
-				    cache_write(paddr+len1, len2, data>>(len1 * 8));
-	            }
+	            memcpy(caches[i].data+ingr_addr, &data, len);
+				caches[i].tag = tag_;
+				caches[i].valid_bit = true;
+	        }
+	        else//跨行
+	        {
+				memcpy(caches[i].data+ingr_addr, &data, len1);
+				caches[i].tag = tag_;
+				caches[i].valid_bit = true;
+				cache_write(paddr+len1, len2, data>>(len1 * 8));
 	        }
 	    }
 	   
 	}
 	
-	if(is_match == false)
-	{
-	    memcpy((void *)(hw_mem+paddr), &data, len);
-	}
 	
-	
-	//memcpy((void *)(hw_mem+paddr), &data, len);
 	
 }
 
@@ -87,7 +78,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	// implement me in PA 3-1
 	
 	uint32_t ingr_addr = paddr & 0x3f;   //块内地址
-	uint32_t group = (paddr& 0x1fff)>>6;     //组号
+	uint32_t group = (paddr>>6)&0x7f;     //组号
 	uint32_t tag_ = paddr>>13;      //标记
 	
 	//组号对应从x1到x2行
@@ -113,14 +104,13 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	{
 	    if(caches[i].valid_bit==true)
 	    {
-	        
 	        if(caches[i].tag==tag_)//命中，直接读取
 	        {
 	            is_match = true;
 	            if(len2==0)//不跨行
 	            {   
 	                //从后向前每次读取一个字节(从高位至低位)
-	                for(int j = ingr_addr+len-1; j>=ingr_addr;j--)
+	                /*for(int j = ingr_addr+len-1; j>=ingr_addr;j--)
 	                {
 	                    ret+=caches[i].data[j];
 	                    if(j!=ingr_addr)
@@ -128,21 +118,21 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	                        ret=ret<<8;
 	                    }
 	                    
-	                }
-	                //memcpy(&ret,caches[i].data+ingr_addr,len);
+	                }*/
+	                memcpy(&ret,caches[i].data+ingr_addr,len);
 	            }
 	            else//跨行
 	            {
 	                //读取前半部分
-	                for(int j = ingr_addr+len1-1;j>=ingr_addr;j--)
+	                /*for(int j = ingr_addr+len1-1;j>=ingr_addr;j--)
 	                {
 	                    ret+=caches[i].data[j];
 	                    if(j!=ingr_addr)
 	                    {
 	                        ret=ret<<8;
 	                    }
-	                }
-	                //memcpy(&ret,caches[i].data+ingr_addr,len1);
+	                }*/
+	                memcpy(&ret,caches[i].data+ingr_addr,len1);
 	                //读取后半部分
 	                uint32_t ret2 = cache_read(paddr+len1,len2);//如果跨组/行都会在这里解决
 	                //后半部分为高位，左移
