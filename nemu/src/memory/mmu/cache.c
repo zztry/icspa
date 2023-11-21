@@ -60,7 +60,7 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 	        }
 	        else//跨行
 	        {
-				cache_write(paddr,len1,data);
+				cache_write(paddr,len1,data&(0x1<<(len1*8));
 				cache_write(paddr+len1, len2, data>>(len1 * 8));
 	        }
 	    }
