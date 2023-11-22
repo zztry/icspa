@@ -27,7 +27,7 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
     memcpy((void *)(hw_mem+paddr), &data, len);
     
 	// implement me in PA 3-1
-	uint32_t ingr_addr = paddr & 0x3f;        //块内地址
+	//uint32_t ingr_addr = paddr & 0x3f;        //块内地址
 	uint32_t group = (paddr>>6)&0x7f;      //组号
 	uint32_t tag_ = (paddr>>13)&0x7ffff;      //标记
 	
