@@ -100,7 +100,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	bool is_match = false;//是否命中
 	uint32_t pos = -1;//判断该组是否满,值为第一个无效的行
 	
-	for(int i = begin_line;i<=end_line;i++)
+	for(uint32_t i = begin_line;i<=end_line;i++)
 	{
 	    if(caches[i].valid_bit==true)
 	    {
