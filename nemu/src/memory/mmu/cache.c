@@ -141,7 +141,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	{
 	    memcpy(&ret,(void *)(hw_mem+paddr),len);
 	    
-	    pos = begin_line + (rand()%8);
+	    pos = begin_line;
 	    memcpy(caches[pos].data, (void *)(hw_mem+paddr-ingr_addr), 64); 
 	    caches[pos].valid_bit = true;
 		caches[pos].tag = tag_;
