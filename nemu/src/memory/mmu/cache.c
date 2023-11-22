@@ -35,6 +35,7 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 	uint32_t begin_line = group*8;
 	uint32_t end_line = begin_line+7;
 	
+	/*
 	//如果跨行/块 先分割长度
 	int len1 = len;
 	int len2 = 0;
@@ -44,7 +45,7 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 	    len2 = len-len1;
 	}
 	
-	memcpy((void *)(hw_mem+paddr), &data, len);
+	memcpy((void *)(hw_mem+paddr), &data, len);*/
 	
 	
 	
