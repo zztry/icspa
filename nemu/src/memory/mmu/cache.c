@@ -143,7 +143,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	    
 	    pos = begin_line;
 	    memcpy((void *)caches[pos].data, (void *)(hw_mem+paddr-ingr_addr), 64); 
-	    caches[pos].valid_bit = true;
+	    caches[pos].valid_bit = false;
 		caches[pos].tag = tag_;
 	    //查看是否有空行
 	    /*
