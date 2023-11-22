@@ -98,7 +98,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	uint32_t ret;
 	
 	bool is_match = false;//是否命中
-	uint32_t pos = -1;//判断该组是否满,值为第一个无效的行
+	uint32_t pos = 0;//判断该组是否满,值为第一个无效的行
 	
 	for(uint32_t i = begin_line;i<=end_line;i++)
 	{
@@ -128,7 +128,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	    }
 	    else//将pos调整为第一个无效行
 	    {
-	        if(pos==-1)
+	        if(pos==0)
 	        {
 	            pos = i;
 	        }
@@ -141,8 +141,8 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	{
 	    memcpy(&ret,(void *)(hw_mem+paddr),len);
 	    //查看是否有空行
-	    /*
-	    if(pos!=-1)
+	    
+	    if(pos!=0)
 	    {
 	        //在第一个空行中写入
 	        memcpy(caches[pos].data, (void *)(hw_mem+paddr-ingr_addr), 64);
@@ -156,7 +156,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	        memcpy(caches[pos].data, (void *)(hw_mem+paddr-ingr_addr), 64); 
 	        caches[pos].valid_bit = true;
 			caches[pos].tag = tag_;
-	    }*/
+	    }
 	    
 	    
 	}
