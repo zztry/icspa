@@ -141,6 +141,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	{
 	    memcpy(&ret,(void *)(hw_mem+paddr),len);
 	    //查看是否有空行
+	    /*
 	    if(pos!=-1)
 	    {
 	        //在第一个空行中写入
@@ -155,7 +156,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	        memcpy(caches[pos].data, (void *)(hw_mem+paddr-ingr_addr), 64); 
 	        caches[pos].valid_bit = true;
 			caches[pos].tag = tag_;
-	    }
+	    }*/
 	    
 	    
 	}
