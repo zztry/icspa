@@ -15,6 +15,7 @@ typedef struct{
     uint8_t data[64]; //数据区 64B  2^6
 } CacheLine;
 
+extern CacheLine caches[];
 
 // init the cache
 void init_cache();

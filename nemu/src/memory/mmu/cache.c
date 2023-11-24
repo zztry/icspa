@@ -7,6 +7,7 @@
 //8-way set associative
 //共有 2^10行 ，2^7组 ,每组2^3=8行
 //32-13 = 19 : 标记位      7: 组号   6: 块内地址
+
 CacheLine caches[1024];
 
 
