@@ -27,26 +27,7 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
     memcpy((void *)(hw_mem+paddr), &data, len);
     
 	// implement me in PA 3-1
-	//uint32_t ingr_addr = paddr & 0x3f;        //块内地址
-	//uint32_t group = (paddr>>6)&0x7f;      //组号
 	uint32_t tag_ = paddr>>13;      //标记
-	
-	//组号对应从x1到x2行
-	//uint32_t begin_line = group*8;
-	//uint32_t end_line = begin_line+7;
-	
-	/*
-	//如果跨行/块 先分割长度
-	int len1 = len;
-	int len2 = 0;
-	if(64<len+ingr_addr)
-	{
-	    len1 = 64-ingr_addr;
-	    len2 = len-len1;
-	}
-	
-	memcpy((void *)(hw_mem+paddr), &data, len);*/
-	
 	
 	
 	for(int i = 0;i<=1024;i++)
@@ -54,18 +35,6 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 	    if(caches[i].valid_bit==true&&caches[i].tag==tag_)//命中
 	    {
 	        caches[i].valid_bit = false;
-	        /*
-	        if(len2==0)//不跨行
-	        {
-	            memcpy((void *)(caches[i].data+ingr_addr), &data, len);
-				caches[i].tag = tag_;
-				caches[i].valid_bit = true;
-	        }
-	        else//跨行
-	        {
-				cache_write(paddr,len1,data);
-				cache_write(paddr+len1, len2, data>>(len1 * 8));
-	        }*/
 	        break;
 	    }
 	   
@@ -120,27 +89,10 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	            }
 	            else//跨行
 	            {
-	                /*
-	                //读取前半部分
-	                memcpy(&ret,(void *)(&caches[i].data+ingr_addr),len1);
-	                //读取后半部分
-	                uint32_t ret2 = cache_read(paddr+len1,len2);//如果跨组/行都会在这里解决
-	                //后半部分为高位，左移
-	                ret2= ret2<<(8*len1);
-	                ret = ret | ret2;
-	                */
 	                memcpy(&ret,(void *)(hw_mem+paddr),len);
 	                
 	            }
-	            //return ret;
-	            break;
-	        }
-	    }
-	    else//将pos调整为第一个无效行
-	    {
-	        if(pos==0)
-	        {
-	            pos = i;
+	            return ret;
 	        }
 	    }
 	}
@@ -155,24 +107,8 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	    memcpy((void *)caches[pos].data, (void *)(hw_mem+paddr-ingr_addr), 64); 
 	    caches[pos].valid_bit = true;
 		caches[pos].tag = tag_;
-	    //查看是否有空行
-	    /*
-	    if(pos!=0)
-	    {
-	        //在第一个空行中写入
-	        memcpy(caches[pos].data, (void *)(hw_mem+paddr-ingr_addr), 64);
-	        caches[pos].valid_bit = true;
-			caches[pos].tag = tag_;
-	    }
-	    else
-	    {
-	        //随机选取
-	        pos = begin_line + (rand()%8);
-	        memcpy(caches[pos].data, (void *)(hw_mem+paddr-ingr_addr), 64); 
-	        caches[pos].valid_bit = true;
-			caches[pos].tag = tag_;
-	    }*/
-	    
+		
+		
 	    
 	}
 	
@@ -182,25 +118,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 }
 
 
-	                //从后向前每次读取一个字节(从高位至低位)
-	                /*for(int j = ingr_addr+len-1; j>=ingr_addr;j--)
-	                {
-	                    ret+=caches[i].data[j];
-	                    if(j!=ingr_addr)
-	                    {
-	                        ret=ret<<8;
-	                    }
-	                    
-	                }*/
 	                
-	                /*for(int j = ingr_addr+len1-1;j>=ingr_addr;j--)
-	                {
-	                    ret+=caches[i].data[j];
-	                    if(j!=ingr_addr)
-	                    {
-	                        ret=ret<<8;
-	                    }
-	                }*/
 
 
 
