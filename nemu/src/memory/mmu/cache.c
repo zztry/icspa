@@ -56,7 +56,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	
 	//组号对应从x1到x2行
 	uint32_t begin_line = group*8;
-	uint32_t end_line = begin_line+7;
+	//uint32_t end_line = begin_line+7;
 	
 	//如果跨行/块 先分割长度
 	int len1 = len;
@@ -74,7 +74,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	uint32_t pos = 0;//判断该组是否满,值为第一个无效的行
 	
 	
-	for(uint32_t i = begin_line;i<=end_line;i++)
+	for(uint32_t i = begin_line;i<begin_line+8;i++)
 	{
 	    if(caches[i].valid_bit==true)
 	    {
@@ -106,7 +106,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	    pos = begin_line;
 	    memcpy((void *)caches[pos].data, (void *)(hw_mem+paddr-ingr_addr), 64); 
 	    caches[pos].valid_bit = true;
-		caches[pos].tag = ret>>13;
+		caches[pos].tag = tag_;
 		
 		
 	    
