@@ -104,6 +104,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	bool is_match = false;//是否命中
 	uint32_t pos = 0;//判断该组是否满,值为第一个无效的行
 	
+	
 	for(uint32_t i = begin_line;i<=end_line;i++)
 	{
 	    if(caches[i].valid_bit==true)
@@ -113,17 +114,8 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	            is_match = true;
 	            if(len2==0)//不跨行
 	            {   
-	                //从后向前每次读取一个字节(从高位至低位)
-	                for(int j = ingr_addr+len-1; j>=ingr_addr;j--)
-	                {
-	                    ret+=caches[i].data[j];
-	                    if(j!=ingr_addr)
-	                    {
-	                        ret=ret<<8;
-	                    }
-	                    
-	                }
-	                //memcpy(&ret,(void *)(&caches[i].data+ingr_addr),len);
+	                
+	                memcpy(&ret,(void *)(&caches[i].data+ingr_addr),len);
 	                
 	            }
 	            else//跨行
@@ -137,7 +129,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	                ret2= ret2<<(8*len1);
 	                ret = ret | ret2;
 	                */
-	                is_match=false;
+	                memcpy(&ret,(void *)(hw_mem+paddr),len);
 	                
 	            }
 	            //return ret;
