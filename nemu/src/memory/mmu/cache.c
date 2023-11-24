@@ -128,6 +128,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	            }
 	            else//跨行
 	            {
+	                /*
 	                //读取前半部分
 	                memcpy(&ret,(void *)(&caches[i].data+ingr_addr),len1);
 	                //读取后半部分
@@ -135,10 +136,11 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	                //后半部分为高位，左移
 	                ret2= ret2<<(8*len1);
 	                ret = ret | ret2;
+	                */
 	                is_match=false;
 	                
 	            }
-	            return ret;
+	            //return ret;
 	            break;
 	        }
 	    }
