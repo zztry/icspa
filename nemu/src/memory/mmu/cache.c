@@ -55,7 +55,7 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 	
 	
 	
-	for(int i = 0;i<=1024;i++)
+	for(int i = begin_line;i<=end_line;i++)
 	{
 	    if(caches[i].valid_bit==true&&caches[i].tag==tag_)//命中
 	    {
@@ -86,7 +86,6 @@ uint32_t cache_read(paddr_t paddr, size_t len)
     
 	// implement me in PA 3-1
 	
-	// implement me in PA 3-1
 	
 	uint32_t ingr_addr = paddr & 0x3f;   //块内地址
 	uint32_t group = (paddr>>6)&0x7f;     //组号
