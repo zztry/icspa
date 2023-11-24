@@ -32,8 +32,8 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 	uint32_t tag_ = paddr>>13;      //标记
 	
 	//组号对应从x1到x2行
-	uint32_t begin_line = group*8;
-	uint32_t end_line = begin_line+7;
+	//uint32_t begin_line = group*8;
+	//uint32_t end_line = begin_line+7;
 	
 	/*
 	//如果跨行/块 先分割长度
