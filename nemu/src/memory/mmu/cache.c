@@ -49,7 +49,7 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 	
 	
 	
-	for(int i = begin_line;i<=end_line;i++)
+	for(int i = 0;i<=1024;i++)
 	{
 	    if(caches[i].valid_bit==true&&caches[i].tag==tag_)//命中
 	    {
@@ -66,6 +66,7 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 				cache_write(paddr,len1,data);
 				cache_write(paddr+len1, len2, data>>(len1 * 8));
 	        }*/
+	        break;
 	    }
 	   
 	}
