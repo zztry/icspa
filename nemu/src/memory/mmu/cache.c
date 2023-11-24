@@ -140,13 +140,6 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	            return ret;
 	        }
 	    }
-	    else//将pos调整为第一个无效行
-	    {
-	        if(pos==0)
-	        {
-	            pos = i;
-	        }
-	    }
 	}
 	
 	
@@ -157,29 +150,14 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	    
 	    
 	    //查看是否有空行
-	    
-	    if(pos!=0)
-	    {
-	        //在第一个空行中写入
-	        memcpy(caches[pos].data, (void *)(hw_mem+paddr-ingr_addr), 64);
-	        caches[pos].valid_bit = true;
-			caches[pos].tag = tag_;
-	    }
-	    else
-	    {
-	        //随机选取
-	        pos = begin_line + (rand()%8);
-	        memcpy(caches[pos].data, (void *)(hw_mem+paddr-ingr_addr), 64); 
-	        caches[pos].valid_bit = true;
-			caches[pos].tag = tag_;
-	    }
+	    pos =begin_line;
+	    memcpy(caches[pos].data, (void *)(hw_mem+paddr-ingr_addr), 64);
+	    caches[pos].valid_bit = false;
+		caches[pos].tag = tag_;
 	    
 	    
 	}
 	
-	
-	
-	return ret;
 	
 	return ret;
 }
