@@ -14,7 +14,7 @@ make_instr_func(jmp_near)
 
         int offset = sign_ext(rel.val, data_size);
         // thank Ting Xu from CS'17 for finding this bug
-        print_asm_1("jmp1", "", 1 + data_size / 8, &rel);
+        print_asm_1("jmp1", "", 1 + (data_size / 8), &rel);
 
         cpu.eip += offset;
 
