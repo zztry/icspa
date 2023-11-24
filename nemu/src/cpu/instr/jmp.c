@@ -14,7 +14,7 @@ make_instr_func(jmp_near)
 
         int offset = sign_ext(rel.val, data_size);
         // thank Ting Xu from CS'17 for finding this bug
-        print_asm_1("jmp", "", 1 + data_size / 8, &rel);
+        print_asm_1("jmp1", "", 1 + data_size / 8, &rel);
 
         cpu.eip += offset;
 
@@ -34,7 +34,7 @@ make_instr_func(jmp_short)
         
         int offset = sign_ext(rel.val, rel.data_size);
         
-        print_asm_1("jmp", "", 2, &rel);
+        print_asm_1("jmp2", "", 2, &rel);
 
         cpu.eip += offset;
 
@@ -63,7 +63,7 @@ make_instr_func(jmp_near_indirect)
         }
         
         
-        print_asm_1("jmp", "", 1 + data_size / 8, &rm);
+        print_asm_1("jmp3", "", 1 + data_size / 8, &rm);
 
         //绝对地址跳转，返回0
 
@@ -90,7 +90,7 @@ make_instr_func(jmp_far_imm)
         {
             cpu.eip = rel.val;
         }
-
+        print_asm_1("jmp4", "", 1 + data_size / 8, &rel);
         return 0;
 }
 
