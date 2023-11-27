@@ -75,7 +75,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 			else
 			{
 				uint32_t temp1=0,temp2=0;
-				memcpy(&temp1,cache[group_num*8+i].data+offset,64-offset);
+				memcpy(&temp1,caches[group_num*8+i].data+offset,64-offset);
 				temp2=cache_read(paddr+64-offset,offset+len-64)<<(8*(64-offset));
 				ret=temp2|temp1;
 			}
