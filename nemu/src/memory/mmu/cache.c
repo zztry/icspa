@@ -128,7 +128,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 			if(caches[group*8+i].valid_bit==0)
 			{
 				caches[group*8+i].valid_bit=true;
-				caches[group*8+i].tag=sign;
+				caches[group*8+i].tag=tag_;
 				memcpy(caches[group*8+i].data,hw_mem+paddr-in_addr,64);
 				break;
 			}
@@ -138,7 +138,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 			srand((unsigned)time(0));
 			i=rand()%8;
 			caches[group*8+i].valid_bit=true;
-			caches[group*8+i].tag=sign;
+			caches[group*8+i].tag=tag_;
 			memcpy(caches[group*8+i].data,hw_mem+paddr-in_addr,64);
 		}
 	}
