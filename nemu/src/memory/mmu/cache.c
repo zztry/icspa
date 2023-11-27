@@ -68,7 +68,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	int i;
 	for(i=0;i<8;i++)
 	{
-		if(caches[group_num*8+i].tag==sign&&cache[group_num*8+i].valid_bit==true)
+		if(caches[group_num*8+i].tag==sign&&caches[group_num*8+i].valid_bit==true)
 		{	
 			if(offset+len<=64)
 				memcpy(&ret,caches[group_num*8+i].data+offset,len);
@@ -87,9 +87,9 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 		memcpy(&ret,hw_mem+paddr,len);
 		for(i=0;i<8;i++)
 		{
-			if(caches[group_num*8+i].valid==0)
+			if(caches[group_num*8+i].valid_bit==0)
 			{
-				caches[group_num*8+i].valid=true;
+				caches[group_num*8+i].valid_bit=true;
 				caches[group_num*8+i].tag=sign;
 				memcpy(caches[group_num*8+i].data,hw_mem+paddr-offset,64);
 				break;
