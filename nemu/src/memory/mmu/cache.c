@@ -38,10 +38,10 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 	int i;
 	for(i=0;i<8;i++)
 	{
-		if(cache[group_num*8+i].tag==sign&&cache[group_num*8+i].valid_bit==1)
+		if(caches[group_num*8+i].tag==sign&&caches[group_num*8+i].valid_bit==true)
 		{
 			if(offset+len<=64)
-				memcpy(cache[group_num*8+i].data+offset,&data,len);
+				memcpy(caches[group_num*8+i].data+offset,&data,len);
 			else
 			{
 				cache_write(paddr,64-offset,data);
