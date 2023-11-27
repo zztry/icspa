@@ -133,26 +133,21 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	if(is_match == false)
 	{
 		memcpy(&ret,hw_mem+paddr,len);
-		int i;
-		for(i=0;i<8;i++)
+		if(pos!=-1)
 		{
-			if(caches[group*8+i].valid_bit==0)
-			{
-				caches[group*8+i].valid_bit=1;
-				caches[group*8+i].tag=tag_;
-				memcpy(caches[group*8+i].data,hw_mem+paddr-in_addr,64);
-				break;
-			}
+		    caches[group*8+pos].valid_bit=true;
+			caches[group*8+pos].tag=tag_;
+			memcpy(caches[group*8+pos].data,hw_mem+paddr-in_addr,64);
 		}
-		if(i==8)
+		else
 		{
-			srand((unsigned)time(0));
-			i=rand()%8;
-			caches[group*8+i].valid_bit=1;
-			caches[group*8+i].tag=tag_;
-			memcpy(caches[group*8+i].data,hw_mem+paddr-in_addr,64);
+		    srand((unsigned)time(0));
+			pos=rand()%8;
+			caches[group*8+pos].valid_bit=true;
+			caches[group*8+pos].tag=tag_;
+			memcpy(caches[group*8+pos].data,hw_mem+paddr-in_addr,64);
 		}
-	}
+		
 	return ret;
 }
 
@@ -177,6 +172,22 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 			break;
 		}*/
 	                
-
+/*int i;
+		for(i=0;i<8;i++)
+		{
+			if(caches[group*8+i].valid_bit==0)
+			{
+				
+			}
+		}
+		if(i==8)
+		{
+			srand((unsigned)time(0));
+			i=rand()%8;
+			caches[group*8+i].valid_bit=1;
+			caches[group*8+i].tag=tag_;
+			memcpy(caches[group*8+i].data,hw_mem+paddr-in_addr,64);
+		}
+	}*/
 
 
