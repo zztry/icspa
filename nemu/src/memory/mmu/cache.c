@@ -92,73 +92,48 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 		len2 = len - len1;
 	}
 	
-	int i;
-	for(i=0;i<8;i++)
+	bool is_match = false;//是否命中
+	int pos = -1;//判断该组是否满,值为第一个无效的行
+	for(int i=0;i<8;i++)
 	{
-		if(caches[group*8+i].tag==tag_&&caches[group*8+i].valid_bit==1)
-		{	
-		    if (len2 == 0)//不跨行
-			{
+	    if(caches[group*8+i].valid_bit==true)
+	    {
+	        
+	        if(caches[group*8+i].tag==tag_)
+	        {
+	            is_match=true;
+	            if (len2 == 0)//不跨行
+			    {
 				memcpy(&ret, (void*)(&caches[group*8+i].data[in_addr]), len);
-			}
-			else//跨行
-			{
-			    uint32_t ret1=0;
-		    	//读取前半部分
-				memcpy(&ret1, (void*)(&caches[group*8+i].data[in_addr]), len1);
-				//读取后半部分
-				//uint32_t ret2 =0;
-				uint32_t ret2=cache_read(paddr + len1, len2);//如果跨组/行都会在这里解决
-				//后半部分为高位，左移
-				ret2 = ret2 << (8 * len1);
-				ret = ret1 | ret2;
-			}
-			/*
-			if(len2==0)
-				memcpy(&ret,caches[group*8+i].data+in_addr,len);
-			else
-			{
-				uint32_t temp1=0,temp2=0;
-				memcpy(&temp1,caches[group *8+i].data+in_addr,len1);
-				temp2=cache_read(paddr+len1,len2)<<(8*len1);
-				ret=temp2|temp1;
-			}*/
-			break;
-		}
+			    }
+			    else//跨行
+			    {
+			        uint32_t ret1=0;
+		    	    //读取前半部分
+				    memcpy(&ret1, (void*)(&caches[group*8+i].data[in_addr]), len1);
+				    //读取后半部分
+				    uint32_t ret2 =0;
+				    ret2=cache_read(paddr + len1, len2);//如果跨组/行都会在这里解决
+				    //后半部分为高位，左移
+				    ret2 = ret2 << (8 * len1);
+				    ret = ret1 | ret2;
+			    }
+			    break;
+	        }
+	    }
+	    else
+	    {
+	        if(pos=-1)
+	        {
+	            pos = i;
+	        }
+	    }
+		
 	}
-	/*for (i = 0; i < 8; i++)
-	{
-		if (caches[group*8+i].valid_bit == true)
-		{
-			if (caches[group*8+i].tag == tag_)//命中，直接读取
-			{
-				is_match = true;
-				if (len2 == 0)//不跨行
-				{
-
-					memcpy(&ret, caches[i].data+in_addr, len);
-
-				}
-				else//跨行
-				{
-
-					//读取前半部分
-					memcpy(&ret, caches[i].data+in_addr, len1);
-					//读取后半部分
-					uint32_t ret2 = cache_read(paddr + len1, len2);//如果跨组/行都会在这里解决
-					//后半部分为高位，左移
-					ret2 = ret2 << (8 * len1);
-					ret = ret | ret2;
-
-
-				}
-				return ret;
-			}
-		}
-	}*/
-	if(i==8)
+	if(is_match = false)
 	{
 		memcpy(&ret,hw_mem+paddr,len);
+		int i;
 		for(i=0;i<8;i++)
 		{
 			if(caches[group*8+i].valid_bit==0)
@@ -181,7 +156,26 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	return ret;
 }
 
-
+/*if(caches[group*8+i].tag==tag_&&caches[group*8+i].valid_bit==1)
+		{	
+		    if (len2 == 0)//不跨行
+			{
+				memcpy(&ret, (void*)(&caches[group*8+i].data[in_addr]), len);
+			}
+			else//跨行
+			{
+			    uint32_t ret1=0;
+		    	//读取前半部分
+				memcpy(&ret1, (void*)(&caches[group*8+i].data[in_addr]), len1);
+				//读取后半部分
+				//uint32_t ret2 =0;
+				uint32_t ret2=cache_read(paddr + len1, len2);//如果跨组/行都会在这里解决
+				//后半部分为高位，左移
+				ret2 = ret2 << (8 * len1);
+				ret = ret1 | ret2;
+			}
+			break;
+		}*/
 	                
 
 
