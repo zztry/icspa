@@ -89,15 +89,15 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	int i;
 	for(i=0;i<8;i++)
 	{
-		if(cache[group_num*8+i].sign==sign&&cache[group_num*8+i].valid==1)
+		if(cache[group_num*8+i].tag==sign&&cache[group_num*8+i].valid==1)
 		{	
 			if(offset+len<=64)
-				memcpy(&ret,cache[group_num*8+i].block+offset,len);
+				memcpy(&ret,cache[group_num*8+i].data+offset,len);
 			else
 			{
 				uint32_t temp1=0,temp2=0;
-				memcpy(&temp1,cache[group_num*8+i].block+offset,64-offset);
-				temp2=cache_read(paddr+64-offset,offset+len-64,Cache)<<(8*(64-offset));
+				memcpy(&temp1,cache[group_num*8+i].data+offset,64-offset);
+				temp2=cache_read(paddr+64-offset,offset+len-64)<<(8*(64-offset));
 				ret=temp2|temp1;
 			}
 			break;
@@ -138,11 +138,11 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 		memcpy(&ret,hw_mem+paddr,len);
 		for(i=0;i<8;i++)
 		{
-			if(cache[group_num*8+i].valid==0)
+			if(cache[group_num*8+i].valid_bit==0)
 			{
-				cache[group_num*8+i].valid=1;
-				cache[group_num*8+i].sign=sign;
-				memcpy(cache[group_num*8+i].block,hw_mem+paddr-offset,64);
+				cache[group_num*8+i].valid_bit=1;
+				cache[group_num*8+i].tag=sign;
+				memcpy(cache[group_num*8+i].data,hw_mem+paddr-offset,64);
 				break;
 			}
 		}
@@ -150,9 +150,9 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 		{
 			srand((unsigned)time(0));
 			i=rand()%8;
-			cache[group_num*8+i].valid=1;
-			cache[group_num*8+i].sign=sign;
-			memcpy(cache[group_num*8+i].block,hw_mem+paddr-offset,64);
+			cache[group_num*8+i].valid_bit=1;
+			cache[group_num*8+i].tag=sign;
+			memcpy(cache[group_num*8+i].data,hw_mem+paddr-offset,64);
 		}
 	}
 	return ret;
