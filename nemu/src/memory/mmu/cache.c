@@ -33,7 +33,7 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 	memcpy((void *)(hw_mem+paddr), &data, len);
     
 	// implement me in PA 3-1
-	uint32_t ingr_addr = paddr & 0x3f;        //块内地址
+	uint32_t in_addr = paddr & 0x3f;        //块内地址
 	uint32_t group = (paddr>>6)&0x7f;      //组号
 	uint32_t tag_ = paddr>>13;      //标记
 	
@@ -45,9 +45,9 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 	//如果跨行/块 先分割长度
 	int len1 = len;
 	int len2 = 0;
-	if(64<len+ingr_addr)
+	if(64<len+in_addr)
 	{
-	    len1 = 64-ingr_addr;
+	    len1 = 64-in_addr;
 	    len2 = len-len1;
 	}
 	
@@ -63,7 +63,7 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 	        
 	        if(len2==0)//不跨行
 	        {
-	            memcpy((void *)(caches[i].data+ingr_addr), &data, len);
+	            memcpy((void *)(caches[i].data+in_addr), &data, len);
 				caches[i].tag = tag_;
 				caches[i].valid_bit = true;
 	        }
@@ -87,7 +87,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	// implement me in PA 3-1
 	
 	
-	uint32_t ingr_addr = paddr & 0x3f;   //块内地址
+	uint32_t in_addr = paddr & 0x3f;   //块内地址
 	uint32_t group = (paddr>>6)&0x7f;     //组号
 	uint32_t tag_ = paddr>>13;      //标记
 	
@@ -98,9 +98,9 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	//如果跨行/块 先分割长度
 	int len1 = len;
 	int len2 = 0;
-	if(64-ingr_addr<len)
+	if(64-in_addr<len)
 	{
-	    len1 = 64-ingr_addr;
+	    len1 = 64-in_addr;
 	    len2 = len-len1;
 	}
 	
@@ -121,14 +121,14 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	            if(len2==0)//不跨行
 	            {   
 	                
-	                memcpy(&ret,(void *)(&caches[i].data+ingr_addr),len);
+	                memcpy(&ret,(void *)(&caches[i].data+in_addr),len);
 	                
 	            }
 	            else//跨行
 	            {
 	                
 	                //读取前半部分
-	                memcpy(&ret,(void *)(&caches[i].data+ingr_addr),len1);
+	                memcpy(&ret,(void *)(&caches[i].data+in_addr),len1);
 	                //读取后半部分
 	                uint32_t ret2 = cache_read(paddr+len1,len2);//如果跨组/行都会在这里解决
 	                //后半部分为高位，左移
@@ -151,7 +151,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	    
 	    //查看是否有空行
 	    pos =begin_line;
-	    memcpy(caches[pos].data, (void *)(hw_mem+paddr-ingr_addr), 64);
+	    memcpy(caches[pos].data, (void *)(hw_mem+paddr-in_addr), 64);
 	    caches[pos].valid_bit = true;
 		caches[pos].tag = tag_;
 	    
