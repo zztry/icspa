@@ -9,7 +9,7 @@
 //32-13 = 19 : 标记位      7: 组号   6: 块内地址
 
 CacheLine caches[1024];
-
+extern uint8_t hw_mem[];
 
 // init the cache
 void init_cache()
