@@ -84,20 +84,26 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 
 
     //如果跨行/块 先分割长度
-	
+	int len1 = len;
+	int len2 = 0;
+	if (64 - offset < len)
+	{
+		len1 = 64 - offset;
+		len2 = len - len1;
+	}
 	
 	int i;
 	for(i=0;i<8;i++)
 	{
 		if(caches[group_num*8+i].tag==sign&&caches[group_num*8+i].valid_bit==1)
 		{	
-			if(offset+len<=64)
+			if(len2==0)
 				memcpy(&ret,caches[group_num*8+i].data+offset,len);
 			else
 			{
 				uint32_t temp1=0,temp2=0;
-				memcpy(&temp1,caches[group_num*8+i].data+offset,64-offset);
-				temp2=cache_read(paddr+64-offset,offset+len-64)<<(8*(64-offset));
+				memcpy(&temp1,caches[group_num*8+i].data+offset,len1);
+				temp2=cache_read(paddr+len1,len2)<<(8*len1);
 				ret=temp2|temp1;
 			}
 			break;
