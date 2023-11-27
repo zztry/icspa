@@ -133,17 +133,16 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 			}
 		}
 	}*/
-	if(is_match==false)
+	if(i==8)
 	{
 		memcpy(&ret,hw_mem+paddr,len);
-		
 		for(i=0;i<8;i++)
 		{
-			if(caches[group*8+i].valid_bit==0)
+			if(cache[group_num*8+i].valid==0)
 			{
-				caches[group*8+i].valid_bit=true;
-				caches[group*8+i].tag=tag_;
-				memcpy(caches[group*8+i].data,hw_mem+paddr-in_addr,64);
+				cache[group_num*8+i].valid=1;
+				cache[group_num*8+i].sign=sign;
+				memcpy(cache[group_num*8+i].block,hw_mem+paddr-offset,64);
 				break;
 			}
 		}
@@ -151,9 +150,9 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 		{
 			srand((unsigned)time(0));
 			i=rand()%8;
-			caches[group*8+i].valid_bit=true;
-			caches[group*8+i].tag=tag_;
-			memcpy(caches[group*8+i].data,hw_mem+paddr-in_addr,64);
+			cache[group_num*8+i].valid=1;
+			cache[group_num*8+i].sign=sign;
+			memcpy(cache[group_num*8+i].block,hw_mem+paddr-offset,64);
 		}
 	}
 	return ret;
