@@ -147,7 +147,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 			caches[group*8+pos].tag=tag_;
 			memcpy(caches[group*8+pos].data,hw_mem+paddr-in_addr,64);
 		}
-		
+	}
 	return ret;
 }
 
