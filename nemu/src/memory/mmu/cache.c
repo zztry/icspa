@@ -61,77 +61,49 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	// implement me in PA 3-1
 	
 	
-	uint32_t in_addr = paddr & 0x3f;   //块内地址
-	uint32_t group = (paddr>>6)&0x7f;     //组号
-	uint32_t tag_ = paddr>>13;      //标记
-	
-	//组号对应从x1到x2行
-	uint32_t begin_line = group*8;
-	
-	//如果跨行/块 先分割长度
-	int len1 = len;
-	int len2 = 0;
-	if(64-in_addr<len)
-	{
-	    len1 = 64-in_addr;
-	    len2 = len-len1;
-	}
-	
-	
 	uint32_t ret;
-	
-	bool is_match = false;//是否命中
-	uint32_t pos = 0;//判断该组是否满,值为第一个无效的行
-	
-	
-	for(uint32_t i = begin_line;i<begin_line+8;i++)
+	uint32_t sign =(paddr>>13)&0x7ffff;
+	uint32_t group_num =(paddr>>6)&0x7f;
+	uint32_t offset=paddr&0x3f;
+	int i;
+	for(i=0;i<8;i++)
 	{
-	    if(caches[i].valid_bit==true)
-	    {
-	        if(caches[i].tag==tag_)//命中，直接读取
-	        {
-	            is_match = true;
-	            if(len2==0)//不跨行
-	            {   
-	                
-	                memcpy(&ret,(void *)(&caches[i].data[in_addr]),len);
-	                
-	            }
-	            else//跨行
-	            {
-	                
-	                //读取前半部分
-	                memcpy(&ret,(void *)(&caches[i].data[in_addr]),len1);
-	                //读取后半部分
-	                uint32_t ret2 = cache_read(paddr+len1,len2);//如果跨组/行都会在这里解决
-	                //后半部分为高位，左移
-	                ret2= ret2<<(8*len1);
-	                ret = ret | ret2;
-	                
-	                
-	            }
-	            return ret;
-	        }
-	    }
+		if(caches[group_num*8+i].tag==sign&&cache[group_num*8+i].valid_bit==true)
+		{	
+			if(offset+len<=64)
+				memcpy(&ret,caches[group_num*8+i].data+offset,len);
+			else
+			{
+				uint32_t temp1=0,temp2=0;
+				memcpy(&temp1,cache[group_num*8+i].data+offset,64-offset);
+				temp2=cache_read(paddr+64-offset,offset+len-64)<<(8*(64-offset));
+				ret=temp2|temp1;
+			}
+			break;
+		}
 	}
-	
-	
-	//如果没有命中
-	if(is_match==false)
+	if(i==8)
 	{
-	    memcpy(&ret,(void *)(hw_mem+paddr),len);
-	    
-	    
-	    //查看是否有空行
-	    pos =begin_line;
-	    memcpy(caches[pos].data, (void *)(hw_mem+paddr-in_addr), 64);
-	    caches[pos].valid_bit = true;
-		caches[pos].tag = tag_;
-	    
-	    
+		memcpy(&ret,hw_mem+paddr,len);
+		for(i=0;i<8;i++)
+		{
+			if(caches[group_num*8+i].valid==0)
+			{
+				caches[group_num*8+i].valid=true;
+				caches[group_num*8+i].tag=sign;
+				memcpy(caches[group_num*8+i].data,hw_mem+paddr-offset,64);
+				break;
+			}
+		}
+		if(i==8)
+		{
+			srand((unsigned)time(0));
+			i=rand()%8;
+			caches[group_num*8+i].valid_bit=true;
+			caches[group_num*8+i].tag=sign;
+			memcpy(caches[group_num*8+i].data,hw_mem+paddr-offset,64);
+		}
 	}
-	
-	
 	return ret;
 }
 
