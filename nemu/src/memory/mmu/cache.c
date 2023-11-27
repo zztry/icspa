@@ -86,9 +86,9 @@ uint32_t cache_read(paddr_t paddr, size_t len)
     //如果跨行/块 先分割长度
 	int len1 = len;
 	int len2 = 0;
-	if (64 - offset < len)
+	if (64 - in_addr < len)
 	{
-		len1 = 64 - offset;
+		len1 = 64 - in_addr;
 		len2 = len - len1;
 	}
 	
