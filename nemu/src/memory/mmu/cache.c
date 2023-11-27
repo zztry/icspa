@@ -95,7 +95,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	int i;
 	for(i=0;i<8;i++)
 	{
-		if(caches[group*8+i].tag_==sign&&caches[group*8+i].valid_bit==1)
+		if(caches[group*8+i].tag==tag_&&caches[group*8+i].valid_bit==1)
 		{	
 			if(len2==0)
 				memcpy(&ret,caches[group*8+i].data+in_addr,len);
