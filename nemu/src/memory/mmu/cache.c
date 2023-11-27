@@ -35,8 +35,15 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 	uint32_t in_addr = paddr & 0x3f;   //块内地址
 	uint32_t group = (paddr >> 6) & 0x7f;     //组号
 	uint32_t tag_ = paddr >> 13;      //标记
-	int i;
-	for(i=0;i<8;i++)
+	//如果跨行/块 先分割长度
+	int len1 = len;
+	int len2 = 0;
+	if (64 - in_addr < len)
+	{
+		len1 = 64 - in_addr;
+		len2 = len - len1;
+	}
+	for(int i=0;i<8;i++)
 	{
 		if(caches[group*8+i].tag==tag_&&caches[group*8+i].valid_bit==true)
 		{
@@ -44,8 +51,8 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 				memcpy(caches[group*8+i].data+in_addr,&data,len);
 			else
 			{
-				cache_write(paddr,64-in_addr,data);
-				cache_write(paddr+64-in_addr,len+in_addr-64,data>>(8*(64-in_addr)));
+				cache_write(paddr,len1,data);
+				cache_write(paddr+len1,len2,data>>(8*len1));
 			}
 			break;
 		}
