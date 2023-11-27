@@ -97,6 +97,21 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	{
 		if(caches[group*8+i].tag==tag_&&caches[group*8+i].valid_bit==1)
 		{	
+		    if (len2 == 0)//不跨行
+			{
+				memcpy(&ret, (void*)(&caches[group*8+i].data[in_addr]), len);
+			}
+			else//跨行
+			{
+		    	//读取前半部分
+				memcpy(&ret, (void*)(&caches[group*8+i].data[in_addr]), len1);
+				//读取后半部分
+				uint32_t ret2 = cache_read(paddr + len1, len2);//如果跨组/行都会在这里解决
+				//后半部分为高位，左移
+				ret2 = ret2 << (8 * len1);
+				ret = ret | ret2;
+			}
+			/*
 			if(len2==0)
 				memcpy(&ret,caches[group*8+i].data+in_addr,len);
 			else
@@ -105,7 +120,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 				memcpy(&temp1,caches[group *8+i].data+in_addr,len1);
 				temp2=cache_read(paddr+len1,len2)<<(8*len1);
 				ret=temp2|temp1;
-			}
+			}*/
 			break;
 		}
 	}
