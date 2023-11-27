@@ -89,7 +89,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	int i;
 	for(i=0;i<8;i++)
 	{
-		if(caches[group_num*8+i].tag==sign&&caches[group_num*8+i].valid==1)
+		if(caches[group_num*8+i].tag==sign&&caches[group_num*8+i].valid_bit==1)
 		{	
 			if(offset+len<=64)
 				memcpy(&ret,caches[group_num*8+i].data+offset,len);
