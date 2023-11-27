@@ -32,45 +32,23 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 {   
 	memcpy((void *)(hw_mem+paddr), &data, len);
     
-	// implement me in PA 3-1
-	uint32_t in_addr = paddr & 0x3f;        //块内地址
-	uint32_t group = (paddr>>6)&0x7f;      //组号
-	uint32_t tag_ = paddr>>13;      //标记
-	
-	//组号对应从x1到x2行
-	uint32_t begin_line = group*8;
-	
-	
-	//如果跨行/块 先分割长度
-	int len1 = len;
-	int len2 = 0;
-	if(64<len+in_addr)
+	uint32_t sign =(paddr>>13)&0x7ffff;
+	uint32_t group_num =(paddr>>6)&0x7f;
+	uint32_t offset=paddr&0x3f;
+	int i;
+	for(i=0;i<8;i++)
 	{
-	    len1 = 64-in_addr;
-	    len2 = len-len1;
-	}
-
-	
-	for(int i = begin_line;i<begin_line+8;i++)
-	{
-	    if(caches[i].valid_bit==true && caches[i].tag==tag_)//命中
-	    {
-	        caches[i].valid_bit = false;
-	        
-	        if(len2==0)//不跨行
-	        {
-	            memcpy((void *)(&caches[i].data[in_addr]), &data, len);
-				caches[i].tag = tag_;
-				caches[i].valid_bit = true;
-	        }
-	        else//跨行
-	        {
-				cache_write(paddr,len1,data);
-				cache_write(paddr+len1, len2, data>>(len1 * 8));
-	        }
-	        break;
-	    }
-	   
+		if(cache[group_num*8+i].tag==sign&&cache[group_num*8+i].valid_bit==1)
+		{
+			if(offset+len<=64)
+				memcpy(cache[group_num*8+i].data+offset,&data,len);
+			else
+			{
+				cache_write(paddr,64-offset,data);
+				cache_write(paddr+64-offset,len+offset-64,data>>(8*(64-offset)));
+			}
+			break;
+		}
 	}
 	
 	
