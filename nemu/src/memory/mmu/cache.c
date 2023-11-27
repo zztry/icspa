@@ -72,15 +72,15 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	// implement me in PA 3-1
 	
 	
-	/*uint32_t ret;
+	uint32_t ret;
 	uint32_t in_addr = paddr & 0x3f;   //块内地址
 	uint32_t group = (paddr >> 6) & 0x7f;     //组号
 	uint32_t tag_ = paddr >> 13;      //标记
-	*/
-	uint32_t ret;
-	uint32_t sign =(paddr>>13)&0x7ffff;
-	uint32_t group_num =(paddr>>6)&0x7f;
-	uint32_t offset=paddr&0x3f;
+	
+	//uint32_t ret;
+	//uint32_t sign =(paddr>>13)&0x7ffff;
+	//uint32_t group_num =(paddr>>6)&0x7f;
+	//uint32_t offset=paddr&0x3f;
 
 
     //如果跨行/块 先分割长度
@@ -95,21 +95,21 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	int i;
 	for(i=0;i<8;i++)
 	{
-		if(caches[group_num*8+i].tag==sign&&caches[group_num*8+i].valid_bit==1)
+		if(caches[group*8+i].tag_==sign&&caches[group*8+i].valid_bit==1)
 		{	
 			if(len2==0)
-				memcpy(&ret,caches[group_num*8+i].data+offset,len);
+				memcpy(&ret,caches[group*8+i].data+in_addr,len);
 			else
 			{
 				uint32_t temp1=0,temp2=0;
-				memcpy(&temp1,caches[group_num*8+i].data+offset,len1);
+				memcpy(&temp1,caches[group *8+i].data+in_addr,len1);
 				temp2=cache_read(paddr+len1,len2)<<(8*len1);
 				ret=temp2|temp1;
 			}
 			break;
 		}
 	}
-	/*for (int i = 0; i < 8; i++)
+	/*for (i = 0; i < 8; i++)
 	{
 		if (caches[group*8+i].valid_bit == true)
 		{
@@ -144,11 +144,11 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 		memcpy(&ret,hw_mem+paddr,len);
 		for(i=0;i<8;i++)
 		{
-			if(caches[group_num*8+i].valid_bit==0)
+			if(caches[group*8+i].valid_bit==0)
 			{
-				caches[group_num*8+i].valid_bit=1;
-				caches[group_num*8+i].tag=sign;
-				memcpy(caches[group_num*8+i].data,hw_mem+paddr-offset,64);
+				caches[group*8+i].valid_bit=1;
+				caches[group*8+i].tag=tag_;
+				memcpy(caches[group*8+i].data,hw_mem+paddr-in_addr,64);
 				break;
 			}
 		}
@@ -156,9 +156,9 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 		{
 			srand((unsigned)time(0));
 			i=rand()%8;
-			caches[group_num*8+i].valid_bit=1;
-			caches[group_num*8+i].tag=sign;
-			memcpy(caches[group_num*8+i].data,hw_mem+paddr-offset,64);
+			caches[group*8+i].valid_bit=1;
+			caches[group*8+i].tag=tag_;
+			memcpy(caches[group*8+i].data,hw_mem+paddr-in_addr,64);
 		}
 	}
 	return ret;
