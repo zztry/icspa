@@ -123,14 +123,14 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	    }
 	    else
 	    {
-	        if(pos=-1)
+	        if(pos==-1)
 	        {
 	            pos = i;
 	        }
 	    }
 		
 	}
-	if(is_match = false)
+	if(is_match == false)
 	{
 		memcpy(&ret,hw_mem+paddr,len);
 		int i;
