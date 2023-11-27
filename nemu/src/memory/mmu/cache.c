@@ -107,8 +107,8 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 		    	//读取前半部分
 				memcpy(&ret1, (void*)(&caches[group*8+i].data[in_addr]), len1);
 				//读取后半部分
-				uint32_t ret2 =0;
-				ret2=cache_read(paddr + len1, len2);//如果跨组/行都会在这里解决
+				//uint32_t ret2 =0;
+				uint32_t ret2=cache_read(paddr + len1, len2);//如果跨组/行都会在这里解决
 				//后半部分为高位，左移
 				ret2 = ret2 << (8 * len1);
 				ret = ret1 | ret2;
