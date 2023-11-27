@@ -47,8 +47,12 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 	{
 		if(caches[group*8+i].tag==tag_&&caches[group*8+i].valid_bit==true)
 		{
-			if(in_addr+len<=64)
-				memcpy(caches[group*8+i].data+in_addr,&data,len);
+			if(len2==0)
+			{
+			    memcpy(caches[group*8+i].data+in_addr,&data,len);
+			    caches[i].tag = tag_;
+				caches[i].valid_bit = true;
+			}
 			else
 			{
 				cache_write(paddr,len1,data);
