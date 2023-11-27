@@ -32,20 +32,20 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 {   
 	memcpy((void *)(hw_mem+paddr), &data, len);
     
-	uint32_t sign =(paddr>>13)&0x7ffff;
-	uint32_t group_num =(paddr>>6)&0x7f;
-	uint32_t offset=paddr&0x3f;
+	uint32_t in_addr = paddr & 0x3f;   //块内地址
+	uint32_t group = (paddr >> 6) & 0x7f;     //组号
+	uint32_t tag_ = paddr >> 13;      //标记
 	int i;
 	for(i=0;i<8;i++)
 	{
-		if(caches[group_num*8+i].tag==sign&&caches[group_num*8+i].valid_bit==true)
+		if(caches[group*8+i].tag==tag_&&caches[group*8+i].valid_bit==true)
 		{
-			if(offset+len<=64)
-				memcpy(caches[group_num*8+i].data+offset,&data,len);
+			if(in_addr+len<=64)
+				memcpy(caches[group*8+i].data+in_addr,&data,len);
 			else
 			{
-				cache_write(paddr,64-offset,data);
-				cache_write(paddr+64-offset,len+offset-64,data>>(8*(64-offset)));
+				cache_write(paddr,64-in_addr,data);
+				cache_write(paddr+64-in_addr,len+in_addr-64,data>>(8*(64-in_addr)));
 			}
 			break;
 		}
