@@ -72,24 +72,38 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	// implement me in PA 3-1
 	
 	
-	uint32_t ret;
+	/*uint32_t ret;
 	uint32_t in_addr = paddr & 0x3f;   //块内地址
 	uint32_t group = (paddr >> 6) & 0x7f;     //组号
 	uint32_t tag_ = paddr >> 13;      //标记
+	*/
+	uint32_t ret;
+	uint32_t sign =(paddr>>13)&0x7ffff;
+	uint32_t group_num =(paddr>>6)&0x7f;
+	uint32_t offset=paddr&0x3f;
 
 
     //如果跨行/块 先分割长度
-	int len1 = len;
-	int len2 = 0;
-	if (64 - in_addr < len)
+	
+	
+	int i;
+	for(i=0;i<8;i++)
 	{
-		len1 = 64 - in_addr;
-		len2 = len - len1;
+		if(cache[group_num*8+i].sign==sign&&cache[group_num*8+i].valid==1)
+		{	
+			if(offset+len<=64)
+				memcpy(&ret,cache[group_num*8+i].block+offset,len);
+			else
+			{
+				uint32_t temp1=0,temp2=0;
+				memcpy(&temp1,cache[group_num*8+i].block+offset,64-offset);
+				temp2=cache_read(paddr+64-offset,offset+len-64,Cache)<<(8*(64-offset));
+				ret=temp2|temp1;
+			}
+			break;
+		}
 	}
-	
-	bool is_match = false;//是否命中
-	
-	for (int i = 0; i < 8; i++)
+	/*for (int i = 0; i < 8; i++)
 	{
 		if (caches[group*8+i].valid_bit == true)
 		{
@@ -118,11 +132,11 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 				return ret;
 			}
 		}
-	}
+	}*/
 	if(is_match==false)
 	{
 		memcpy(&ret,hw_mem+paddr,len);
-		int i = 0;
+		
 		for(i=0;i<8;i++)
 		{
 			if(caches[group*8+i].valid_bit==0)
