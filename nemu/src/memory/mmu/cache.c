@@ -77,11 +77,6 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	uint32_t group = (paddr >> 6) & 0x7f;     //组号
 	uint32_t tag_ = paddr >> 13;      //标记
 	
-	//uint32_t ret;
-	//uint32_t sign =(paddr>>13)&0x7ffff;
-	//uint32_t group_num =(paddr>>6)&0x7f;
-	//uint32_t offset=paddr&0x3f;
-
 
     //如果跨行/块 先分割长度
 	int len1 = len;
@@ -104,7 +99,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	            is_match=true;
 	            if (len2 == 0)//不跨行
 			    {
-				memcpy(&ret, (void*)(&caches[group*8+i].data[in_addr]), len);
+				    memcpy(&ret, (void*)(&caches[group*8+i].data[in_addr]), len);
 			    }
 			    else//跨行
 			    {
@@ -151,43 +146,5 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	return ret;
 }
 
-/*if(caches[group*8+i].tag==tag_&&caches[group*8+i].valid_bit==1)
-		{	
-		    if (len2 == 0)//不跨行
-			{
-				memcpy(&ret, (void*)(&caches[group*8+i].data[in_addr]), len);
-			}
-			else//跨行
-			{
-			    uint32_t ret1=0;
-		    	//读取前半部分
-				memcpy(&ret1, (void*)(&caches[group*8+i].data[in_addr]), len1);
-				//读取后半部分
-				//uint32_t ret2 =0;
-				uint32_t ret2=cache_read(paddr + len1, len2);//如果跨组/行都会在这里解决
-				//后半部分为高位，左移
-				ret2 = ret2 << (8 * len1);
-				ret = ret1 | ret2;
-			}
-			break;
-		}*/
-	                
-/*int i;
-		for(i=0;i<8;i++)
-		{
-			if(caches[group*8+i].valid_bit==0)
-			{
-				
-			}
-		}
-		if(i==8)
-		{
-			srand((unsigned)time(0));
-			i=rand()%8;
-			caches[group*8+i].valid_bit=1;
-			caches[group*8+i].tag=tag_;
-			memcpy(caches[group*8+i].data,hw_mem+paddr-in_addr,64);
-		}
-	}*/
 
 
