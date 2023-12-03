@@ -58,14 +58,38 @@ typedef struct
 	GDTR gdtr; // GDTR, todo: define type GDTR
 	// segment registers, todo: define type SegReg
 	union {
-		SegReg segReg[6];
+	    union
+		{
+			union
+			{
+				uint32_t index : 13;
+				uint32_t TI : 1;
+				uint32_t RPL : 2;
+			};
+			uint16_t val;
+		} segReg[6];
+		//SegReg segReg[6];
 		struct
 		{
 			SegReg es, cs, ss, ds, fs, gs;
 		};
 	};
 	// control registers, todo: define type CR0
-	CR0 cr0;
+	union {
+		struct
+		{
+			uint32_t PG : 1;
+			uint32_t undefined : 28;
+			uint32_t ET : 1;
+			uint32_t TS : 1;
+			uint32_t EM : 1;
+			uint32_t MP : 1;
+			uint32_t PE : 1;
+			
+		};
+		uint32_t val;
+	} cr0;
+	//CR0 cr0;
 #else
 	uint8_t dummy_seg[142]; // make __ref_ instructions safe to use
 #endif
