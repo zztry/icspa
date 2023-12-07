@@ -46,9 +46,8 @@ make_instr_func(jmp_near_indirect)
 {
         OPERAND rm;
         
-        //rm.sreg = SREG_CS;
         rm.data_size = data_size;
-        //rm.addr = eip + 1;
+        rm.sreg = SREG_CS;
         int len = 1;
         len += modrm_rm(eip + 1, &rm);
 
