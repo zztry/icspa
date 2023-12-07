@@ -18,7 +18,7 @@ make_instr_func(lgdt){
     operand_read(&m);
     cpu.gdtr.base = m.val;
     
-    return len;s
+    return len;
     
     
 }
