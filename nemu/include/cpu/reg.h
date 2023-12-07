@@ -99,7 +99,7 @@ typedef struct
 	// segment registers, todo: define type SegReg
 	//SegReg segReg[6];
 	union {
-		segReg[6];
+		SegReg segReg[6];
 		struct
 		{
 			SegReg es, cs, ss, ds, fs, gs;
