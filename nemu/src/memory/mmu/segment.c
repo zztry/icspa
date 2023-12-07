@@ -18,8 +18,8 @@ void load_sreg(uint8_t sreg)
 	 * The visible part of 'sreg' should be assigned by mov or ljmp already.
 	 */
 	 
-	 //对应段表地址
-	 uint32_t segt_addr = (uint32_t)hw_mem + cpu.gdtr.base + cpu.segReg[sreg].index * 64;
+	 //对应段表地址,64位8字节
+	 uint32_t segt_addr = (uint32_t)hw_mem + cpu.gdtr.base + cpu.segReg[sreg].index * 8;
 	 SegDesc* sgdt = (SegDesc *)segt_addr;
 	 //laddr_read  laddr_read(laddr_t laddr, size_t len)
 	 cpu.segReg[sreg].base = sgdt->base_15_0 + (sgdt->base_23_16<<16)+(sgdt->base_31_24<<24);
