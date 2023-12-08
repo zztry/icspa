@@ -13,6 +13,7 @@ make_instr_func(ret_near)//c3
     m.data_size = data_size;
     m.type = OPR_MEM;
     m.addr = cpu.esp;
+    m.sreg = SREG_CS;
     //m.val = eip;
     operand_read(&m);
     cpu.eip = m.val;
@@ -35,6 +36,7 @@ make_instr_func(ret_near_imm16)
     m.data_size = data_size;
     m.type = OPR_MEM;
     m.addr = cpu.esp;
+    m.sreg = SREG_CS;
     operand_read(&m);
     
     OPERAND imm;//读取后面的立即数
