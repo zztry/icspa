@@ -21,6 +21,7 @@ make_instr_func(call_near)
     operand_read(&opr_src);
     m.data_size = data_size;
     m.type = OPR_MEM;
+    m.sreg = SREG_CS;
     m.addr = cpu.esp;
     m.val = eip+1+data_size/8;
     operand_write(&m);
@@ -53,12 +54,13 @@ make_instr_func(call_near_indirect)
     m.data_size = data_size;
     m.type = OPR_MEM;
     m.addr = cpu.esp;
-    
+    m.sreg = SREG_CS;
     
     
     //  jmp
     OPERAND rm;
     rm.data_size = data_size;
+    rm.sreg = SREG_CS;
     int len = 1;
     len += modrm_rm(eip + 1, &rm);
     operand_read(&rm);
