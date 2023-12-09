@@ -143,7 +143,6 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 			memcpy(caches[group*8+pos].data,hw_mem+paddr-in_addr,64);
 		}
 	}
-	assert(ret==1);
 	return ret;
 }
 
