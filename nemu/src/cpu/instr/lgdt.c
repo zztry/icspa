@@ -2,7 +2,7 @@
 /*
 Put the implementations of `lgdt' instructions here.
 */
-/*
+
 make_instr_func(lgdt){
     OPERAND m;
     m.data_size = 16;
@@ -22,4 +22,4 @@ make_instr_func(lgdt){
     return len;
     
     
-}*/
+}
