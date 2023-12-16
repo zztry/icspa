@@ -54,7 +54,6 @@ uint32_t vaddr_read(vaddr_t vaddr, uint8_t sreg, size_t len)
 	assert(len == 1 || len == 2 || len == 4);
 #ifdef IA32_SEG
     if(cpu.cr0.pe){
-        assert(len == 3);
 	    uint32_t ld=segment_translate(vaddr,sreg);
 	    return laddr_read(ld,len);
 	}
@@ -71,7 +70,6 @@ void vaddr_write(vaddr_t vaddr, uint8_t sreg, size_t len, uint32_t data)
 	assert(len == 1 || len == 2 || len == 4);
 #ifdef IA32_SEG
 	if(cpu.cr0.pe) {
-	    assert(len == 5);
 		uint32_t ld = segment_translate(vaddr, sreg);
 		laddr_write(ld, len, data);
 	}
