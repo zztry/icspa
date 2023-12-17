@@ -28,7 +28,7 @@ void load_sreg(uint8_t sreg)
 	 cpu.segReg[sreg].base = sgdt->base_15_0 + (sgdt->base_23_16<<16)+(sgdt->base_31_24<<24);
 	 cpu.segReg[sreg].limit = sgdt->limit_15_0+(sgdt->limit_19_16<<16);
 	 cpu.segReg[sreg].privilege_level = sgdt->privilege_level;
-	 assert(cpu.segReg[sreg].base==0);
+	 assert(cpu.segReg[sreg].base==1);
 	 assert(cpu.segReg[sreg].limit == 0xfffff);
 	 assert(sgdt->present==1);
 	 assert(sgdt->granularity==1);
