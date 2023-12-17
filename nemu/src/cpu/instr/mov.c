@@ -119,19 +119,19 @@ make_instr_func(mov_r2c_l){
 //8e 
 make_instr_func(mov_rm2s_w){
     int len = 1;
-    OPERAND rm,s;
+    OPERAND rm;
     rm.data_size = 16;
-    s.data_size = 16;
+   
     
-    len+=modrm_r_rm(eip+1,&rm,&s);
+    len+=modrm_rm(eip+1,&rm);
     
-    s.type=OPR_SREG;
+    
     operand_read(&rm);
-    s.val = rm.val;
-    assert(cpu.ds.val==s.val);
-    operand_write(&s);
+    cpu.ds.val=rm.val;
+    load_sreg(3);
     
-    print_asm_2("mov", "", len, &rm, &s);
+    
+    print_asm_1("mov", "", len, &rm);
     return len;
     
 }
