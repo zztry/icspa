@@ -89,6 +89,13 @@ make_instr_func(jmp_far_imm)
         {
             cpu.eip = rel.val;
         }
+        rel.data_size = 16;
+        rel.addr += data_size/8;
+        operand_read(&rel);
+        
+        cpu.cs.val = rel.val;
+        load_sreg(1);
+        
         print_asm_1("jmp4", "", 1 + data_size / 8, &rel);
         return 0;
 }
