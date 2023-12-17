@@ -116,7 +116,7 @@ make_instr_func(mov_r2c_l){
     return len;
 }
 
-
+//8e 
 make_instr_func(mov_rm2s_w){
     int len = 1;
     OPERAND rm,s;
@@ -128,6 +128,7 @@ make_instr_func(mov_rm2s_w){
     s.type=OPR_SREG;
     operand_read(&rm);
     s.val = rm.val;
+    assert(cpu.ds.val==s.val);
     operand_write(&s);
     
     print_asm_2("mov", "", len, &rm, &s);
