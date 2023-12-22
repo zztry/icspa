@@ -54,7 +54,7 @@ uint32_t laddr_read(laddr_t laddr, size_t len)
 			/* this is a special case, you can handle it later. */			
 		} else {
 			uint32_t hwaddr = page_translate(laddr);
-			return paddr_read(hwaddr, len);	
+			return hw_mem_read(hwaddr, len);	
 		}
 	}
 	else {
