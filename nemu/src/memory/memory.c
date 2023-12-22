@@ -45,12 +45,12 @@ uint32_t laddr_read(laddr_t laddr, size_t len)
 #ifdef IA32_PAGE
     if( cpu.cr0.pg ) {
 		if ((laddr>>12) !=((laddr+len-1)>>12)) {
-		    uint32_t len1 = ((laddr+len-1)>>12)<<12 - laddr;
+		    uint32_t len1 = (((laddr+len-1)>>12)<<12) - laddr;
 		    uint32_t ret1 = page_translate(laddr);
 		    uint32_t ret2 = page_translate((laddr>>12)<<12);
 		    ret1 = paddr_read(ret1,len1);
 		    ret2 = paddr_read(ret2,len-len1);
-		    return ret1+ret2<<(8*len1);
+		    return ret1+ (ret2<<(8*len1));
 			/* this is a special case, you can handle it later. */			
 		} else {
 			uint32_t hwaddr = page_translate(laddr);
