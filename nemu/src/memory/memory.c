@@ -53,8 +53,8 @@ uint32_t laddr_read(laddr_t laddr, size_t len)
 		    return ret1+ret2<<(8*len1);
 			/* this is a special case, you can handle it later. */			
 		} else {
-			hwaddr_t hwaddr = page_translate(laddr);
-			return hwaddr_read(hwaddr, len);	
+			uint32_t hwaddr = page_translate(laddr);
+			return paddr_read(hwaddr, len);	
 		}
 	}
 	else {
