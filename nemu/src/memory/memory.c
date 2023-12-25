@@ -58,7 +58,7 @@ uint32_t laddr_read(laddr_t laddr, size_t len)
 		} 
 		else {
 			uint32_t hwaddr = page_translate(laddr);
-			return hw_mem_read(hwaddr, len);	
+			return paddr_read(hwaddr, len);	
 		}
 	}
 	else {
@@ -76,6 +76,8 @@ void laddr_write(laddr_t laddr, size_t len, uint32_t data)
         //printf("cpu.cr0.pg=1 now.  laddr_write  \n");
         //fflush(stdout);
         if ((laddr>>12) !=((laddr+len-1)>>12)) {
+            printf("cpu.cr0.pg=1 now.  laddr_write  \n");
+            fflush(stdout);
 		    uint32_t len1 = (((laddr+len-1)>>12)<<12) - laddr;
 		    uint32_t len2 = len - len1;
 		    uint32_t ret1 = page_translate(laddr);
