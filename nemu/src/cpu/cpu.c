@@ -134,6 +134,8 @@ int exec_inst()
 #else
 	int len = opcode_entry[opcode](cpu.eip, opcode);
 #endif
+    printf("opcode = %x , eip = %x , len = %d\n", opcode , cpu.eip,len);
+    fflush(stdout);
 	return len;
 }
 
