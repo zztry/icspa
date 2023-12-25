@@ -48,11 +48,11 @@ uint32_t laddr_read(laddr_t laddr, size_t len)
         //fflush(stdout);
         //assert(0);
 		if ((laddr>>12) !=((laddr+len-1)>>12)) {
-		    uint32_t len1 = (((laddr+len-1)>>12)<<12) - laddr;
-		    uint32_t ret1 = page_translate(laddr);//低位
-		    uint32_t ret2 = page_translate((laddr>>12)<<12);
-		    ret1 = paddr_read(ret1,len1);
-		    ret2 = paddr_read(ret2,len-len1);
+		    uint32_t len1 = (((laddr>>12)+1)<<12)-laddr;
+		    uint32_t addr1 = page_translate(laddr);  //低位
+		    uint32_t addr2 = page_translate( ((laddr>>12)+1)<<12) );
+		    uint32_t ret1 = paddr_read(addr1,len1);
+		    uint32_t ret2 = paddr_read(addr2,len-len1);
 		    return ret1+ (ret2<<(8*len1));
 			/* this is a special case, you can handle it later. */			
 		} 
@@ -78,10 +78,10 @@ void laddr_write(laddr_t laddr, size_t len, uint32_t data)
         if ((laddr>>12) !=((laddr+len-1)>>12)) {
             printf("cpu.cr0.pg=1 now.  laddr_write  \n");
             fflush(stdout);
-		    uint32_t len1 = (((laddr+len-1)>>12)<<12) - laddr;
+		    uint32_t len1 = (((laddr>>12)+1)<<12)-laddr;
 		    uint32_t len2 = len - len1;
-		    uint32_t ret1 = page_translate(laddr);
-		    uint32_t ret2 = page_translate((laddr>>12)<<12);
+		    uint32_t addr1 = page_translate(laddr);  //低位
+		    uint32_t addr2 = page_translate( ((laddr>>12)+1)<<12) );
 		    uint32_t data1 = data - ((data>>(8*len1))<<(8*len1));
 		    uint32_t data2 = (data>>(8*len1));
 		    paddr_write(ret1,len1,data1);
