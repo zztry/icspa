@@ -87,7 +87,7 @@ void laddr_write(laddr_t laddr, size_t len, uint32_t data)
 		} 
 		else {
 			uint32_t hwaddr = page_translate(laddr);
-		    paddr_write(hwaddr, len);
+		    paddr_write(hwaddr, len,data);
 		}
         
     }
