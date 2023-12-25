@@ -4,9 +4,9 @@
 // translate from linear address to physical address
 paddr_t page_translate(laddr_t laddr)
 {
-    //printf("\nPlease implement page_translate()\n");
-	//fflush(stdout);
-	//assert(0);s
+    printf("\nPlease implement page_translate()\n");
+	fflush(stdout);
+	assert(0);
 #ifndef TLB_ENABLED
 	printf("\nPlease implement page_translate()\n");
 	fflush(stdout);
