@@ -44,9 +44,9 @@ uint32_t laddr_read(laddr_t laddr, size_t len)
     assert(len == 1 || len == 2 || len == 4);
 #ifdef IA32_PAGE
     if( cpu.cr0.pg ) {
-        printf("cpu.cr0.pg=1 now/n");
+        printf("cpu.cr0.pg=1 now\n");
         fflush(stdout);
-        assert(0);
+        //assert(0);
 		if ((laddr>>12) !=((laddr+len-1)>>12)) {
 		    uint32_t len1 = (((laddr+len-1)>>12)<<12) - laddr;
 		    uint32_t ret1 = page_translate(laddr);
