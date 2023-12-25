@@ -44,18 +44,19 @@ uint32_t laddr_read(laddr_t laddr, size_t len)
     assert(len == 1 || len == 2 || len == 4);
 #ifdef IA32_PAGE
     if( cpu.cr0.pg ) {
-        printf("cpu.cr0.pg=1 now\n");
+        printf("cpu.cr0.pg=1 now.  laddr_read  \n");
         fflush(stdout);
         //assert(0);
 		if ((laddr>>12) !=((laddr+len-1)>>12)) {
 		    uint32_t len1 = (((laddr+len-1)>>12)<<12) - laddr;
-		    uint32_t ret1 = page_translate(laddr);
+		    uint32_t ret1 = page_translate(laddr);//低位
 		    uint32_t ret2 = page_translate((laddr>>12)<<12);
 		    ret1 = paddr_read(ret1,len1);
 		    ret2 = paddr_read(ret2,len-len1);
 		    return ret1+ (ret2<<(8*len1));
 			/* this is a special case, you can handle it later. */			
-		} else {
+		} 
+		else {
 			uint32_t hwaddr = page_translate(laddr);
 			return hw_mem_read(hwaddr, len);	
 		}
@@ -70,7 +71,32 @@ uint32_t laddr_read(laddr_t laddr, size_t len)
 
 void laddr_write(laddr_t laddr, size_t len, uint32_t data)
 {
+#ifdef IA32_PAGE
+    if(cpu.cr0.pg){
+        printf("cpu.cr0.pg=1 now.  laddr_write  \n");
+        fflush(stdout);
+        if ((laddr>>12) !=((laddr+len-1)>>12)) {
+		    uint32_t len1 = (((laddr+len-1)>>12)<<12) - laddr;
+		    uint32_t len2 = len - len1;
+		    uint32_t ret1 = page_translate(laddr);
+		    uint32_t ret2 = page_translate((laddr>>12)<<12);
+		    uint32_t data1 = data - ((data>>(8*len1))<<(8*len1));
+		    uint32_t data2 = (data>>(8*len1));
+		    paddr_write(ret1,len1,data1);
+		    paddr_write(ret2,len-len1,data2);
+		} 
+		else {
+			uint32_t hwaddr = page_translate(laddr);
+		    hw_mem_write(hwaddr, len);
+		}
+        
+    }
+    else{
+        paddr_write(laddr, len, data);
+    }
+#else
 	paddr_write(laddr, len, data);
+#endif
 }
 
 uint32_t vaddr_read(vaddr_t vaddr, uint8_t sreg, size_t len)
