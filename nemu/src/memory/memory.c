@@ -44,8 +44,8 @@ uint32_t laddr_read(laddr_t laddr, size_t len)
     assert(len == 1 || len == 2 || len == 4);
 #ifdef IA32_PAGE
     if( cpu.cr0.pg ) {
-        printf("cpu.cr0.pg=1 now.  laddr_read  \n");
-        fflush(stdout);
+        //printf("cpu.cr0.pg=1 now.  laddr_read  \n");
+        //fflush(stdout);
         //assert(0);
 		if ((laddr>>12) !=((laddr+len-1)>>12)) {
 		    uint32_t len1 = (((laddr+len-1)>>12)<<12) - laddr;
@@ -73,8 +73,8 @@ void laddr_write(laddr_t laddr, size_t len, uint32_t data)
 {
 #ifdef IA32_PAGE
     if(cpu.cr0.pg){
-        printf("cpu.cr0.pg=1 now.  laddr_write  \n");
-        fflush(stdout);
+        //printf("cpu.cr0.pg=1 now.  laddr_write  \n");
+        //fflush(stdout);
         if ((laddr>>12) !=((laddr+len-1)>>12)) {
 		    uint32_t len1 = (((laddr+len-1)>>12)<<12) - laddr;
 		    uint32_t len2 = len - len1;
