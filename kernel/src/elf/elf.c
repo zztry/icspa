@@ -39,20 +39,20 @@ uint32_t loader()
 
 			// remove this panic!!!
 			//panic("Please implement the loader");
-    uint32_t addr = 0;
+            uint32_t p_paddr = 0;
 #ifdef IA32_PAGE
-    addr = mm_malloc(ph->p_vaddr,ph->p_memsz);
-    memcpy((void *)addr, (void *)(ph->p_offset), ph->p_filesz); 
-    if(ph->p_memsz>ph->p_filesz)
-    {
-        memset((void *)(addr+ph->p_filesz), 0, (ph->p_memsz - ph->p_filesz) );
-    }
+            p_paddr = mm_malloc(ph->p_vaddr,ph->p_memsz);
+            memcpy((void *)p_paddr, (void *)(ph->p_offset), ph->p_filesz); 
+            if(ph->p_memsz>ph->p_filesz)
+            {
+                memset((void *)(p_paddr+ph->p_filesz), 0, (ph->p_memsz - ph->p_filesz) );
+            }
 #else
-    memcpy((void *)(ph->p_vaddr), (void *)(ph->p_offset), ph->p_filesz); 
-    if(ph->p_memsz>ph->p_filesz)
-    {
-        memset((void *)(ph->p_vaddr+ph->p_filesz), 0, (ph->p_memsz - ph->p_filesz) );
-    }
+            memcpy((void *)(ph->p_vaddr), (void *)(ph->p_offset), ph->p_filesz); 
+            if(ph->p_memsz>ph->p_filesz)
+            {
+                memset((void *)(ph->p_vaddr+ph->p_filesz), 0, (ph->p_memsz - ph->p_filesz) );
+            }
 #endif
 
 /* TODO: copy the segment from the ELF file to its proper memory area */
