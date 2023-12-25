@@ -57,7 +57,7 @@ uint32_t laddr_read(laddr_t laddr, size_t len)
 			/* this is a special case, you can handle it later. */			
 		} 
 		else {
-			uint32_t hwaddr = page_translate(laddr);
+			uint32_t paddr = page_translate(laddr);
 			return paddr_read(hwaddr, len);	
 		}
 	}
@@ -71,6 +71,7 @@ uint32_t laddr_read(laddr_t laddr, size_t len)
 
 void laddr_write(laddr_t laddr, size_t len, uint32_t data)
 {
+    assert(len == 1 || len == 2 || len == 4);
 #ifdef IA32_PAGE
     if(cpu.cr0.pg){
         //printf("cpu.cr0.pg=1 now.  laddr_write  \n");
@@ -90,8 +91,8 @@ void laddr_write(laddr_t laddr, size_t len, uint32_t data)
 		    paddr_write(addr2,len2,data2);
 		} 
 		else {
-			uint32_t hwaddr = page_translate(laddr);
-		    paddr_write(hwaddr, len ,data);
+			uint32_t paddr = page_translate(laddr);
+		    paddr_write(paddr, len ,data);
 		}
         
     }
