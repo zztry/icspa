@@ -83,11 +83,11 @@ void laddr_write(laddr_t laddr, size_t len, uint32_t data)
 		    uint32_t data1 = data - ((data>>(8*len1))<<(8*len1));
 		    uint32_t data2 = (data>>(8*len1));
 		    paddr_write(ret1,len1,data1);
-		    paddr_write(ret2,len-len1,data2);
+		    paddr_write(ret2,len2,data2);
 		} 
 		else {
 			uint32_t hwaddr = page_translate(laddr);
-		    hw_mem_write(hwaddr, len);
+		    paddr_write(hwaddr, len);
 		}
         
     }
