@@ -134,6 +134,8 @@ int exec_inst()
 #else
 	int len = opcode_entry[opcode](cpu.eip, opcode);
 #endif
+    //printf("opcode = %x , eip = %x , len = %d\n", opcode , cpu.eip,len);
+    //fflush(stdout);
 	return len;
 }
 
@@ -148,11 +150,6 @@ void do_intr()
 		uint8_t intr_no = i8259_query_intr_no(); // get interrupt number
 		assert(intr_no != I8259_NO_INTR);
 		i8259_ack_intr();	// tell the PIC interrupt info received
-		raise_intr(intr_no); // raise intrrupt to turn into kernel handler
-	}
-}
-#endif
-t info received
 		raise_intr(intr_no); // raise intrrupt to turn into kernel handler
 	}
 }
