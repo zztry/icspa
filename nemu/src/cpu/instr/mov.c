@@ -128,9 +128,8 @@ make_instr_func(mov_rm2s_w){
     
     operand_read(&rm);
     s.val=rm.val;
-    cpu.ds.val = rm.val;
     operand_write(&s);
-    load_sreg(3);
+    load_sreg(s.addr);
     
     
     print_asm_1("mov", "", len, &rm);
