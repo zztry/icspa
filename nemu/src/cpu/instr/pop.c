@@ -17,9 +17,10 @@ make_instr_func(pop_r_v)
     
     m.data_size = data_size;
     m.type = OPR_MEM;
+    m.sreg = SREG_DS;
     m.addr = cpu.esp;
     operand_read(&m);
-    //cpu.ebp = m.val;
+    
     
     
     OPERAND r;//要存到的寄存器
@@ -32,8 +33,6 @@ make_instr_func(pop_r_v)
     
     cpu.esp += data_size/8;
     
-    
-    //eip = m.val;
     
     
     return 1;
