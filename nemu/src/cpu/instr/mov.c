@@ -120,14 +120,15 @@ make_instr_func(mov_r2c_l){
 make_instr_func(mov_rm2s_w){
     int len = 1;
     OPERAND rm,s;
-    rm.data_size = 16;
-    
+    rm.data_size = data_size;
+    s.data_size = data_size;
     
     len+=modrm_r_rm(eip+1,&s,&rm);
     s.type = OPR_SREG;
     
     operand_read(&rm);
     s.val=rm.val;
+    cpu.ds.val = rm.val;
     operand_write(&s);
     load_sreg(3);
     
