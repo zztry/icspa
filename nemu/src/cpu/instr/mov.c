@@ -119,15 +119,16 @@ make_instr_func(mov_r2c_l){
 //8e 
 make_instr_func(mov_rm2s_w){
     int len = 1;
-    OPERAND rm;
+    OPERAND rm,s;
     rm.data_size = 16;
-   
     
-    len+=modrm_rm(eip+1,&rm);
     
+    len+=modrm_r_rm(eip+1,&s,&rm);
+    s.type = SREG_DS;
     
     operand_read(&rm);
-    cpu.ds.val=rm.val;
+    s.val=rm.val;
+    operand_write(&s);
     load_sreg(3);
     
     
