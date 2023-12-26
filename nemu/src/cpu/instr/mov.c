@@ -124,7 +124,7 @@ make_instr_func(mov_rm2s_w){
     
     
     len+=modrm_r_rm(eip+1,&s,&rm);
-    s.type = SREG_DS;
+    s.type = OPR_SREG;
     
     operand_read(&rm);
     s.val=rm.val;
