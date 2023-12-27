@@ -3,11 +3,6 @@
 
 #include "nemu.h"
 
-typedef struct {
-	uint32_t limit :16;
-	uint32_t base :32;
-}GDTR;
-
 typedef union {
 	struct {
 		uint32_t pe :1;
@@ -20,6 +15,11 @@ typedef union {
 	};
 	uint32_t val; 	
 }CR0;
+
+typedef struct {
+	uint32_t limit :16;
+	uint32_t base :32;
+}GDTR;
 
 typedef struct {
 	// the 16-bit visible part, i.e., the selector
