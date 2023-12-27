@@ -17,6 +17,8 @@ void init_page(void)
 	PTE *ptable = (PTE *)va_to_pa(kptable);
 	uint32_t pdir_idx, ptable_idx, pframe_idx;
     //Log("pdir = %x  ptable = %x",pdir,ptable);
+    printf("pdir = %x  ptable = %x",pdir,ptable);
+    fflush(stdout);
 	/* make all PDE invalid */
 	memset(pdir, 0, NR_PDE * sizeof(PDE));
 
