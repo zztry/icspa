@@ -113,6 +113,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 				    ret2 = ret2 << (8 * len1);
 				    ret = ret1 | ret2;
 			    }
+			    return ret;
 			    break;
 	        }
 	    }
