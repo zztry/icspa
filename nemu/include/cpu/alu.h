@@ -4,7 +4,7 @@
 #include <cpu-ref/alu_ref.h>
 
 // enable NEMU_REF_ALU to use reference implementation
-#define NEMU_REF_ALU
+//#define NEMU_REF_ALU
 
 // dest + src
 uint32_t alu_add(uint32_t src, uint32_t dest, size_t data_size);
