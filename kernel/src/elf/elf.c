@@ -27,7 +27,7 @@ uint32_t loader()
 #else
 	elf = (void *)0x0;
 	Log("ELF loading from ram disk.");
-	Log("test");
+	//Log("test");
 #endif
 
 	/* Load each program segment */
@@ -43,7 +43,7 @@ uint32_t loader()
             uint32_t p_paddr = 0;
 #ifdef IA32_PAGE
             p_paddr = mm_malloc(ph->p_vaddr,ph->p_memsz);
-            Log("vaddr = %x  paddr = %x",ph->p_vaddr,p_paddr);
+            //Log("vaddr = %x  paddr = %x",ph->p_vaddr,p_paddr);
             memcpy((void *)p_paddr, (void *)(ph->p_offset), ph->p_filesz); 
             if(ph->p_memsz>ph->p_filesz)
             {
@@ -51,7 +51,7 @@ uint32_t loader()
             }
 #else
             Log("vaddr = %x",ph->p_vaddr);
-            memcpy((void *)(ph->p_vaddr), (void *)(ph->p_offset), ph->p_filesz); 
+            //memcpy((void *)(ph->p_vaddr), (void *)(ph->p_offset), ph->p_filesz); 
             if(ph->p_memsz>ph->p_filesz)
             {
                 memset((void *)(ph->p_vaddr+ph->p_filesz), 0, (ph->p_memsz - ph->p_filesz) );
