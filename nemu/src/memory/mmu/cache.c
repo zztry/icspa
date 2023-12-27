@@ -49,7 +49,7 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 		{
 			if(len2==0)
 			{
-			    memcpy(caches[group*8+i].data+in_addr,&data,len);ss
+			    memcpy(caches[group*8+i].data+in_addr,&data,len);
 			}
 			else
 			{
