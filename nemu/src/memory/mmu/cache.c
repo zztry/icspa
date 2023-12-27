@@ -9,7 +9,7 @@
 //32-13 = 19 : 标记位      7: 组号   6: 块内地址
 #ifdef CACHE_ENABLED
 CacheLine caches[1024];
-extern uint8_t hw_mem[];
+
 
 // init the cache
 void init_cache()
@@ -72,7 +72,7 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	// implement me in PA 3-1
 	
 	
-	uint32_t ret;
+	uint32_t ret = 0;
 	uint32_t in_addr = paddr & 0x3f;   //块内地址
 	uint32_t group = (paddr >> 6) & 0x7f;     //组号
 	uint32_t tag_ = paddr >> 13;      //标记
