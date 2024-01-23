@@ -10,21 +10,21 @@ static void instr_execute_1op()
     
     //将src写入esp/sp的地址中
     
-    OPERAND m;
+    //OPERAND m;
     
     //opr_src.data_size=data_size;
     operand_read(&opr_src);
     
-    m.data_size = data_size;
-    m.sreg = SREG_DS;
-    m.type = OPR_MEM;
-    m.addr = cpu.esp;
-    m.val = opr_src.val;
+    //opr_dest.data_size = data_size;
+    opr_dest.sreg = SREG_DS;
+    opr_dest.type = OPR_MEM;
+    opr_dest.addr = cpu.esp;
+    opr_dest.val = opr_src.val;
     //if(data_size==8)
     //{
     //    m.val = sign_ext(opr_src.val,opr_src.data_size);
     //}
-    operand_write(&m);
+    operand_write(&opr_dest);
 }
 
 //50-57   r->esp 16/32 push_rm_v
