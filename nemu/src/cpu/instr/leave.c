@@ -16,12 +16,13 @@ make_instr_func(leave)
     m.data_size = data_size;
     m.type = OPR_MEM;
     m.addr = cpu.esp;
+    m.sreg = SREG_DS;
     //m.val = eip;
     operand_read(&m);
     cpu.ebp = m.val;
     
     
-    cpu.esp += 4;
+    cpu.esp += data_size/8;
     //eip = m.val;
     
     
