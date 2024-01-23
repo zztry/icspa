@@ -15,11 +15,11 @@ make_instr_func(iret)
     cpu.eip = m.val;
     cpu.esp+=4;
     
-    m.data_size = 16;
+    m.data_size = 32;
     m.addr = cpu.esp;
     operand_read(&m);
     cpu.cs.val = m.val&0xFFFF;
-    cpu.esp+=2;
+    cpu.esp+=4;
 
     m.data_size = 32;
     m.addr = cpu.esp;
