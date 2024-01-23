@@ -34,8 +34,8 @@ void raise_intr(uint8_t intr_no)
     operand_write(&m);
 
     GateDesc* gate = (void *)(page_translate( segment_translate(cpu.idtr.base + intr_no*8 , SREG_CS) )+hw_mem);    
-
-    if(gate->type ==  INTERRUPT_GATE_32){
+    //INTERRUPT_GATE_32
+    if(gate->type == 0xe ){
         cpu.eflags.IF = 0; 
     }
 
