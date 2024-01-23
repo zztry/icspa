@@ -15,7 +15,7 @@ static void instr_execute_1op()
     //opr_src.data_size=data_size;
     operand_read(&opr_src);
     
-    //m.data_size = data_size;
+    m.data_size = data_size;
     m.sreg = SREG_DS;
     m.type = OPR_MEM;
     m.addr = cpu.esp;
