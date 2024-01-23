@@ -48,8 +48,6 @@ make_instr_func(pusha)
     m.data_size = data_size;
     m.sreg = SREG_DS;
     
-    if(data_size==32)
-    {
         cpu.esp -= data_size/8;
         m.addr = cpu.esp;
         m.val = cpu.eax;
@@ -89,49 +87,6 @@ make_instr_func(pusha)
         m.addr = cpu.esp;
         m.val = cpu.edi;
         operand_write(&m);
-    }
-    else
-    {
-        cpu.esp -= data_size/8;
-        m.addr = cpu.esp;
-        m.val = cpu.ax;
-        operand_write(&m.val);
-
-        cpu.esp -= data_size/8;
-        m.addr = cpu.esp;
-        m.val = cpu.cx;
-        operand_write(&m);
-
-        cpu.esp -= data_size/8;
-        m.addr = cpu.esp;
-        m.val = cpu.dx;
-        operand_write(&m);
-
-        cpu.esp -= data_size/8;
-        m.addr = cpu.esp;
-        m.val = cpu.bx;
-        operand_write(&m);
-     
-        cpu.esp -= data_size/8;
-        m.addr = cpu.esp;
-        m.val = temp;
-        operand_write(&m);
-
-        cpu.esp -= data_size/8;
-        m.addr = cpu.esp;
-        m.val = cpu.bp;
-        operand_write(&m);
-
-        cpu.esp -= data_size/8;
-        m.addr = cpu.esp;
-        m.val = cpu.si;
-        operand_write(&m);
-
-        cpu.esp -= data_size/8;
-        m.addr = cpu.esp;
-        m.val = cpu.di;
-        operand_write(&m);
-    }
     
     
 
