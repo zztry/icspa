@@ -40,6 +40,103 @@ make_instr_impl_1op(push,i,b);
 //68 push_i_v
 make_instr_impl_1op(push,i,v);
 
+make_instr_func(pusha)
+{
+    uint32_t temp = cpu.esp;
+    OPERAND m;
+    m.type = OPR_MEM;
+    m.data_size = data_size;
+    m.sreg = SREG_DS;
+    
+    if(data_size==32)
+    {
+        cpu.esp -= data_size/8;
+        m.addr = cpu.esp;
+        m.val = cpu.eax;
+        operand_write(&m.val);
+    
+        cpu.esp -= data_size/8;
+        m.addr = cpu.esp;
+        m.val = cpu.ecx;
+        operand_write(&m.val);
+
+        cpu.esp -= data_size/8;
+        m.addr = cpu.esp;
+        m.val = cpu.edx;
+        operand_write(&m.val);
+
+        cpu.esp -= data_size/8;
+        m.addr = cpu.esp;
+        m.val = cpu.ebx;
+        operand_write(&m.val);
+     
+        cpu.esp -= data_size/8;
+        m.addr = cpu.esp;
+        m.val = temp;
+        operand_write(&m.val);
+
+        cpu.esp -= data_size/8;
+        m.addr = cpu.esp;
+        m.val = cpu.ebp;
+        operand_write(&m.val);
+
+        cpu.esp -= data_size/8;
+        m.addr = cpu.esp;
+        m.val = cpu.esi;
+        operand_write(&m.val);
+
+        cpu.esp -= data_size/8;
+        m.addr = cpu.esp;
+        m.val = cpu.edi;
+        operand_write(&m.val);
+    }
+    else
+    {
+        cpu.esp -= data_size/8;
+        m.addr = cpu.esp;
+        m.val = cpu.ax;
+        operand_write(&m.val);
+
+        cpu.esp -= data_size/8;
+        m.addr = cpu.esp;
+        m.val = cpu.cx;
+        operand_write(&m.val);
+
+        cpu.esp -= data_size/8;
+        m.addr = cpu.esp;
+        m.val = cpu.dx;
+        operand_write(&m.val);
+
+        cpu.esp -= data_size/8;
+        m.addr = cpu.esp;
+        m.val = cpu.bx;
+        operand_write(&m.val);
+     
+        cpu.esp -= data_size/8;
+        m.addr = cpu.esp;
+        m.val = temp;
+        operand_write(&m.val);
+
+        cpu.esp -= data_size/8;
+        m.addr = cpu.esp;
+        m.val = cpu.bp;
+        operand_write(&m.val);
+
+        cpu.esp -= data_size/8;
+        m.addr = cpu.esp;
+        m.val = cpu.si;
+        operand_write(&m.val);
+
+        cpu.esp -= data_size/8;
+        m.addr = cpu.esp;
+        m.val = cpu.di;
+        operand_write(&m.val);
+    }
+    
+    
+
+    return 1;
+}
 
 /*    
 make_instr_func(push_r_l)//32
