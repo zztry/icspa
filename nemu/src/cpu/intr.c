@@ -8,8 +8,6 @@ void raise_intr(uint8_t intr_no)
 	//printf("Please implement raise_intr()");
 	//fflush(stdout);
 	//assert(0);
-
-
     // Push EFLAGS, CS, and EIP
     OPERAND m;
     m.type = OPR_MEM;
