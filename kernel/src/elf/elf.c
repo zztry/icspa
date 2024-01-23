@@ -40,9 +40,9 @@ uint32_t loader()
 
 			// remove this panic!!!
 			//panic("Please implement the loader");
-            uint32_t p_paddr = 0;
+            //uint32_t p_paddr = 0;
 #ifdef IA32_PAGE
-            p_paddr = mm_malloc(ph->p_vaddr,ph->p_memsz);
+            uint32_t p_paddr = mm_malloc(ph->p_vaddr,ph->p_memsz);
             //Log("vaddr = %x  paddr = %x, memsz = %x",ph->p_vaddr,p_paddr,ph->p_memsz);
             memcpy((void *)p_paddr, (void *)(ph->p_offset), ph->p_filesz); 
             if(ph->p_memsz>ph->p_filesz)
