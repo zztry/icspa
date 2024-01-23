@@ -2,7 +2,7 @@
 /*
 Put the implementations of `lidt' instructions here.
 */
-make_instr_func(lgdt){
+make_instr_func(lidt){
     OPERAND m;
     m.data_size = 16;
     m.sreg = SREG_CS;
