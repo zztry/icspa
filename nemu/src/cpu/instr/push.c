@@ -53,42 +53,42 @@ make_instr_func(pusha)
         cpu.esp -= data_size/8;
         m.addr = cpu.esp;
         m.val = cpu.eax;
-        operand_write(&m.val);
+        operand_write(&m);
     
         cpu.esp -= data_size/8;
         m.addr = cpu.esp;
         m.val = cpu.ecx;
-        operand_write(&m.val);
+        operand_write(&m);
 
         cpu.esp -= data_size/8;
         m.addr = cpu.esp;
         m.val = cpu.edx;
-        operand_write(&m.val);
+        operand_write(&m);
 
         cpu.esp -= data_size/8;
         m.addr = cpu.esp;
         m.val = cpu.ebx;
-        operand_write(&m.val);
+        operand_write(&m);
      
         cpu.esp -= data_size/8;
         m.addr = cpu.esp;
         m.val = temp;
-        operand_write(&m.val);
+        operand_write(&m);
 
         cpu.esp -= data_size/8;
         m.addr = cpu.esp;
         m.val = cpu.ebp;
-        operand_write(&m.val);
+        operand_write(&m);
 
         cpu.esp -= data_size/8;
         m.addr = cpu.esp;
         m.val = cpu.esi;
-        operand_write(&m.val);
+        operand_write(&m);
 
         cpu.esp -= data_size/8;
         m.addr = cpu.esp;
         m.val = cpu.edi;
-        operand_write(&m.val);
+        operand_write(&m);
     }
     else
     {
@@ -100,37 +100,37 @@ make_instr_func(pusha)
         cpu.esp -= data_size/8;
         m.addr = cpu.esp;
         m.val = cpu.cx;
-        operand_write(&m.val);
+        operand_write(&m);
 
         cpu.esp -= data_size/8;
         m.addr = cpu.esp;
         m.val = cpu.dx;
-        operand_write(&m.val);
+        operand_write(&m);
 
         cpu.esp -= data_size/8;
         m.addr = cpu.esp;
         m.val = cpu.bx;
-        operand_write(&m.val);
+        operand_write(&m);
      
         cpu.esp -= data_size/8;
         m.addr = cpu.esp;
         m.val = temp;
-        operand_write(&m.val);
+        operand_write(&m);
 
         cpu.esp -= data_size/8;
         m.addr = cpu.esp;
         m.val = cpu.bp;
-        operand_write(&m.val);
+        operand_write(&m);
 
         cpu.esp -= data_size/8;
         m.addr = cpu.esp;
         m.val = cpu.si;
-        operand_write(&m.val);
+        operand_write(&m);
 
         cpu.esp -= data_size/8;
         m.addr = cpu.esp;
         m.val = cpu.di;
-        operand_write(&m.val);
+        operand_write(&m);
     }
     
     
