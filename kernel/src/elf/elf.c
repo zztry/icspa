@@ -40,23 +40,25 @@ uint32_t loader()
 
 			// remove this panic!!!
 			//panic("Please implement the loader");
-            //uint32_t p_paddr = 0;
+            uint32_t p_paddr = 0;
 #ifdef IA32_PAGE
-            uint32_t p_paddr = mm_malloc(ph->p_vaddr,ph->p_memsz);
-            //Log("vaddr = %x  paddr = %x, memsz = %x",ph->p_vaddr,p_paddr,ph->p_memsz);
+            p_paddr = mm_malloc(ph->p_vaddr,ph->p_memsz);       
+#else
+            p_paddr = ph->p_vaddr;
+#endif
+
+#ifdef HAS_DEVICE_IDE 
+            //ide_read(uint8_t *buf, uint32_t offset, uint32_t len);
+            ide_read((void *)p_paddr ,ph->p_offset , ph->p_filesz);
+#else
             memcpy((void *)p_paddr, (void *)(ph->p_offset), ph->p_filesz); 
+#endif
+
+            
             if(ph->p_memsz>ph->p_filesz)
             {
                 memset((void *)(p_paddr+ph->p_filesz), 0, (ph->p_memsz - ph->p_filesz) );
             }
-#else
-            //Log("vaddr = %x",ph->p_vaddr);
-            //memcpy((void *)(ph->p_vaddr), (void *)(ph->p_offset), ph->p_filesz); 
-            if(ph->p_memsz>ph->p_filesz)
-            {
-                memset((void *)(ph->p_vaddr+ph->p_filesz), 0, (ph->p_memsz - ph->p_filesz) );
-            }
-#endif
 
 /* TODO: copy the segment from the ELF file to its proper memory area */
             //从文件Offset开始位置，连续FileSiz个字节的内容需要被装载
