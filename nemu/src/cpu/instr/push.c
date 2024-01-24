@@ -57,7 +57,7 @@ make_instr_func(pusha)
     uint32_t temp = cpu.esp;
     OPERAND m;
     m.type = OPR_MEM;
-    m.data_size = data_size;
+    m.data_size = 32;
     m.sreg = SREG_DS;
     
         cpu.esp -= 4;
