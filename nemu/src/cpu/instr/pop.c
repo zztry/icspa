@@ -22,15 +22,15 @@ make_instr_func(pop_r_v)
     operand_read(&m);
     
     
+    opr_src.val = m.val;
+    //OPERAND r;//要存到的寄存器
+    //r.data_size = data_size;
+    //r.type = OPR_REG;
+    //r.addr = opcode & 0x7;
+    //r.val = m.val;
     
-    OPERAND r;//要存到的寄存器
-    r.data_size = data_size;
-    r.type = OPR_REG;
-    r.addr = opcode & 0x7;
-    r.val = m.val;
-    
-    operand_write(&r);
-    
+    //operand_write(&r);
+    operand_write(&opr_src);
     cpu.esp += data_size/8;
     
     
