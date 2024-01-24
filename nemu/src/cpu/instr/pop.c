@@ -31,7 +31,7 @@ make_instr_func(pop_r_v)
     
     //operand_write(&r);
     operand_write(&opr_src);
-    cpu.esp += data_size/8;
+    cpu.esp += 4;
     
     
     
