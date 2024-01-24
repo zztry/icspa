@@ -45,8 +45,9 @@ void paddr_write(paddr_t paddr, size_t len, uint32_t data)
     // mmio_write(uint32_t addr, size_t len, uint32_t data, int map_NO)
     if(is_mmio(paddr) != -1) {
 		mmio_write(paddr,len,data,is_mmio(paddr));
+        return ;
 	} 
-    return ;
+    
 #endif
 
 #ifdef CACHE_ENABLED
