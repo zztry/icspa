@@ -43,7 +43,8 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 		len1 = 64 - in_addr;
 		len2 = len - len1;
 	}
-	for(int i=0;i<8;i++)
+    int i = 0;
+	for(i=0;i<8;i++)
 	{
 		if(caches[group*8+i].tag==tag_&&caches[group*8+i].valid_bit==true)
 		{
@@ -59,6 +60,9 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 			break;
 		}
 	}
+    if(i==8 && len2>0){
+        cache_write(paddr+len1,len2,data>>(8*len1));
+    }
 	
 	
 }
