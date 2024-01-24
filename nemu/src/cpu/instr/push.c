@@ -16,7 +16,7 @@ static void instr_execute_1op()
     operand_read(&opr_src);
     
     opr_dest.data_size = data_size;
-    opr_dest.sreg = SREG_CS;
+    opr_dest.sreg = SREG_SS;
     opr_dest.type = OPR_MEM;
     opr_dest.addr = cpu.esp;
     opr_dest.val = opr_src.val;
@@ -39,6 +39,18 @@ make_instr_impl_1op(push,i,b);
 
 //68 push_i_v
 make_instr_impl_1op(push,i,v);
+
+/*
+make_instr_func(push_r_v)
+{
+    OPERAND r;
+    r.data_size = data_size;
+    r.type = OPR_REG;
+    r.addr = opcode & 0x7;
+
+    operand_read(&opr_src);
+}*/
+
 
 make_instr_func(pusha)
 {
