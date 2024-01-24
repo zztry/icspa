@@ -6,7 +6,7 @@ Put the implementations of `push' instructions here.
 //宏make_instr_impl_1op(inst_name, src_type, suffix)
 static void instr_execute_1op()
 {
-    cpu.esp -=data_size/8;
+    
     
     //将src写入esp/sp的地址中
     
@@ -14,7 +14,8 @@ static void instr_execute_1op()
     
     //opr_src.data_size=data_size;
     operand_read(&opr_src);
-    
+    cpu.esp -=data_size/8;
+
     opr_dest.data_size = data_size;
     opr_dest.sreg = SREG_SS;
     opr_dest.type = OPR_MEM;
