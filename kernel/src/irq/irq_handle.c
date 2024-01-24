@@ -36,7 +36,7 @@ void irq_handle(TrapFrame *tf)
 
 	if (irq < 0)
 	{
-        panic("Unexpected exception #%d at eip = %x", irq, tf->eip);
+        panic("Unexpected exception #%x at eip = %x", irq, tf->eip);
 		panic("Unhandled exception!");
 	}
 	else if (irq == 0x80)
