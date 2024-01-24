@@ -20,15 +20,16 @@ void create_video_mapping()
     //0xa0 000->0xaf a00
     PDE *pdir = (PDE *)va_to_pa(get_updir());  
 	PTE *ptable = (PTE *)va_to_pa(table);
-
     
+    uint32_t pdir_idx = 0, ptable_idx = 0 ,pframe_idx=0;
 	/* fill PDEs and PTEs */
     pdir[0].val = make_pde(ptable);
     
-	for (uint32_t idx = 0xa0; idx < 0xaf; idx++)
+	for (ptable = 0; ptable < 1024; ptable++)
 	{
-		ptable->val = make_pte(idx << 12);
-		ptable++;
+		ptable->val = make_pte(pframe_idx << 12);
+        pframe_idx++;
+        ptable++;
 	}
 	//panic("please implement me");
 }
