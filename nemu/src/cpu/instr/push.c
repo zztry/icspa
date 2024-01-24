@@ -7,14 +7,7 @@ Put the implementations of `push' instructions here.
 static void instr_execute_1op()
 {
     cpu.esp -=data_size/8;
-    /*
-    if(data_size == 8){
-        cpu.esp -=4;
-    }
-    else
-    {
-        cpu.esp -=data_size/8;
-    }*/
+    
     //将src写入esp/sp的地址中
     
     //OPERAND m;
@@ -23,7 +16,7 @@ static void instr_execute_1op()
     operand_read(&opr_src);
     
     opr_dest.data_size = data_size;
-    opr_dest.sreg = SREG_DS;
+    opr_dest.sreg = SREG_CS;
     opr_dest.type = OPR_MEM;
     opr_dest.addr = cpu.esp;
     opr_dest.val = opr_src.val;
@@ -55,42 +48,42 @@ make_instr_func(pusha)
     m.data_size = data_size;
     m.sreg = SREG_DS;
     
-        cpu.esp -= data_size/8;
+        cpu.esp -= 4;
         m.addr = cpu.esp;
         m.val = cpu.eax;
         operand_write(&m);
     
-        cpu.esp -= data_size/8;
+        cpu.esp -= 4;
         m.addr = cpu.esp;
         m.val = cpu.ecx;
         operand_write(&m);
 
-        cpu.esp -= data_size/8;
+        cpu.esp -= 4;
         m.addr = cpu.esp;
         m.val = cpu.edx;
         operand_write(&m);
 
-        cpu.esp -= data_size/8;
+        cpu.esp -= 4;
         m.addr = cpu.esp;
         m.val = cpu.ebx;
         operand_write(&m);
      
-        cpu.esp -= data_size/8;
+        cpu.esp -= 4;
         m.addr = cpu.esp;
         m.val = temp;
         operand_write(&m);
 
-        cpu.esp -= data_size/8;
+        cpu.esp -= 4;
         m.addr = cpu.esp;
         m.val = cpu.ebp;
         operand_write(&m);
 
-        cpu.esp -= data_size/8;
+        cpu.esp -= 4;
         m.addr = cpu.esp;
         m.val = cpu.esi;
         operand_write(&m);
 
-        cpu.esp -= data_size/8;
+        cpu.esp -= 4;
         m.addr = cpu.esp;
         m.val = cpu.edi;
         operand_write(&m);
