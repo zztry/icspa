@@ -46,7 +46,7 @@ uint32_t loader()
 #else
             p_paddr = ph->p_vaddr;
 #endif
-            printk("paddr = %x\n" , p_paddr);
+            printk("vaddr = %x, paddr = %x\n" ,ph->p_vaddr , p_paddr);
 #ifdef HAS_DEVICE_IDE 
             //ide_read(uint8_t *buf, uint32_t offset, uint32_t len);
             ide_read((void *)p_paddr ,ph->p_offset , ph->p_filesz);
