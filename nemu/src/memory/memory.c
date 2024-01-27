@@ -95,16 +95,16 @@ void laddr_write(laddr_t laddr, size_t len, uint32_t data)
         //printf("cpu.cr0.pg=1 now.  laddr_write  \n");
         //fflush(stdout);
         if ((laddr>>12) !=((laddr+len-1)>>12)) {
-            printf("data= %x \n",data);
-            fflush(stdout);
+            //printf("data= %x \n",data);
+            //fflush(stdout);
 		    uint32_t len1 = (((laddr>>12)+1)<<12)-laddr;
 		    uint32_t len2 = len - len1;
 		    uint32_t addr1 = page_translate(laddr);  //低位
 		    uint32_t addr2 = page_translate( ((laddr>>12)+1)<<12 );
 		    uint32_t data1 = data - ((data>>(8*len1))<<(8*len1));
 		    uint32_t data2 = (data>>(8*len1));
-		    printf("data1= %x data2 = %x \n",data1,data2);
-            fflush(stdout);
+		    //printf("data1= %x data2 = %x \n",data1,data2);
+            //fflush(stdout);
 		    paddr_write(addr1,len1,data1);
 		    paddr_write(addr2,len2,data2);
 		} 
